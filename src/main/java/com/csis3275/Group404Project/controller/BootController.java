@@ -3,6 +3,8 @@ package com.csis3275.Group404Project.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +49,11 @@ public class BootController {
 	@GetMapping("/homePage")
 	public String showHomePage(HttpSession session, Model model) {
 
-		//List<expense> expense = expenseDao.getAllExpenses();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
 
-		//model.addAttribute("loginScreen", expense);
+		model.addAttribute("currentUserExpenses", expenses);
 
 		return "homePage";
 	}
@@ -98,11 +102,17 @@ public class BootController {
 	@PostMapping("/createExpense")
 	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
 
-		expenseDao.createExpense(createExpense);
+
 
 //		List<Expense> expenses = expenseDao.getAllExpenses();
 //		model.addAttribute("")
 
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		expenseDao.createExpense(createExpense, currentPrincipalName);
+
+		System.out.println("I am in create Expense and my userName is " + currentPrincipalName);
 
 		return "homePage";
 
