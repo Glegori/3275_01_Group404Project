@@ -1,4 +1,4 @@
-package com.csis3275.Group404Project.models;
+package com.csis3275.Group404Project.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

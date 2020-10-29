@@ -1,6 +1,6 @@
 package com.csis3275.Group404Project;
 
-import com.csis3275.Group404Project.models.USER_404_PROJECT;
+import com.csis3275.Group404Project.model.USER_404_PROJECT;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

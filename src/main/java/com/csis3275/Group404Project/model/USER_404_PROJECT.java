@@ -1,4 +1,4 @@
-package com.csis3275.Group404Project.models;
+package com.csis3275.Group404Project.model;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.csis3275.Group404Project;
+package com.csis3275.Group404Project.dao;
 
 
 import java.util.List;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.csis3275.model.expense;
-import com.csis3275.model.expenseMapper;
+import com.csis3275.Group404Project.model.Expense;
+import com.csis3275.Group404Project.model.ExpenseMapper;
 
 @Component
 public class expenseDAO {
@@ -24,14 +24,14 @@ public class expenseDAO {
 	public expenseDAO(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	public List<expenseForm> getAllStudents() {
+	public List<ExpenseForm> getAllStudents() {
 		return jdbcTemplate.query(SQL_GET_ALL, new ExpenseMapper());
 	}
 	public boolean createStudent(Expense expense) {
 		return jdbcTemplate.update(SQL_INSERT_PERSON, expense.getExpenseName() , 
 				expense.getExpenseCost(), expense.getDate(),
 				expense.getExpenseType(), expense.getExpenseStatus(), 
-				expense.getBillImage() expense.getUser()) > 0;
+				expense.getBillImage() Expense.getUser()) > 0;
 	}
 }
 

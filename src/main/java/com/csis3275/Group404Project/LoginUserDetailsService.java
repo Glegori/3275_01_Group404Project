@@ -1,8 +1,8 @@
 package com.csis3275.Group404Project;
 
-import com.csis3275.Group404Project.models.LoginUserDetails;
+import com.csis3275.Group404Project.model.LoginUserDetails;
 
-import com.csis3275.Group404Project.models.USER_404_PROJECT;
+import com.csis3275.Group404Project.model.USER_404_PROJECT;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;
