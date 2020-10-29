@@ -35,7 +35,6 @@ public class USER_404_PROJECT {
     }
 
     public String getUserName() {
-        System.out.println("I am in entity" + userName);
         return userName;
     }
 

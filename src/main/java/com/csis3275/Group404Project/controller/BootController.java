@@ -3,20 +3,18 @@ package com.csis3275.Group404Project.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.csis3275.Group404Project.dao.expenseDAO;
-//import com.csis3275.Group404Project.userDAO;
 import com.csis3275.Group404Project.model.Expense;
-//import com.csis3275.Group404Project.model.User;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
 public class BootController {
 
 	@RequestMapping("/")
@@ -42,7 +40,19 @@ public class BootController {
 
 	    return "loginScreen";
 	}
-	
+
+
+	@GetMapping("/homePage")
+	public String showHomePage(HttpSession session, Model model) {
+
+		//List<expense> expense = expenseDao.getAllExpenses();
+
+		//model.addAttribute("loginScreen", expense);
+
+		return "homePage";
+	}
+
+
 	//checkLogin
 	//	@PostMapping("/loginScreen")
 //		public String loginScreen(@ModelAttribute("loginScreen") user checkUser, Model model)	{

@@ -33,7 +33,7 @@ public class SecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user").hasAnyRole("ADMIN","USER")
                 .antMatchers("/error").permitAll()
                 .antMatchers("/").permitAll()
-                .and().formLogin();
+                .and().formLogin().defaultSuccessUrl("/homePage");
 
     }
 
