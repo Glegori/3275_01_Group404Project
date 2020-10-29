@@ -8,5 +8,9 @@ function closeMenu() {
 
 function openExpenseForm(){
 document.getElementById("expenseForm").style.width = "38%";
+$(document).ready(function(){
+   
+   $('#expenseForm').load("/submitExpense");
 
+});
 }

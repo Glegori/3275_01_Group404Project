@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="date" class="col-md-3 control-label">date</label>
+				<label for="date" class="col-md-3 control-label">Date</label>
 				<div class="col-md-9">
 					<form:input path="date" cssClass="form-control" />
 				</div>
@@ -53,17 +53,12 @@
 					<form:input type="file" path="billImage" cssClass="form-control" />
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="user" class="col-md-3 control-label">user</label>
-				<div class="col-md-9">
-					<form:input path="user" cssClass="form-control" />
-				</div>
 			</div>
 			
 			<div class="form-group">
 				<!-- Button -->
 				<div class="col-md-offset-3 col-md-9">
-					<form:button cssClass="btn btn-primary">Submit</form:button>
+					<form:button cssClass="btn btn-dark btn-lg">Submit</form:button>
 				</div>
 			</div>
 
