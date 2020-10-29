@@ -10,7 +10,7 @@ public class HomeResource {
 
     @GetMapping("/")
     public String home(){
-        return ("homePage");
+        return ("redirect");
     }
 
     @GetMapping("/user")
