@@ -24,14 +24,12 @@ public class expenseDAO {
 	public expenseDAO(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	public List<ExpenseForm> getAllStudents() {
-		return jdbcTemplate.query(SQL_GET_ALL, new ExpenseMapper());
-	}
+
 	public boolean createStudent(Expense expense) {
 		return jdbcTemplate.update(SQL_INSERT_PERSON, expense.getExpenseName() , 
 				expense.getExpenseCost(), expense.getDate(),
 				expense.getExpenseType(), expense.getExpenseStatus(), 
-				expense.getBillImage() Expense.getUser()) > 0;
+				expense.getBillImage(), expense.getUser()) > 0;
 	}
 }
 

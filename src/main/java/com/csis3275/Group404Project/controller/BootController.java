@@ -26,7 +26,6 @@ public class BootController {
 	
 	@Autowired
 	expenseDAO expenseDao;
-	userDAO userDao;
 	
 	@ModelAttribute("expenses")
 	public Expense setupAddForm() {
@@ -45,13 +44,13 @@ public class BootController {
 	}
 	
 	//checkLogin
-		@PostMapping("/loginScreen")
-		public String loginScreen(@ModelAttribute("loginScreen") user checkUser, Model model)	{
+	//	@PostMapping("/loginScreen")
+//		public String loginScreen(@ModelAttribute("loginScreen") user checkUser, Model model)	{
 			
 			//do something
 			 
-			return "submitExpense";
-		}
+	//		return "submitExpense";
+	//	}
 	
 	//showForm
 	@GetMapping("/submitExpense")
