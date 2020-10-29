@@ -8,12 +8,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Expense submittal form</title>
+	<link href="<c:url value="/static/css/bootstrap.min.css" />"
+		  rel="stylesheet">
+	<script src="<c:url value="/static/js/script.js" />"></script>
 </head>
 <body>
 	<div class="container">
 	<h3>Submit Expense</h3>
 		<form:form action="${pageContext.request.contextPath}/createExpense/" cssClass="form-horizontal"
-			method="post" modelAttribute="expense">
+			method="post" modelAttribute="Expense">
 			<div class="form-group">
 				<label for="expenseName" class="col-md-3 control-label">Name of Expense</label>
 				<div class="col-md-9">
@@ -45,7 +48,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="billImage" class="col-md-3 control-label">Upload Bill Image</label>
+<%--				<label for="billImage" class="col-md-3 control-label">Upload Bill Image</label>--%>
 				<div class="col-md-9">
 					<form:input type="file" path="expenseType" cssClass="form-control" />
 				</div>

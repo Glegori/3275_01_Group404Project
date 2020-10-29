@@ -14,6 +14,8 @@ import com.csis3275.Group404Project.model.Expense;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class BootController {
 
@@ -25,7 +27,7 @@ public class BootController {
 	@Autowired
 	expenseDAO expenseDao;
 	
-	@ModelAttribute("expenses")
+	@ModelAttribute("Expense")
 	public Expense setupAddForm() {
 		return new Expense();
 	}
@@ -34,9 +36,9 @@ public class BootController {
 	@GetMapping("/loginScreen")
 	public String showLoginScreen(HttpSession session, Model model) {
 		
-		//List<expense> expense = expenseDao.getAllExpenses();
+		List<Expense> expense = expenseDao.getAllExpenses();
 
-		//model.addAttribute("loginScreen", expense);
+		model.addAttribute("loginScreen", expense);
 
 	    return "loginScreen";
 	}

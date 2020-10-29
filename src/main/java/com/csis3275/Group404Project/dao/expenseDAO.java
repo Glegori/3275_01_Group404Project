@@ -31,5 +31,9 @@ public class expenseDAO {
 				expense.getExpenseType(), expense.getExpenseStatus(), 
 				expense.getBillImage(), expense.getUser()) > 0;
 	}
+
+	public List<Expense> getAllExpenses() {
+		return jdbcTemplate.query(SQL_GET_ALL, new ExpenseMapper());
+	}
 }
 
