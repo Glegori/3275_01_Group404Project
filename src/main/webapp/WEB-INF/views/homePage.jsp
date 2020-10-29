@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>--%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
 
 	<div id="idSideMenu" class="sideMenu">
   		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
-		<a href="#" onclick="openExpenseForm()">Add An Expense</a>
+		<a href="${pageContext.request.contextPath}/submitExpense}" onclick="openExpenseForm()">Add An Expense</a>
   	</div>
 
 	<div id="top">

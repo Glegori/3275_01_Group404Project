@@ -14,6 +14,4 @@ public class Group404ProjectApplication {
 		SpringApplication.run(Group404ProjectApplication.class, args);
 	}
 
-
-
 }
