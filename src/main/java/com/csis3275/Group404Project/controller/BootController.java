@@ -19,11 +19,11 @@ import java.util.List;
 @Controller
 public class BootController {
 
-	@RequestMapping("/")
-	public String index() {
-		return "Greetings from Spring Boot!";
-	}
-	
+//	@RequestMapping("/")
+//	public String index() {
+//		return "Greetings from Spring Boot!";
+//	}
+//
 	@Autowired
 	expenseDAO expenseDao;
 	
@@ -89,12 +89,24 @@ public class BootController {
 	}
 	
 	//CreateExpenses
-	@PostMapping("/submitExpense")
-	public String createExpense(@ModelAttribute("expense") Expense createExpense, Model model)	{
-		
-		 return "showExpense";
-	}
+//	@PostMapping("/submitExpense")
+//	public String createExpense(@ModelAttribute("expense") Expense createExpense, Model model)	{
+//
+//		 return "showExpense";
+//	}
 
+	@PostMapping("/createExpense")
+	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
+
+		expenseDao.createExpense(createExpense);
+
+//		List<Expense> expenses = expenseDao.getAllExpenses();
+//		model.addAttribute("")
+
+
+		return "homePage";
+
+	}
 	
 	
 }
