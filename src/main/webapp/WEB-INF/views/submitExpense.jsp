@@ -53,7 +53,8 @@
 					<form:input type="file" path="billImage" cssClass="form-control" />
 				</div>
 			</div>
-			</div>
+			
+			
 			
 			<div class="form-group">
 				<!-- Button -->

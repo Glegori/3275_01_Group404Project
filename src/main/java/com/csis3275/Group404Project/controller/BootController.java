@@ -109,10 +109,15 @@ public class BootController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		
 
 		expenseDao.createExpense(createExpense, currentPrincipalName);
 
 		System.out.println("I am in create Expense and my userName is " + currentPrincipalName);
+		
+		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+
+        model.addAttribute("currentUserExpenses", expenses);
 
 		return "homePage";
 

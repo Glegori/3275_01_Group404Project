@@ -31,13 +31,14 @@
 	<div class="sideButton" onclick="openMenu()">&#x25ba; Menu</div>
 	<div id="expenseForm">&nbsp;</div>
 	<table class="table table-striped table-bordered">
-	<t:forEach var="expense" items="${currentUserExpenses}">
-	<tr>
 	<td>Expense Name</td>
 	<td>Expense Cost</td>
 	<td>Expense Date</td>
 	<td>Expense Expense Type</td>
 	<td>Expense Status</td>
+	<t:forEach var="expense" items="${currentUserExpenses}">
+	<tr>
+
 	</tr>
                         <tr>
                             <td>${expense.expenseName}</td>
