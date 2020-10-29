@@ -15,7 +15,7 @@
 
 	<div id="idSideMenu" class="sideMenu">
   		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
-		<a href="${pageContext.request.contextPath}/submitExpense}" onclick="openExpenseForm()">Add An Expense</a>
+		<a href="${pageContext.request.contextPath}/submitExpense" onclick="openExpenseForm()">Add An Expense</a>
   	</div>
 
 	<div id="top">
