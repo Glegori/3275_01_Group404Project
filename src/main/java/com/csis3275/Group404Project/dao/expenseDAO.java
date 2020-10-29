@@ -25,7 +25,7 @@ public class expenseDAO {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public boolean createStudent(Expense expense) {
+	public boolean createExpense(Expense expense) {
 		return jdbcTemplate.update(SQL_INSERT_PERSON, expense.getExpenseName() , 
 				expense.getExpenseCost(), expense.getDate(),
 				expense.getExpenseType(), expense.getExpenseStatus(), 

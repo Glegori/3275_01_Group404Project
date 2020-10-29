@@ -48,9 +48,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-<%--				<label for="billImage" class="col-md-3 control-label">Upload Bill Image</label>--%>
+				<label for="billImage" class="col-md-3 control-label">Upload Bill Image</label>
 				<div class="col-md-9">
-					<form:input type="file" path="expenseType" cssClass="form-control" />
+					<form:input type="file" path="billImage" cssClass="form-control" />
 				</div>
 			</div>
 			<div class="form-group">
