@@ -1,3 +1,4 @@
+    public String admin(){
 package com.csis3275.Group404Project;
 
 

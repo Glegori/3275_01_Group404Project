@@ -4,7 +4,7 @@ DROP TABLE USER_404_project IF EXISTS;
 CREATE TABLE USER_404_project(
 id INTEGER PRIMARY KEY AUTO_INCREMENT,
 USERNAME VARCHAR(30),
-PASSWORD VARCHAR(50),
+password VARCHAR(50),
 reportTO VARCHAR(20),
 userType VARCHAR(20),
 total double
@@ -21,9 +21,9 @@ billImage VARCHAR(240),
 user VARCHAR(30)
 );
 
-insert into USER_404_project(USERNAME, PASSWORD, REPORTTO, USERTYPE, TOTAL) values('Alfredo', '12345', ' ', 'admin', 0);
-insert into USER_404_project(USERNAME, PASSWORD, REPORTTO, USERTYPE, TOTAL) values('Gregory', '12345', ' ', 'admin', 0);
-insert into USER_404_project(USERNAME, PASSWORD, REPORTTO, USERTYPE, TOTAL) values('Francis', '12345', ' ', 'admin', 0);
-insert into USER_404_project(USERNAME, PASSWORD, REPORTTO, USERTYPE, TOTAL) values('Shubham', '12345', ' ', 'admin', 0);
+insert into USER_404_project(USERNAME, password, REPORTTO, USERTYPE, TOTAL) values('Alfredo', '12345', ' ', 'admin', 0);
+insert into USER_404_project(USERNAME, password, REPORTTO, USERTYPE, TOTAL) values('Gregory', '12345', ' ', 'admin', 0);
+insert into USER_404_project(USERNAME, password, REPORTTO, USERTYPE, TOTAL) values('Francis', '12345', ' ', 'admin', 0);
+insert into USER_404_project(USERNAME, password, REPORTTO, USERTYPE, TOTAL) values('Shubham', '12345', ' ', 'admin', 0);
 
 Select * from USER_404_project;
