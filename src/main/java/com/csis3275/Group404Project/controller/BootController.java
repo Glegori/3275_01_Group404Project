@@ -15,6 +15,7 @@ import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class BootController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
 
 		model.addAttribute("currentUserExpenses", expenses);
@@ -68,29 +70,6 @@ public class BootController {
 	//		return "submitExpense";
 	//	}
 	
-	//showForm
-	@GetMapping("/submitExpense")
-	public String submitExpense(HttpSession session, Model model) {
-		
-		//List<expense> expense = expenseDao.getAllExpenses();
-
-		//model.addAttribute("loginScreen", expense);
-
-	    return "submitExpense";
-	}
-	
-	//ShowExpenses
-	@GetMapping("/showExpenses")
-	public String showExpenses(HttpSession session, Model model) {
-
-		
-		//List<expense> expense = expenseDao.getAllExpenses();
-	    
-
-		//model.addAttribute("expenses", expense);
-
-	    return "showExpense";
-	}
 	
 	//CreateExpenses
 //	@PostMapping("/submitExpense")
@@ -122,6 +101,26 @@ public class BootController {
 		return "homePage";
 
 	}
+	
+	@GetMapping("/filterExpense")
+	public String filterExpense(@RequestParam(required = true) String expenseType, Model model)
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		System.out.println("I am inside filterExpense Method");
+		System.out.println("Value of expenseType is = "+expenseType);
+	
+		//BRING LIST
+		List<Expense> expenses = expenseDao.getExpensesByUserNameAndExpenseType(currentPrincipalName, expenseType);
+		System.out.println("Database returns a total of: " + expenses.size() + " rows");
+		 
+		//MODEL
+		model.addAttribute("currentUserExpenses", expenses);
+		
+		return "homePage";
+	}
+	
 	
 	
 }
