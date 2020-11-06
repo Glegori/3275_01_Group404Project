@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="t"%>
 
 
@@ -17,38 +18,52 @@
 <body>
 
 	<div id="idSideMenu" class="sideMenu">
-  		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
-		<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>
-		
-  	</div>
+		<a href="javascript:void(0)" id="closeButton" class="sideButton"
+			onclick="closeMenu()">&#9668;</a> <a href="javascript:void(0)"
+			onclick="openExpenseForm()">Add An Expense</a>
+
+	</div>
 
 	<div id="top">
-		<h2 class="header">404 Expense Tracker </h2>
+		<h2 class="header">404 Expense Tracker</h2>
 		<p class="header">Keep your expenses in check</p>
-		<button onclick="location.href = '/login';" id="logout" type="button" class="btn btn-dark btn-lg"> Logout</button>
+		<button onclick="location.href = '/login';" id="logout" type="button"
+			class="btn btn-dark btn-lg">Logout</button>
+
+		<select onchange="location = this.value">
+			<option value="-" label="-- Please Select an expense type --" />
+			<option value="/filterExpense/?expenseType=FOOD" label="Food" />
+			<option value="/filterExpense/?expenseType=TRAVEL" label="Travel" />
+			<option value="/filterExpense/?expenseType=SUPPLIERS" label="Suppliers" />
+			<option value="/filterExpense/?expenseType=SERVICES" label="SERVICES" />
+		</select>
+		
+		<button onclick="location.href = '/homePage';" id="clean" type="button"
+			class="btn btn-dark btn-lg">Clean Filter</button>
+
 	</div>
 
 	<div class="sideButton" onclick="openMenu()">&#x25ba; Menu</div>
 	<div id="expenseForm">&nbsp;</div>
 	<table class="table table-striped table-bordered">
-	<td><strong>Expense Name</strong></td>
-	<td><strong>Expense Cost</strong></td>
-	<td><strong>Expense Date</strong></td>
-	<td><strong>Expense Type</strong></td>
-	<td><strong>Expense Status</strong></td>
-	<t:forEach var="expense" items="${currentUserExpenses}">
-	<tr>
+		<td><strong>Expense Name</strong></td>
+		<td><strong>Expense Cost</strong></td>
+		<td><strong>Expense Date</strong></td>
+		<td><strong>Expense Type</strong></td>
+		<td><strong>Expense Status</strong></td>
+		<t:forEach var="expense" items="${currentUserExpenses}">
+			<tr>
 
-	</tr>
-                        <tr>
-                            <td>${expense.expenseName}</td>
-                            <td>${expense.expenseCost}</td>
-                            <td>${expense.date}</td>
-                            <td>${expense.expenseType}</td>
-                            <td>${expense.expenseStatus}</td>      
-                        </tr>
-                    </t:forEach>
-                    </table>
+			</tr>
+			<tr>
+				<td>${expense.expenseName}</td>
+				<td>${expense.expenseCost}</td>
+				<td>${expense.date}</td>
+				<td>${expense.expenseType}</td>
+				<td>${expense.expenseStatus}</td>
+			</tr>
+		</t:forEach>
+	</table>
 
 
 </body>
