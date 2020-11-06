@@ -19,7 +19,7 @@ public class expenseDAO {
 
 	private final String SQL_GET_ALL = "select * from EXPENSE_404_project";
 	private final String SQL_GET_ALL_EXPENSES_BY_USERNAME = "select * from EXPENSE_404_project where USER = ?";
-
+	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, billImage, user) values(?,?,?,?,?,?,?)";
 
 	@Autowired
@@ -44,6 +44,11 @@ public class expenseDAO {
 	public List<Expense> getExpensesByUserName(String USER){
 
 		return jdbcTemplate.query(SQL_GET_ALL_EXPENSES_BY_USERNAME, new Object[] {USER} , new ExpenseMapper());
+	}
+	
+	public List<Expense> getExpensesByUserNameAndExpenseType(String USER, String EXPENSETYPE){
+		System.out.println("System is searching expense type = "+ EXPENSETYPE + " into the Database");
+		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSETYPE, new Object[] {USER, EXPENSETYPE} , new ExpenseMapper());
 	}
 
 	public List<Expense> getAllExpenses() {
