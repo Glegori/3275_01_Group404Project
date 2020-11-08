@@ -19,8 +19,10 @@
 
 	<div id="idSideMenu" class="sideMenu">
 		<a href="javascript:void(0)" id="closeButton" class="sideButton"
-			onclick="closeMenu()">&#9668;</a> <a href="javascript:void(0)"
+			onclick="closeMenu()">&#9668;</a>
+			 <a href="javascript:void(0)"
 			onclick="openExpenseForm()">Add An Expense</a>
+			<a href="/barGraph"> View reports</a>
 
 	</div>
 

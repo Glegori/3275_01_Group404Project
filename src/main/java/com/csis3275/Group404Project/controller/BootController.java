@@ -17,7 +17,10 @@ import com.csis3275.Group404Project.model.Expense;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BootController {
@@ -54,10 +57,18 @@ public class BootController {
 		String currentPrincipalName = authentication.getName();
 		
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
-
+		
 		model.addAttribute("currentUserExpenses", expenses);
 
 		return "homePage";
+	}
+	
+	@GetMapping("/barGraph")
+	public String barGraph(Model model) {
+		List<Map<String, Object>> expenseCost = expenseDao.getTotalCost();
+		model.addAttribute("expenseCost", expenseCost);
+		return "barGraph";
+		
 	}
 
 
