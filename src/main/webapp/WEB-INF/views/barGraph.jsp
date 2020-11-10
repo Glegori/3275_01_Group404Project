@@ -16,10 +16,11 @@
 <script src="<c:url value="/static/js/charts.js" />"></script>
 <script src="<c:url value="/static/js/jquery-1.11.1.min.js" />"></script>
 <script>var expenseCost = [];
-		var expenseType = [] ;</script>
+		var expenseType = [];
+		var averageCost = [];</script>
 <t:forEach var="expense" items="${expenseCost}">
 <script> expenseCost.push(${expense.TOTALCOST});
-expenseType.push(${expense.EXPENSETYPE});
+expenseType.push(${String(expense.EXPENSETYPE)});
 		</script>
 </t:forEach>
 		
@@ -28,5 +29,23 @@ expenseType.push(${expense.EXPENSETYPE});
 <body>
 
 <div id="container"></div>
+<div>
+<table class="table table-striped table-bordered">
+		<td><strong>Expense Type</strong></td>
+		<td><strong>Average Cost</strong></td>
+		<td><strong>Total Number of Expenses</strong></td>
+		<t:forEach var="expense" items="${expenseCost}">
+			<tr>
+
+			</tr>
+			<tr>
+				<td>${expense.EXPENSETYPE}</td>
+				<td>${expense.AVERAGECOST}</td>
+				<td>${expense.TOTALCOUNT }</td>
+			</tr>
+		</t:forEach>
+	</table>
+	</div>
+	<button onclick="location.href = '/homePage';" class="btn btn-dark btn-lg"> Back to Home </button>
 </body>
 </html>

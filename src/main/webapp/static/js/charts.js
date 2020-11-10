@@ -20,8 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             },
             series: [{
-            	name: 'Cost',
+            	name: 'Total Cost',
                 data: expenseCost,
+                color: '#0d0d0d'
             }]
         });
     });
