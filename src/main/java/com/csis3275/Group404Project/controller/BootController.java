@@ -57,7 +57,18 @@ public class BootController {
 
 		return "homePage";
 	}
+	
+	@GetMapping("/decisionPage")
+	public String showDecisionPage(HttpSession session, Model model) {
 
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		List<Expense> expenses = expenseDao.getReportingExpenses(currentPrincipalName);
+		
+		model.addAttribute("reportingUserExpenses", expenses);
+
+		return "decisionPage";
+	}
 
 	//checkLogin
 	//	@PostMapping("/loginScreen")
