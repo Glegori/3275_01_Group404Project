@@ -17,8 +17,8 @@ public class USER_404_PROJECT {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "REPORTTO")
-    private String reportTO;
+    @Column(name = "REPORTSFROM")
+    private String reportsFROM;
 
     @Column(name = "USERTYPE")
     private String userType;
@@ -50,12 +50,12 @@ public class USER_404_PROJECT {
         this.password = password;
     }
 
-    public String getReportTO() {
-        return reportTO;
+    public String getReportsFROM() {
+        return reportsFROM;
     }
 
-    public void setReportTO(String reportTo) {
-        this.reportTO = reportTo;
+    public void setReportsFROM(String reportTo) {
+        this.reportsFROM = reportTo;
     }
 
     public String getUserType() {

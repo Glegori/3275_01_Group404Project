@@ -2,19 +2,20 @@ package com.csis3275.Group404Project.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.csis3275.Group404Project.LoginUserDetailsService;
+import com.csis3275.Group404Project.dao.userDAO;
+
+import com.csis3275.Group404Project.model.USER_404_PROJECT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
-
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -28,11 +29,18 @@ public class BootController {
 //
 	@Autowired
 	expenseDAO expenseDao;
+
+	@Autowired
+	userDAO userDAO;
 	
 	@ModelAttribute("Expense")
 	public Expense setupAddForm() {
 		return new Expense();
 	}
+
+	@ModelAttribute("User")
+	public USER_404_PROJECT setupUserForm(){ return new USER_404_PROJECT();}
+
 	
 	//showLogin
 	@GetMapping("/loginScreen")
@@ -122,6 +130,73 @@ public class BootController {
 		return "homePage";
 
 	}
-	
+
+
+//	@GetMapping("/createUser")
+//	public String createNewUser(HttpSession session, Model model){
+//		return "createUser";
+//	}
+
+	@GetMapping("/createUser")
+	public String createUser(){
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		if(user.getUserType().equals("admin")){
+			return ("createUser");
+		} else {
+
+			return("forbidden");
+
+		}
+
+	}
+
+	@GetMapping("/forbidden")
+	public String forbidden(){
+		return ("forbidden");
+	}
+
+
+	@PostMapping("/submitUser")
+	public String createNewUser(@ModelAttribute("User") USER_404_PROJECT createUser, Model model){
+
+		userDAO.createUser(createUser);
+		List<USER_404_PROJECT> users = userDAO.getAllUsers();
+		model.addAttribute("Users", users);
+
+		return "createUser";
+	}
+
+	@GetMapping("/changePassword")
+	public String changePasswordScreen(){
+		return ("changePassword");
+	}
+
+
+	@PostMapping("/submitPassword")
+	public String submitPassword(@RequestParam String oldPassword, @RequestParam String newPassword, Model model){
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+
+
+		if(oldPassword.equals(currentUser.getPassword())) {
+			userDAO.updatePasswordByUserName(currentPrincipalName, newPassword);
+			model.addAttribute("message", "Password for " + currentPrincipalName + " has been successfully updated!");
+		} else {
+			model.addAttribute("error", "Cannot update password for the current user. " +
+					"Please try again, if the issue persists please contact an admin.");
+
+		}
+
+		return ("changePassword");
+	}
 	
 }

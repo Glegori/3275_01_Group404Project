@@ -24,7 +24,7 @@ public class LoginUserDetails implements UserDetails {
     public LoginUserDetails(USER_404_PROJECT user){
         this.userName = user.getUserName();
         this.password = user.getPassword();
-        this.reportTo = user.getReportTO();
+        this.reportTo = user.getReportsFROM();
         this.userType = user.getUserType();
         this.total = user.getTotal();
 
