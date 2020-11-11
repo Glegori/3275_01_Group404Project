@@ -63,7 +63,6 @@ public class BootController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		System.out.println(currentPrincipalName);
 		List<Expense> expenses = expenseDao.getReportingExpenses(currentPrincipalName);
 		model.addAttribute("reportingUserExpenses", expenses);
 

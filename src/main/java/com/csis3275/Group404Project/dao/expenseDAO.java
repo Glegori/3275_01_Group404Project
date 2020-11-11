@@ -1,6 +1,7 @@
 package com.csis3275.Group404Project.dao;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -37,9 +38,13 @@ public class expenseDAO {
 	}
 	public List<Expense> getReportingExpenses(String S_USER){
 		List<User> userList = jdbcTemplate.query(SQL_GET_REPORTS_FROM, new Object[] {S_USER}, new UserMapper());
-		List<Expense> returningExpenses = null;
+		String[] users = new String[100];
 		for(User user:userList) {
-			List<Expense> list = (jdbcTemplate.query(SQL_GET_ALL_EXPENSES_BY_USERNAME, new Object[] {user.getUsername()} , new ExpenseMapper()));
+			users = user.getReportsFrom().split(",");
+		}
+		List<Expense> returningExpenses = new ArrayList<>();
+		for(String user:users) {
+			List<Expense> list = (jdbcTemplate.query(SQL_GET_ALL_EXPENSES_BY_USERNAME, new Object[] {user} , new ExpenseMapper()));
 			for(Expense expense:list){
 				returningExpenses.add(expense);
 			}

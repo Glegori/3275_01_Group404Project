@@ -23,7 +23,7 @@ user VARCHAR(30)
 
 insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values('Alfredo', '12345', '', 'admin', 0);
 insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values('Gregory', '12345', '', 'admin', 0);
-insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values('Francis', '12345', 'Alfredo', 'admin', 0);
+insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values('Francis', '12345', 'Alfredo, Shubham, Gregory', 'admin', 0);
 /*insert into EXPENSE_404_project(expensename, expensecost, date, expensetype, expensestatus, billimage, user)
                             values('expenseName','expenseCost', '2020-11-11', 'Personal', 'Pending', 'billImageUrl', 'Alfredo')) ;
  */
