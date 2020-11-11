@@ -63,7 +63,6 @@ public class expenseDAO {
 	public List<Expense> getAllExpenses() {
 		return jdbcTemplate.query(SQL_GET_ALL, new ExpenseMapper());
 	}
-	//this might be broken
 	public boolean modifyStatus(Expense expense){
 		System.out.println("THE DATA YOUR LOOKING FOR " +expense.getId()+ " " + expense.getExpenseName()+ " "+expense.getExpenseStatus() + " "+expense.getExpenseStatus().getClass().getName());
 		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getId()) > 0;

@@ -18,7 +18,7 @@ function openModifyForm(id, expenseUser, expenseName, expenseCost,expenseDate, e
     document.getElementById("modifyForm").style.width = "45%";
     document.getElementById("modifyForm").style.display = "block";
     console.log(expenseDate);
-
+//this needs some modification for formatting
     $(document).ready(function() {
         $('#id').val(id);
         $('#expenseUser').val(expenseUser);
@@ -31,8 +31,8 @@ function openModifyForm(id, expenseUser, expenseName, expenseCost,expenseDate, e
         $('#labelExpenseCost').html('<p class="col-md-12 control-label" id="labelExpenseCost">Expense Cost: </p>');
         $('#labelExpenseCost').append(expenseCost);
         $('#expenseDate').val(expenseDate);
-        $('#labelExpenseDate').html('<p class="col-md-12 control-label" id="labelExpenseDate">Date of Submission: </p>');
-        $('#labelExpenseDate').append(expenseDate);
+        //$('#labelExpenseDate').html('<p class="col-md-12 control-label" id="labelExpenseDate">Date of Submission: </p>');
+        //$('#labelExpenseDate').append(expenseDate);
         $('#expenseType').val(expenseType);
         $('#labelExpenseType').html('<p class="col-md-12 control-label" id="labelExpenseType">Expense Type: </p>');
         $('#labelExpenseType').append(expenseType);
