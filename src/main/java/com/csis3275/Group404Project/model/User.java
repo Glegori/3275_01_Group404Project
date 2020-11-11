@@ -36,12 +36,12 @@ public class User  {
 		this.password = password;
 	}
 	public void setReportsFrom(String reportsFrom) {
-		this.reportsFrom = reportsFrom
+		this.reportsFrom = reportsFrom;
 	}
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 	public void setTotal(double total) {
-		this.total = total
+		this.total = total;
 	}
 }

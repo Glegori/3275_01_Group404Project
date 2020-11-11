@@ -63,8 +63,8 @@ public class BootController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		System.out.println(currentPrincipalName);
 		List<Expense> expenses = expenseDao.getReportingExpenses(currentPrincipalName);
-		
 		model.addAttribute("reportingUserExpenses", expenses);
 
 		return "decisionPage";
@@ -78,7 +78,6 @@ public class BootController {
 			 
 	//		return "submitExpense";
 	//	}
-	
 	//showForm
 	@GetMapping("/submitExpense")
 	public String submitExpense(HttpSession session, Model model) {
@@ -93,16 +92,10 @@ public class BootController {
 	//ShowExpenses
 	@GetMapping("/showExpenses")
 	public String showExpenses(HttpSession session, Model model) {
-
-		
 		//List<expense> expense = expenseDao.getAllExpenses();
-	    
-
 		//model.addAttribute("expenses", expense);
-
 	    return "showExpense";
 	}
-	
 	//CreateExpenses
 //	@PostMapping("/submitExpense")
 //	public String createExpense(@ModelAttribute("expense") Expense createExpense, Model model)	{
@@ -112,26 +105,15 @@ public class BootController {
 
 	@PostMapping("/createExpense")
 	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
-
-
-
 //		List<Expense> expenses = expenseDao.getAllExpenses();
 //		model.addAttribute("")
-
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
-
 		expenseDao.createExpense(createExpense, currentPrincipalName);
-
 		System.out.println("I am in create Expense and my userName is " + currentPrincipalName);
-		
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
-
         model.addAttribute("currentUserExpenses", expenses);
-
 		return "homePage";
-
 	}
 	
 	

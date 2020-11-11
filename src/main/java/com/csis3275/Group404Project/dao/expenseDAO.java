@@ -21,7 +21,7 @@ public class expenseDAO {
 
 	private final String SQL_GET_ALL = "select * from EXPENSE_404_project";
 	private final String SQL_GET_ALL_EXPENSES_BY_USERNAME = "select * from EXPENSE_404_project where USER = ?";
-	private final String SQL_GET_REPORTS_FROM = "select REPORTFROM from USER_404_project where USER = ?";
+	private final String SQL_GET_REPORTS_FROM = "select REPORTSFROM from USER_404_project where USERNAME = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, billImage, user) values(?,?,?,?,?,?,?)";
 
 	@Autowired
@@ -37,9 +37,12 @@ public class expenseDAO {
 	}
 	public List<Expense> getReportingExpenses(String S_USER){
 		List<User> userList = jdbcTemplate.query(SQL_GET_REPORTS_FROM, new Object[] {S_USER}, new UserMapper());
-		List<Expense> returningExpenses = new List<Expense>;
+		List<Expense> returningExpenses = null;
 		for(User user:userList) {
-			returningExpenses.add(jdbcTemplate.query(SQL_GET_ALL_EXPENSES_BY_USERNAME, new Object[] {user} , new ExpenseMapper()));
+			List<Expense> list = (jdbcTemplate.query(SQL_GET_ALL_EXPENSES_BY_USERNAME, new Object[] {user} , new ExpenseMapper()));
+			for(Expense expense:list){
+				returningExpenses.add(expense);
+			}
 		}
 		return returningExpenses;
 	}

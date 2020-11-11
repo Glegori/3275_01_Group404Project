@@ -32,7 +32,7 @@
 			<div class="form-group">
 				<label for="date" class="col-md-3 control-label">Date</label>
 				<div class="col-md-9">
-					<form:input path="date" cssClass="form-control" />
+					<form:input type="date" path="date" cssClass="form-control" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -53,8 +53,6 @@
 					<form:input type="file" path="billImage" cssClass="form-control" />
 				</div>
 			</div>
-			
-			
 			
 			<div class="form-group">
 				<!-- Button -->
