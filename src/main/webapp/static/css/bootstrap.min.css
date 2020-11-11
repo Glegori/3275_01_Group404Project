@@ -14,7 +14,7 @@
   width: 0;
   position: fixed;
   background-color: #0d0d0d;
-  overflow: hidden;
+  overflow: auto;
   transition: 0.2s;
   border-style: solid;
 }
