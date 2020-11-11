@@ -51,7 +51,6 @@ public class expenseDAO {
 			System.out.println(list.size() + " Queries found");
 			for(Expense expense:list){
 				returningExpenses.add(expense);
-				System.out.println(expense.getExpenseName());
 			}
 		}
 		return returningExpenses;
@@ -66,7 +65,8 @@ public class expenseDAO {
 	}
 	//this might be broken
 	public boolean modifyStatus(Expense expense){
-		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getId(), expense.getExpenseStatus()) > 0;
+		System.out.println("THE DATA YOUR LOOKING FOR " +expense.getId()+ " " + expense.getExpenseName()+ " "+expense.getExpenseStatus() + " "+expense.getExpenseStatus().getClass().getName());
+		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getId()) > 0;
 	}
 }
 

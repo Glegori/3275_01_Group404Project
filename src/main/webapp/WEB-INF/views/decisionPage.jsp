@@ -17,10 +17,70 @@
 <body>
 	<div id="top">
 		<h2 class="header">Expense Review Form </h2>
-		<button onclick="location.href = '/homePage';" id="backToMain" type="button" class="btn btn-dark btn-lg"> Return</button>
+		<button onclick="location.href = '/homePage';" id="backToMain" type="button" class="btn btn-dark btn-lg">Return</button>
 	</div>
-	<div id="modifyForm"> </div>
+	<div id="modifyForm" class="sideMenu">
+		<button onclick="closeSide()" id="closeSide" type="button" class="btn btn-dark btn-sm">x</button>
+		<form:form action="${pageContext.request.contextPath}/modifyStatus/" cssClass="form-horizontal"
+				   method="post" modelAttribute="modExpense">
+			<div class="form-group">
+				<div class="col-md-12">
+					<p class="col-md-12 control-label" id="labelExpenseUser">Expense Submitter: </p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p class="col-md-12 control-label" id="labelExpenseName">Name of Expense: </p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p class="col-md-10 control-label" id="labelExpenseCost">Expense Cost: </p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p class="col-md-11 control-label" id="labelDate">Date of Submit: </p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<p class="col-md-12 control-label" id="labelExpenseType">Expense Type: </p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-9">
+					<p class="col-md-3 control-label" id="labelBillImage">*bill image location*</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="expenseStatus" class="col-md-3 control-label">Expense Status</label>
+				<div class="col-md-9">
+					<form:select path="expenseStatus" cssClass="form-control">
+						<form:option value="Pending" label="Pending"/>
+						<form:option value="Approved" label="Approved"/>
+						<form:option value="Denied" label="Denied"/>
+					</form:select>
+				</div>
+			</div>
+			<div class="form-group">
+				<!-- Button -->
+				<div class="col-md-offset-3 col-md-9">
+					<form:input type="hidden" path="id" value="" id="id" cssClass="form-control"/>
+					<form:input type="hidden" path="expenseName" value="" id="expenseName" cssClass="form-control"/>
+					<form:input type="hidden" path="expenseCost" value="" id="expenseCost" cssClass="form-control"/>
+					<form:input type="hidden" path="date" value="" id="date" cssClass="form-control"/>
+					<form:input type="hidden" path="expenseType" value="" id="expenseType" cssClass="form-control"/>
+					<form:input type="hidden" path="billImage" value="" id="billImage" cssClass="form-control" />
+					<form:input type="hidden" path="user" value="" id="user" cssClass="form-control" />
+					<form:button type="submit" cssClass="btn btn-dark btn-lg" onclick="closeSide()">Submit</form:button>
+				</div>
+			</div>
+
+		</form:form>
+	</div>
 	<table class="table table-striped table-bordered">
+	<td><strong>ID</strong></td>
 	<td><strong>Submitting User</strong></td>
 	<td><strong>Expense Name</strong></td>
 	<td><strong>Expense Cost</strong></td>
@@ -32,14 +92,15 @@
 	<tr>
 	</tr>
                   <tr>
+					  		<td>${expense.id}</td>
                             <td>${expense.user}</td>
                             <td>${expense.expenseName}</td>
                             <td>${expense.expenseCost}</td>
                             <td>${expense.date}</td>
                             <td>${expense.expenseType}</td>
                             <td>${expense.expenseStatus}</td>
-                            <td><a href="javascript:void(0)" onclick="openModifyForm(${expense.user}, ${expense.expenseName}, ${expense.expenseCost}, ${expense.date},
-								${expense.expenseType}, ${expense.expenseStatus})">Modify Status</a></td>
+                            <td><a href="javascript:void(0)" onclick="openModifyForm('${expense.id}','${expense.user}', '${expense.expenseName}', '${expense.expenseCost}', '${expense.date}',
+								'${expense.expenseType}', '${expense.expenseStatus}', '${expense.billImage}')">Modify Status</a></td>
                         </tr>
                     </t:forEach>
                     </table>

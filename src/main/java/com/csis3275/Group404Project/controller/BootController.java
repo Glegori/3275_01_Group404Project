@@ -8,14 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
-
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -32,6 +28,10 @@ public class BootController {
 	
 	@ModelAttribute("Expense")
 	public Expense setupAddForm() {
+		return new Expense();
+	}
+	@ModelAttribute("modExpense")
+	public Expense setupModifyForm() {
 		return new Expense();
 	}
 	
@@ -117,7 +117,7 @@ public class BootController {
 	}
 	//this might be broken
 	@PostMapping("/modifyStatus")
-	public String modifyStatus(@ModelAttribute("User")Expense modifyExpense, Model model){
+	public String modifyStatus(@ModelAttribute("modExpense")Expense modifyExpense, Model model){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
@@ -126,11 +126,5 @@ public class BootController {
 		List<Expense> expenses = expenseDao.getReportingExpenses(currentPrincipalName);
 		model.addAttribute("reportingUserExpenses", expenses);
 		return "decisionPage";
-	}
-	@PostMapping("/changeStatus")
-	public String changeStatus(@ModelAttribute("User")Expense values, Model model){
-
-		model.addAttribute("modifiedUser", values);
-		return  "changeStatus";
 	}
 }
