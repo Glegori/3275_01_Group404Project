@@ -15,6 +15,7 @@
 <body>
 <div class="container">
     <h3>Submit Expense</h3>
+    <button onclick="location.href = '/decisionPage';" id="backToMain" type="button" class="btn btn-dark btn-sm"> Return</button>
     <form:form action="${pageContext.request.contextPath}/modifyStatus/" cssClass="form-horizontal"
                method="post" modelAttribute="User">
         <div class="form-group">
@@ -35,10 +36,10 @@
                 <form:input type="file" path="billImage" cssClass="form-control" />
             </div>
         </div>
-
         <div class="form-group">
             <!-- Button -->
             <div class="col-md-offset-3 col-md-9">
+                <form:input type="hidden" path="" value="" cssClass="form-control"/>
                 <form:button cssClass="btn btn-dark btn-lg">Submit</form:button>
             </div>
         </div>

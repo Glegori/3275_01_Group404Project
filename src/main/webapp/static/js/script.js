@@ -14,3 +14,11 @@ $(document).ready(function(){
    $('#expenseForm').load("/submitExpense");
 });
 }
+function openModifyForm(expenseUser, expenseName, expenseCost, expenseDate, expenseType, expenseStatus){
+    document.getElementById("modifyForm").style.width = "38%";
+    document.getElementById("modifyForm").style.display = "block";
+    console.log(expenseUser, expenseName, expenseCost, expenseDate, expenseType, expenseStatus);
+    $(document).ready(function() {
+        $('#modifyForm').load("/changeStatus", {expense:expense});
+    });
+}

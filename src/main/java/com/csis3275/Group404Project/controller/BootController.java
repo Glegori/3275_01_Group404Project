@@ -2,6 +2,7 @@ package com.csis3275.Group404Project.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.csis3275.Group404Project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -114,6 +115,22 @@ public class BootController {
         model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
 	}
-	
-	
+	//this might be broken
+	@PostMapping("/modifyStatus")
+	public String modifyStatus(@ModelAttribute("User")Expense modifyExpense, Model model){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		expenseDao.modifyStatus(modifyExpense);
+
+		List<Expense> expenses = expenseDao.getReportingExpenses(currentPrincipalName);
+		model.addAttribute("reportingUserExpenses", expenses);
+		return "decisionPage";
+	}
+	@PostMapping("/changeStatus")
+	public String changeStatus(@ModelAttribute("User")Expense values, Model model){
+
+		model.addAttribute("modifiedUser", values);
+		return  "changeStatus";
+	}
 }

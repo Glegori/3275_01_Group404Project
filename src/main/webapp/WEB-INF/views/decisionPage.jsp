@@ -19,7 +19,7 @@
 		<h2 class="header">Expense Review Form </h2>
 		<button onclick="location.href = '/homePage';" id="backToMain" type="button" class="btn btn-dark btn-lg"> Return</button>
 	</div>
-	<div id="expenseForm">&nbsp;</div>
+	<div id="modifyForm"> </div>
 	<table class="table table-striped table-bordered">
 	<td><strong>Submitting User</strong></td>
 	<td><strong>Expense Name</strong></td>
@@ -37,8 +37,9 @@
                             <td>${expense.expenseCost}</td>
                             <td>${expense.date}</td>
                             <td>${expense.expenseType}</td>
-                            <td>${expense.expenseStatus}</td>   
-                            <td>place button here that will open a form</td>   
+                            <td>${expense.expenseStatus}</td>
+                            <td><a href="javascript:void(0)" onclick="openModifyForm(${expense.user}, ${expense.expenseName}, ${expense.expenseCost}, ${expense.date},
+								${expense.expenseType}, ${expense.expenseStatus})">Modify Status</a></td>
                         </tr>
                     </t:forEach>
                     </table>
