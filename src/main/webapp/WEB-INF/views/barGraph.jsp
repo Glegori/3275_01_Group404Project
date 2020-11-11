@@ -17,10 +17,14 @@
 <script src="<c:url value="/static/js/jquery-1.11.1.min.js" />"></script>
 <script>var expenseCost = [];
 		var expenseType = [];
-		var averageCost = [];</script>
+		var averageCost = [];
+		</script>
+	
 <t:forEach var="expense" items="${expenseCost}">
-<script> expenseCost.push(${expense.TOTALCOST});
-expenseType.push(${String(expense.EXPENSETYPE)});
+<div hidden id="type">${expense.EXPENSETYPE}</div>
+<script> 
+expenseCost.push(${expense.TOTALCOST});
+expenseType.push('${expense.EXPENSETYPE}');
 		</script>
 </t:forEach>
 		
