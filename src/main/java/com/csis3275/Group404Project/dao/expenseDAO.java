@@ -33,6 +33,8 @@ public class expenseDAO {
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, billImage, user) values(?,?,?,?,?,?,?)";
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY EXPENSETYPE";
 	private final String SQL_GET_TOTAL_COST_BY_USER = "SELECT USER, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY USER";
+	private final String SQL_DELETE_BY_EXPENSE_ID = "delete from EXPENSE_404_project where id = ?";
+
 
 	@Autowired
 	public expenseDAO(DataSource dataSource) {
@@ -88,6 +90,14 @@ public class expenseDAO {
 	public List<Map<String, Object>> getTotalCostByUser() {
 		return jdbcTemplate.queryForList(SQL_GET_TOTAL_COST_BY_USER);
 	}
+
+	public boolean deleteExpense(Expense expense){
+		System.out.println("The ID of the expense your deleting is: " + expense.getId());
+		return jdbcTemplate.update(SQL_DELETE_BY_EXPENSE_ID,  expense.getId()) > 0;
+	}
+
+
+
 }
 
 
