@@ -13,7 +13,7 @@ total double
 CREATE TABLE EXPENSE_404_project(
 id INTEGER PRIMARY KEY AUTO_INCREMENT,
 expenseName VARCHAR(30),
-expenseCost VARCHAR(50),
+expenseCost DOUBLE (50),
 date VARCHAR(20),
 expenseType VARCHAR(20),
 expenseStatus VARCHAR(10),
@@ -28,7 +28,5 @@ insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) v
                             values('expenseName','expenseCost', '2020-11-11', 'Personal', 'Pending', 'billImageUrl', 'Alfredo')) ;
  */
 insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values('Shubham', '12345', '', 'admin', 0);
-ALTER TABLE EXPENSE_404_PROJECT
-ALTER COLUMN EXPENSECOST DOUBLE
 
 Select * from USER_404_project;
