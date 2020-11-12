@@ -37,7 +37,8 @@
 			<option value="/filterExpense/?expenseType=FOOD" label="Food" />
 			<option value="/filterExpense/?expenseType=TRAVEL" label="Travel" />
 			<option value="/filterExpense/?expenseType=SUPPLIERS" label="Suppliers" />
-			<option value="/filterExpense/?expenseType=SERVICES" label="SERVICES" />
+			<option value="/filterExpense/?expenseType=SERVICES" label="Services" />
+			<option value="/filterExpense/?expenseType=PERSONAL" label="Personal" />
 		</select>
 		
 		<button onclick="location.href = '/homePage';" id="clean" type="button"
