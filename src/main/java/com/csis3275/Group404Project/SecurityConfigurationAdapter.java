@@ -37,7 +37,6 @@ public class SecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
     }
 
-
     @Bean
     public PasswordEncoder getPasswordEncoder(){
 

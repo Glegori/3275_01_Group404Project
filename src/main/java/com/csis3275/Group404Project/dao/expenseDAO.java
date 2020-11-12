@@ -34,11 +34,15 @@ public class expenseDAO {
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY EXPENSETYPE";
 	private final String SQL_GET_TOTAL_COST_BY_USER = "SELECT USER, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY USER";
 	private final String SQL_DELETE_BY_EXPENSE_ID = "delete from EXPENSE_404_project where id = ?";
-
+	private final String SQL_GET_TOTAL_BY_USERNAME = "SELECT SUM(EXPENSECOST) FROM EXPENSE_404_PROJECT WHERE USER = ?";
 
 	@Autowired
 	public expenseDAO(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
+	public Double getTotalByUserName(String userName){
+		return jdbcTemplate.queryForObject(SQL_GET_TOTAL_BY_USERNAME, Double.class, userName);
 	}
 
 	public boolean createExpense(Expense expense, String userName){
@@ -79,10 +83,13 @@ public class expenseDAO {
 	public List<Expense> getAllExpenses() {
 		return jdbcTemplate.query(SQL_GET_ALL, new ExpenseMapper());
 	}
+
 	public boolean modifyStatus(Expense expense){
-		System.out.println("THE DATA YOUR LOOKING FOR " +expense.getId()+ " " + expense.getExpenseName()+ " "+expense.getExpenseStatus() + " "+expense.getExpenseStatus().getClass().getName());
+		System.out.println("THE DATA YOUR LOOKING FOR " + expense.getId() + " " + expense.getExpenseName()+ " " + expense.getExpenseStatus() + " " + expense.getExpenseStatus());
 		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getId()) > 0;
 	}
+
+
 
 	public List<Map<String, Object>> getTotalCost() {
 		return jdbcTemplate.queryForList(SQL_GET_TOTAL_COST_BY_CATEGORY);
