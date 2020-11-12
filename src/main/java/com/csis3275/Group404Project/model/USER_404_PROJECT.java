@@ -18,13 +18,13 @@ public class USER_404_PROJECT {
     private String password;
 
     @Column(name = "REPORTSFROM")
-    private String reportsFROM;
+    private String reportsFrom;
 
     @Column(name = "USERTYPE")
     private String userType;
 
     @Column(name = "TOTAL")
-    private String total;
+    private double total;
 
     public int getID() {
         return ID;
@@ -50,12 +50,13 @@ public class USER_404_PROJECT {
         this.password = password;
     }
 
-    public String getReportsFROM() {
-        return reportsFROM;
+
+    public String getReportsFrom() {
+        return reportsFrom;
     }
 
-    public void setReportsFROM(String reportTo) {
-        this.reportsFROM = reportTo;
+    public void setReportsFrom(String reportsFrom) {
+        this.reportsFrom = reportsFrom;
     }
 
     public String getUserType() {
@@ -66,11 +67,11 @@ public class USER_404_PROJECT {
         this.userType = userType;
     }
 
-    public String getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 }

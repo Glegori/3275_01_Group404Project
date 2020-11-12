@@ -30,9 +30,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="reportsFROM" class="col-md-3 control-label">Managing reports from:</label>
+				<label for="reportsFrom" class="col-md-3 control-label">Managing reports from:</label>
 				<div class="col-md-9">
-					<form:input path="reportsFROM" cssClass="form-control" />
+					<form:input path="reportsFrom" cssClass="form-control" />
 				</div>
 			</div>
 			<div class="form-group">
