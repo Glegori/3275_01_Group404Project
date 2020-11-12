@@ -45,7 +45,6 @@ public class expenseDAO {
 		return jdbcTemplate.queryForObject(SQL_GET_TOTAL_BY_USERNAME, Double.class, userName);
 	}
 
-
 	public boolean createExpense(Expense expense, String userName){
 		userDAO.updateUserTotal(userName, expense.getExpenseCost());
 		return jdbcTemplate.update(SQL_INSERT_EXPENSE, expense.getExpenseName() ,
@@ -84,10 +83,13 @@ public class expenseDAO {
 	public List<Expense> getAllExpenses() {
 		return jdbcTemplate.query(SQL_GET_ALL, new ExpenseMapper());
 	}
+
 	public boolean modifyStatus(Expense expense){
-		System.out.println("THE DATA YOUR LOOKING FOR " +expense.getId()+ " " + expense.getExpenseName()+ " "+expense.getExpenseStatus() + " "+expense.getExpenseStatus().getClass().getName());
+		System.out.println("THE DATA YOUR LOOKING FOR " + expense.getId() + " " + expense.getExpenseName()+ " " + expense.getExpenseStatus() + " " + expense.getExpenseStatus());
 		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getId()) > 0;
 	}
+
+
 
 	public List<Map<String, Object>> getTotalCost() {
 		return jdbcTemplate.queryForList(SQL_GET_TOTAL_COST_BY_CATEGORY);
