@@ -84,11 +84,17 @@ public class BootController {
 
 		return "decisionPage";
 	}
-	@GetMapping("/barGraph")
-	public String barGraph(Model model) {
+	@GetMapping("/barGraphCategory")
+	public String barGraphCategory(Model model) {
 		List<Map<String, Object>> expenseCost = expenseDao.getTotalCost();
 		model.addAttribute("expenseCost", expenseCost);
-		return "barGraph";
+		return "barGraphCategory";
+	}
+	@GetMapping("/barGraphUser")
+	public String barGraphUser(Model model) {
+		List<Map<String, Object>> expenseCost = expenseDao.getTotalCostByUser();
+		model.addAttribute("expenseCost", expenseCost);
+		return "barGraphUser";
 	}
 
 	//checkLogin

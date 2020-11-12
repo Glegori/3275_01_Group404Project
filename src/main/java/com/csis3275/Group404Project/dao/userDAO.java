@@ -20,6 +20,7 @@ public class userDAO {
     private final String SQL_DELETE_USER_BY_USERNAME = "delete * from USER_404_PROJECT where USERNAME = ?";
     private final String SQL_UPDATE_USER_BY_USERNAME = "update USER_404_PROJECT set USERNAME = ?, PASSWORD = ?, REPORTSFROM = ?, USERTYPE = ?, TOTAL = ? WHERE USERNAME = ?";
     private final String SQL_UPDATE_PASSWORD_BY_USERNAME = "update USER_404_PROJECT set PASSWORD = ? WHERE USERNAME = ?";
+    private final String SQL_UPDATE_USER_TOTAL_BY_USERNAME = "update USER_404_PROJECT set TOTAL = ? WHERE USERNAME = ? ";
     private final String SQL_INSERT_USER = "insert into USER_404_PROJECT(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values(?,?,?,?,?)";
 
     @Autowired
@@ -36,6 +37,14 @@ public class userDAO {
     public List<User> getUserByUserName(String userName){
 
         return jdbcTemplate.query(SQL_GET_USER_BY_USERNAME, new Object[] {userName} , new UserMapper());
+    }
+
+
+    public boolean updateUserTotal(String userName, Double expenseCost){
+        Double currentTotal = getUserByUserName(userName).get(0).getTotal();
+        Double newTotal = currentTotal + expenseCost;
+
+        return jdbcTemplate.update(SQL_UPDATE_USER_TOTAL_BY_USERNAME, newTotal, userName) > 0;
     }
 
     public List<User> getAllUsers() {
