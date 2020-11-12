@@ -41,8 +41,8 @@
 					<form:select path="expenseType" cssClass="form-control" >
 						<option value="">Select an Expense type</option>
 						<option value="SERVICES">Services</option>
-						<option value="FOOD">FOOD</option>
-						<option value="SUPPLIERS">SUPPLIER</option>
+						<option value="FOOD">Food</option>
+						<option value="SUPPLIERS">Suppliers</option>
 						<option value="TRAVEL">Travel</option>
 						<option value="PERSONAL">Personal</option>
 					</form:select>
