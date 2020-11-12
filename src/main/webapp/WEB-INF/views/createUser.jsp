@@ -57,6 +57,11 @@
 			</div>
 
 		</form:form>
+
+
+		<div>
+			<button onclick="location.href = '/homePage';" id="backToMain" type="button" class="btn btn-dark btn-lg">Return</button>
+		</div>
 			
 		</div>
 		

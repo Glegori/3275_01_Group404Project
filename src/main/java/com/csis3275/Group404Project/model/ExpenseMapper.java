@@ -5,8 +5,17 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * Creates a new expense based on the properties given by the DAO.
+ *
+ *
+ */
+
 public class ExpenseMapper implements RowMapper<Expense> {
 
+	/**
+	 * Creates a expense based on the result set.
+	 */
 	public Expense mapRow(ResultSet resultSet, int i) throws SQLException {
 
 		Expense expense = new Expense();

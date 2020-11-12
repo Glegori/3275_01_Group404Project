@@ -11,7 +11,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+/**
+ *
+ * Checks the username to see if it exists.
+ *
+ */
 @Service
 public class LoginUserDetailsService implements UserDetailsService {
 
@@ -21,6 +25,9 @@ public class LoginUserDetailsService implements UserDetailsService {
 
 
 
+    /**
+     * If the user exists, send back a mapped object, otherwise throw an error.
+     */
     @Override
     public UserDetails loadUserByUsername(String USERNAME) throws UsernameNotFoundException {
         System.out.println("I am here");

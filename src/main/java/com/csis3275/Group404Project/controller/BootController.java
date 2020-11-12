@@ -22,6 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * The boot controller is the controller that loads models into the jsps as well as handle
+ * all routes when a user is clicking around a page.
+ *
+ */
 
 @Controller
 public class BootController {
@@ -36,19 +42,38 @@ public class BootController {
 
 	@Autowired
 	userDAO userDAO;
+
+	/**
+	 * Saves our Expense class to be used in models.
+	 * @return
+	 */
 	
 	@ModelAttribute("Expense")
 	public Expense setupAddForm() {
 		return new Expense();
 	}
+
+	/**
+	 * Saves our User class to be used in models.
+	 * @return
+	 */
 	@ModelAttribute("User")
 	public USER_404_PROJECT setupUserForm(){ return new USER_404_PROJECT();}
 
+	/**
+	 * Saves our Expense class to be used in models.
+	 * @return
+	 */
 	@ModelAttribute("modExpense")
 	public Expense setupModifyForm() {
 		return new Expense();
 	}
-	//showLogin
+	/**
+	 *
+	 * Shows the login screen.
+	 * @param model This holds all the expenses from the database.
+	 * @return Returns to the login screen.
+	 */
 	@GetMapping("/loginScreen")
 	public String showLoginScreen(HttpSession session, Model model) {
 		
@@ -59,7 +84,12 @@ public class BootController {
 	    return "loginScreen";
 	}
 
-
+	/**
+	 * This grabs the user who logged in to be used when loading the expenses.
+	 *
+	 * @param model Holds a list of all the expenses by the user who logged in.
+	 * @return Redirects to the home page.
+	 */
 	@GetMapping("/homePage")
 	public String showHomePage(HttpSession session, Model model) {
 
@@ -72,7 +102,13 @@ public class BootController {
 
 		return "homePage";
 	}
-	
+	/**
+	 * This grabs the user who logged in to be used when loading the expenses.
+	 *
+	 * @param model Holds a list of all the expenses from the users who report to
+	 * who logged in.
+	 * @return Redirects to the decision page.
+	 */
 	@GetMapping("/decisionPage")
 	public String showDecisionPage(HttpSession session, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -82,12 +118,24 @@ public class BootController {
 
 		return "decisionPage";
 	}
+	/**
+	 * Page that shows the the bar graph and some statistics of the expenses.
+	 * @param model Holds expense statistics to be shown in a bar graph as well as table
+	 * by the expense category.
+	 * @return Redirects to the bar graph page.
+	 */
 	@GetMapping("/barGraphCategory")
 	public String barGraphCategory(Model model) {
 		List<Map<String, Object>> expenseCost = expenseDao.getTotalCost();
 		model.addAttribute("expenseCost", expenseCost);
 		return "barGraphCategory";
 	}
+	/**
+	 * Page that shows the bar graph and some statistics of the expenses.
+	 * @param model Holds expense statistics to be shown in a bar graph as well as table
+	 * by the users category.
+	 * @return Redirects to the bar graph page.
+	 */
 	@GetMapping("/barGraphUser")
 	public String barGraphUser(Model model) {
 		List<Map<String, Object>> expenseCost = expenseDao.getTotalCostByUser();
@@ -104,6 +152,12 @@ public class BootController {
 	//		return "submitExpense";
 	//	}
 	//showForm
+
+	/**
+	 *
+	 * Page allows you to add an expense to the database.
+	 * @return Redirects to the page to submit expenses.
+	 */
 	@GetMapping("/submitExpense")
 	public String submitExpense(HttpSession session, Model model) {
 		
@@ -113,7 +167,12 @@ public class BootController {
 
 	    return "submitExpense";
 	}
-	
+
+	/**
+	 *
+	 *  Shows the expenses.
+	 * @return Redirects to the page to show expenses.
+	 */
 	//ShowExpenses
 	@GetMapping("/showExpenses")
 	public String showExpenses(HttpSession session, Model model) {
@@ -128,6 +187,13 @@ public class BootController {
 //		 return "showExpense";
 //	}
 
+
+	/**
+	 *
+	 * Grabs all the data that was entered into the form and create a new expense. This expense
+	 * is then added to the database.
+	 * @return Redirects back to homepage.
+	 */
 	@PostMapping("/createExpense")
 	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
 //		List<Expense> expenses = expenseDao.getAllExpenses();
@@ -140,6 +206,13 @@ public class BootController {
         model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
 	}
+
+	/**
+	 * Grabs the expense that needs to be modified and edits the status in the database based
+	 * on what was inputed.
+	 *
+	 * @return Redirects back to the decision page.
+	 */
 	@PostMapping("/modifyStatus")
 	public String modifyStatus(@ModelAttribute("modExpense")Expense modifyExpense, Model model){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -156,6 +229,11 @@ public class BootController {
 //		return "createUser";
 //	}
 
+	/**
+	 * Redirects user to be able to either create a new user if they're an admin
+	 * or show an error otherwise.
+	 * @return If the user return is an admin, redirect to create a user or forbidden if not.
+	 */
 	@GetMapping("/createUser")
 	public String createUser(){
 
@@ -173,12 +251,20 @@ public class BootController {
 		}
 
 	}
+	/**
+	 * Error page if the user entered a page they weren't suppose to see.
+	 * @return Redirects to the forbidden page.
+	 */
 	@GetMapping("/forbidden")
 	public String forbidden(){
 		return ("forbidden");
 	}
 
-
+	/**
+	 * Creates a new user to be added to the database.
+	 *
+	 * @return Redirects to the create a new user page.
+	 */
 	@PostMapping("/submitUser")
 	public String createNewUser(@ModelAttribute("User") USER_404_PROJECT createUser, Model model){
 
@@ -188,10 +274,23 @@ public class BootController {
 
 		return "createUser";
 	}
+
+	/**
+	 *  Page that lets the the user change the password.
+	 * @return Redirects to change password page.
+	 */
 	@GetMapping("/changePassword")
 	public String changePasswordScreen(){
 		return ("changePassword");
 	}
+
+	/**
+	 * Checks to see if the old password matches the one inputed. If so, update it in the database,
+	 * otherwise throw an error.
+	 * @param oldPassword Password to be updated.
+	 * @param newPassword Password that replaces old pasword.
+	 * @return The change password page.
+	 */
 	@PostMapping("/submitPassword")
 	public String submitPassword(@RequestParam String oldPassword, @RequestParam String newPassword, Model model){
 
@@ -212,6 +311,11 @@ public class BootController {
 		return ("changePassword");
 	}
 
+	/**
+	 *
+	 * Shows a filtered list of expenses based on the category selected.
+	 * @return Redirects to home page.
+	 */
 	@GetMapping("/filterExpense")
 	public String filterExpense(@RequestParam(required = true) String expenseType, Model model)
 	{

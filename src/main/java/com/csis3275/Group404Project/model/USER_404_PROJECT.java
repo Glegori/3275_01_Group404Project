@@ -2,6 +2,11 @@ package com.csis3275.Group404Project.model;
 
 import javax.persistence.*;
 
+/**
+ * Getters and setters for the user class for login.
+ *
+ *
+ */
 @Entity
 @Table(name = "USER_404_PROJECT")
 public class USER_404_PROJECT {

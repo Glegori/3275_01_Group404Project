@@ -27,6 +27,10 @@
         <div class="alert alert-danger" role="alert">${error}</div>
     </t:if>
 
+    <div>
+        <button onclick="location.href = '/homePage';" id="backToMain" type="button" class="btn btn-dark btn-lg">Return</button>
+    </div>
+
 <form:form action="${pageContext.request.contextPath}/submitPassword/" cssClass="form-horizontal"
                method="post" modelAttribute="User" >
 
@@ -54,6 +58,8 @@
 </div>
 
 </form:form>
+
+
 
 </div>
 

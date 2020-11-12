@@ -7,7 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-
+/**
+ *
+ * Login details for the login page. Grants authority based on roles and has the ability returns password and username for the login page.
+ *
+ */
 public class LoginUserDetails implements UserDetails {
 
     private String userName;

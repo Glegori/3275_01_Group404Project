@@ -4,8 +4,16 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper implements RowMapper<USER_404_PROJECT> {
+/**
+ * Creates a new user based on the properties given by the DAO.
+ *
+ *
+ */
 
+public class UserMapper implements RowMapper<USER_404_PROJECT> {
+	/**
+	 * Creates a user based on the result set.
+	 */
 	public USER_404_PROJECT mapRow(ResultSet resultSet, int i) throws SQLException {
 		USER_404_PROJECT user = new USER_404_PROJECT();
 		user.setUserName(resultSet.getString("USERNAME"));

@@ -2,7 +2,11 @@ package com.csis3275.Group404Project.model;
 
 import javax.persistence.*;
 
-
+/**
+ * Getters and setters for the expense class.
+ *
+ *
+ */
 @Entity
 @Table(name = "EXPENSE_404_PROJECT")
 public class Expense{
