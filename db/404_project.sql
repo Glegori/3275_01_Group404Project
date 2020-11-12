@@ -28,5 +28,7 @@ insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) v
                             values('expenseName','expenseCost', '2020-11-11', 'Personal', 'Pending', 'billImageUrl', 'Alfredo')) ;
  */
 insert into USER_404_project(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values('Shubham', '12345', '', 'admin', 0);
+ALTER TABLE EXPENSE_404_PROJECT
+ALTER COLUMN EXPENSECOST DOUBLE
 
 Select * from USER_404_project;
