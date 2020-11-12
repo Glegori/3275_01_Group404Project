@@ -20,12 +20,14 @@ import com.csis3275.Group404Project.model.UserMapper;
 @Component
 public class expenseDAO {
 
+	@Autowired
+	userDAO userDAO;
+
 	JdbcTemplate jdbcTemplate;
 
 	private final String SQL_GET_ALL = "select * from EXPENSE_404_project";
 	private final String SQL_GET_ALL_EXPENSES_BY_USERNAME = "select * from EXPENSE_404_project where USER = ?";
 	private final String SQL_GET_REPORTS_FROM = "select * from USER_404_project where USERNAME = ?";
-	private final String SQL_DELETE_BY_EXPENSE_ID = "delete from EXPENSE_404_project where id = ?";
 	private final String SQL_UPDATE_STATUS = "update EXPENSE_404_project SET expenseStatus = ? WHERE id = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, billImage, user) values(?,?,?,?,?,?,?)";
@@ -38,6 +40,7 @@ public class expenseDAO {
 	}
 
 	public boolean createExpense(Expense expense, String userName){
+		userDAO.updateUserTotal(userName, expense.getExpenseCost());
 		return jdbcTemplate.update(SQL_INSERT_EXPENSE, expense.getExpenseName() ,
 				expense.getExpenseCost(), expense.getDate(),
 				expense.getExpenseType(), expense.getExpenseStatus(),
@@ -84,10 +87,6 @@ public class expenseDAO {
 	}
 	public List<Map<String, Object>> getTotalCostByUser() {
 		return jdbcTemplate.queryForList(SQL_GET_TOTAL_COST_BY_USER);
-	}
-	public boolean deleteExpense(Expense expense){
-		System.out.println("The ID of the expense your deleting is: " + expense.getId());
-		return jdbcTemplate.update(SQL_DELETE_BY_EXPENSE_ID,  expense.getId()) > 0;
 	}
 }
 
