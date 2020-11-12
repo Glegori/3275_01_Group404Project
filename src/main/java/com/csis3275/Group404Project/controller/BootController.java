@@ -2,10 +2,9 @@ package com.csis3275.Group404Project.controller;
 
 import javax.servlet.http.HttpSession;
 
-import com.csis3275.Group404Project.LoginUserDetailsService;
+
 import com.csis3275.Group404Project.dao.userDAO;
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
-import com.csis3275.Group404Project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +17,11 @@ import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @Controller
 public class BootController {
@@ -164,7 +162,7 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-		User user = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
 
 		if(user.getUserType().equals("admin")){
 			return ("createUser");
@@ -185,7 +183,7 @@ public class BootController {
 	public String createNewUser(@ModelAttribute("User") USER_404_PROJECT createUser, Model model){
 
 		userDAO.createUser(createUser);
-		List<User> users = userDAO.getAllUsers();
+		List<USER_404_PROJECT> users = userDAO.getAllUsers();
 		model.addAttribute("Users", users);
 
 		return "createUser";
@@ -200,7 +198,7 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-		User currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
 
 		if(oldPassword.equals(currentUser.getPassword())) {
 			userDAO.updatePasswordByUserName(currentPrincipalName, newPassword);

@@ -1,7 +1,6 @@
 package com.csis3275.Group404Project.dao;
 
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
-import com.csis3275.Group404Project.model.User;
 import com.csis3275.Group404Project.model.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,7 +33,7 @@ public class userDAO {
                 user.getUserType(), user.getTotal()) > 0;
     }
 
-    public List<User> getUserByUserName(String userName){
+    public List<USER_404_PROJECT> getUserByUserName(String userName){
 
         return jdbcTemplate.query(SQL_GET_USER_BY_USERNAME, new Object[] {userName} , new UserMapper());
     }
@@ -47,7 +46,7 @@ public class userDAO {
         return jdbcTemplate.update(SQL_UPDATE_USER_TOTAL_BY_USERNAME, newTotal, userName) > 0;
     }
 
-    public List<User> getAllUsers() {
+    public List<USER_404_PROJECT> getAllUsers() {
         return jdbcTemplate.query(SQL_GET_ALL, new UserMapper());
     }
 

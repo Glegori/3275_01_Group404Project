@@ -13,8 +13,9 @@ import org.springframework.stereotype.Component;
 
 import com.csis3275.Group404Project.model.Expense;
 import com.csis3275.Group404Project.model.ExpenseMapper;
-import com.csis3275.Group404Project.model.User;
+import com.csis3275.Group404Project.model.USER_404_PROJECT;
 import com.csis3275.Group404Project.model.UserMapper;
+
 
 
 @Component
@@ -53,9 +54,9 @@ public class expenseDAO {
 				expense.getBillImage(), userName) > 0;
 	}
 	public List<Expense> getReportingExpenses(String S_USER){
-		List<User> userList = jdbcTemplate.query(SQL_GET_REPORTS_FROM, new Object[] {S_USER}, new UserMapper());
+		List<USER_404_PROJECT> userList = jdbcTemplate.query(SQL_GET_REPORTS_FROM, new Object[] {S_USER}, new UserMapper());
 		String[] users = new String[100];
-		for(User user:userList) {
+		for(USER_404_PROJECT user:userList) {
 
 			users = user.getReportsFrom().replaceAll("\\s+","").split(",");
 		}
