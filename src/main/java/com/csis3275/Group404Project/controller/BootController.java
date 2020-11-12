@@ -17,7 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
 
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BootController {
@@ -61,8 +67,9 @@ public class BootController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
-
+		
 		model.addAttribute("currentUserExpenses", expenses);
 
 		return "homePage";
@@ -70,13 +77,18 @@ public class BootController {
 	
 	@GetMapping("/decisionPage")
 	public String showDecisionPage(HttpSession session, Model model) {
-
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		List<Expense> expenses = expenseDao.getReportingExpenses(currentPrincipalName);
 		model.addAttribute("reportingUserExpenses", expenses);
 
 		return "decisionPage";
+	}
+	@GetMapping("/barGraph")
+	public String barGraph(Model model) {
+		List<Map<String, Object>> expenseCost = expenseDao.getTotalCost();
+		model.addAttribute("expenseCost", expenseCost);
+		return "barGraph";
 	}
 
 	//checkLogin
@@ -105,7 +117,7 @@ public class BootController {
 		//model.addAttribute("expenses", expense);
 	    return "showExpense";
 	}
-	//CreateExpenses
+//CreateExpenses
 //	@PostMapping("/submitExpense")
 //	public String createExpense(@ModelAttribute("expense") Expense createExpense, Model model)	{
 //
@@ -195,4 +207,22 @@ public class BootController {
 
 		return ("changePassword");
 	}
-}
+
+	@GetMapping("/filterExpense")
+	public String filterExpense(@RequestParam(required = true) String expenseType, Model model)
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		System.out.println("I am inside filterExpense Method");
+		System.out.println("Value of expenseType is = "+expenseType);
+	
+		//BRING LIST
+		List<Expense> expenses = expenseDao.getExpensesByUserNameAndExpenseType(currentPrincipalName, expenseType);
+		System.out.println("Database returns a total of: " + expenses.size() + " rows");
+		 
+		//MODEL
+		model.addAttribute("currentUserExpenses", expenses);
+		
+		return "homePage";
+	}}
