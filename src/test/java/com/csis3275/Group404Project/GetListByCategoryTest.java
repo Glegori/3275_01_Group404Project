@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.csis3275.Group404Project.dao.expenseDAO;
 
 /**
- * Tests that 
+ * Tests that the expenses are returned.
  * @author Francis
  *
  */
