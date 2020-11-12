@@ -216,7 +216,7 @@ public class BootController {
 		
 		System.out.println("I am inside filterExpense Method");
 		System.out.println("Value of expenseType is = "+expenseType);
-	
+		
 		//BRING LIST
 		List<Expense> expenses = expenseDao.getExpensesByUserNameAndExpenseType(currentPrincipalName, expenseType);
 		System.out.println("Database returns a total of: " + expenses.size() + " rows");
