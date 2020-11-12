@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -5,7 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="t"%>
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>404 Expense Tracker</title>
@@ -13,18 +13,16 @@
 	rel="stylesheet">
 <script src="<c:url value="/static/js/highcharts.js" />"></script>
 <script src="<c:url value="/static/js/script.js" />"></script>
-<script src="<c:url value="/static/js/charts.js" />"></script>
+<script src="<c:url value="/static/js/charts2.js" />"></script>
 <script src="<c:url value="/static/js/jquery-1.11.1.min.js" />"></script>
 <script>var expenseCost = [];
-		var expenseType = [];
-		var averageCost = [];
+		var expenseUser = [];
 		</script>
 	
 <t:forEach var="expense" items="${expenseCost}">
-<div hidden id="type">${expense.EXPENSETYPE}</div>
 <script> 
 expenseCost.push(${expense.TOTALCOST});
-expenseType.push('${expense.EXPENSETYPE}');
+expenseUser.push('${expense.USER}');
 		</script>
 </t:forEach>
 		
@@ -32,7 +30,7 @@ expenseType.push('${expense.EXPENSETYPE}');
 </head>
 <body>
 
-<div id="container"></div>
+<div id="containerUser"></div>
 <div>
 <table class="table table-striped table-bordered">
 		<td><strong>Expense Type</strong></td>
@@ -43,9 +41,9 @@ expenseType.push('${expense.EXPENSETYPE}');
 
 			</tr>
 			<tr>
-				<td>${expense.EXPENSETYPE}</td>
+				<td>${expense.USER}</td>
 				<td>${expense.AVERAGECOST}</td>
-				<td>${expense.TOTALCOUNT }</td>
+				<td>${expense.TOTALCOUNT}</td>
 			</tr>
 		</t:forEach>
 	</table>

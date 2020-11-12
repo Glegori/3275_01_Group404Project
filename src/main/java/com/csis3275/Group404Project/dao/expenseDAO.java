@@ -29,6 +29,7 @@ public class expenseDAO {
 	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, billImage, user) values(?,?,?,?,?,?,?)";
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY EXPENSETYPE";
+	private final String SQL_GET_TOTAL_COST_BY_USER = "SELECT USER, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY USER";
 
 	@Autowired
 	public expenseDAO(DataSource dataSource) {
@@ -79,6 +80,9 @@ public class expenseDAO {
 
 	public List<Map<String, Object>> getTotalCost() {
 		return jdbcTemplate.queryForList(SQL_GET_TOTAL_COST_BY_CATEGORY);
+	}
+	public List<Map<String, Object>> getTotalCostByUser() {
+		return jdbcTemplate.queryForList(SQL_GET_TOTAL_COST_BY_USER);
 	}
 }
 
