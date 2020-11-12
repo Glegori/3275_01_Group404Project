@@ -4,16 +4,16 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper implements RowMapper<USER_404_PROJECT> {
+public class UserMapper implements RowMapper<User> {
 
-    public USER_404_PROJECT mapRow(ResultSet resultSet, int i) throws SQLException {
-
-        USER_404_PROJECT user = new USER_404_PROJECT();
-        user.setUserName(resultSet.getString("USERNAME"));
-        user.setPassword(resultSet.getString("PASSWORD"));
-        user.setReportsFROM(resultSet.getString("REPORTSFROM"));
-        user.setUserType(resultSet.getString("USERTYPE"));
-        user.setTotal(resultSet.getString("TOTAL"));
-        return user;
-    }
+	public User mapRow(ResultSet resultSet, int i) throws SQLException {
+		User user = new User();
+		user.setUsername(resultSet.getString("USERNAME"));
+		user.setPassword(resultSet.getString("PASSWORD"));
+		user.setReportsFrom(resultSet.getString("reportsFrom"));
+		user.setUserType(resultSet.getString("userType"));
+		user.setTotal(resultSet.getDouble("total"));
+		return user;
+	}
 }
+
