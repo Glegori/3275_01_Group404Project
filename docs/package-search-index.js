@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.csis3275.Group404Project.controller"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.csis3275.Group404Project"},{"l":"com.csis3275.Group404Project.controller"},{"l":"com.csis3275.Group404Project.dao"},{"l":"com.csis3275.Group404Project.model"}]
