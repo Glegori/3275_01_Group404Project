@@ -333,4 +333,67 @@ public class BootController {
 		model.addAttribute("currentUserExpenses", expenses);
 		
 		return "homePage";
-	}}
+	}
+	
+	/**
+	 *
+	 * Shows a filtered list of expenses based on the sorting method selected.
+	 * @return Redirects to home page.
+	 */
+	@GetMapping("/sortExpenseDate")
+	public String sortExpenseDate(@RequestParam(required = true) String sortExpense, Model model)
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		System.out.println("I am inside sortexpense Method");
+		System.out.println("Value of sortExpense is = "+sortExpense);
+		
+		
+		//BRING LIST
+		if(sortExpense.equals("ASC"))
+		{
+			List<Expense> expenses = expenseDao.getExpensesBySortAsc(currentPrincipalName);
+			System.out.println("Database returns a total of: " + expenses.size() + " rows order by date asc");
+			//MODEL
+			model.addAttribute("currentUserExpenses", expenses);
+		}
+		else if(sortExpense.equals("DESC"))
+		{
+			List<Expense> expenses = expenseDao.getExpensesBySortDesc(currentPrincipalName);
+			System.out.println("Database returns a total of: " + expenses.size() + " rows order by date desc");
+			//MODEL
+			model.addAttribute("currentUserExpenses", expenses);
+		}
+		
+		return "homePage";
+	}
+	
+	/**
+	 *
+	 * Shows a filtered list of expenses based on the expense status selected.
+	 * @return Redirects to home page.
+	 */
+	@GetMapping("/filterExpenseByStatus")
+	public String filterExpenseByStatus(@RequestParam(required = true) String expenseStatus, Model model)
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		System.out.println("I am inside filterExpense by status Method");
+		System.out.println("Value of expenseType status is = "+expenseStatus);
+		
+		//BRING LIST
+		List<Expense> expenses = expenseDao.getExpensesByUserAndStatus(currentPrincipalName, expenseStatus);
+		System.out.println("Database returns a total of: " + expenses.size() + " rows expenses by expenses status");
+		 
+		//MODEL
+		model.addAttribute("currentUserExpenses", expenses);
+		
+		return "homePage";
+	}
+	
+	
+
+}
+
