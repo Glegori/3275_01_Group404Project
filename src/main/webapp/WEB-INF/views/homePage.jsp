@@ -42,6 +42,19 @@
 			<option value="/filterExpense/?expenseType=PERSONAL" label="Personal" />
 		</select>
 		
+		<select onchange="location = this.value">
+			<option value="-" label="-- Sort Date by --" />
+			<option value="/sortExpenseDate/?sortExpense=ASC" label="Asc" />
+			<option value="/sortExpenseDate/?sortExpense=DESC" label="Desc" />
+		</select>
+		
+		<select onchange="location = this.value">
+			<option value="-" label="-- Please Select an expense Status --" />
+			<option value="/filterExpenseByStatus/?expenseStatus=Pending" label="Pending" />
+			<option value="/filterExpenseByStatus/?expenseStatus=Approved" label="Approved" />
+			<option value="/filterExpenseByStatus/?expenseStatus=Denied" label="Denied" />
+		</select>
+		
 		<button onclick="location.href = '/homePage';" id="clean" type="button"
 			class="btn btn-dark btn-lg">Clean Filter</button>
 
