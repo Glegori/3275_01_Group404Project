@@ -37,11 +37,14 @@ public class expenseDAO {
 	private final String SQL_GET_REPORTS_FROM = "select * from USER_404_project where USERNAME = ?";
 	private final String SQL_UPDATE_STATUS = "update EXPENSE_404_project SET expenseStatus = ? WHERE id = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
+	private final String SQL_GET_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSESTATUS = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, billImage, user) values(?,?,?,?,?,?,?)";
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY EXPENSETYPE";
 	private final String SQL_GET_TOTAL_COST_BY_USER = "SELECT USER, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project GROUP BY USER";
 	private final String SQL_DELETE_BY_EXPENSE_ID = "delete from EXPENSE_404_project where id = ?";
 	private final String SQL_GET_TOTAL_BY_USERNAME = "SELECT SUM(EXPENSECOST) FROM EXPENSE_404_PROJECT WHERE USER = ?";
+	private final String SQL_GET_TOTAL_EXPENSES_SORT_ASC = "SELECT * FROM EXPENSE_404_project WHERE USER = ? order by DATE ASC";
+	private final String SQL_GET_TOTAL_EXPENSES_SORT_DESC = "SELECT * FROM EXPENSE_404_project WHERE USER = ? order by DATE DESC";
 
 	/**
 	 * Gets the jdbc connection to h2.
@@ -115,6 +118,35 @@ public class expenseDAO {
 		System.out.println("System is searching expense type = "+ EXPENSETYPE + " into the Database");
 		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSETYPE, new Object[] {USER, EXPENSETYPE} , new ExpenseMapper());
 	}
+	
+	
+	/**
+	 *  Gets a list of certain expense status made by the user.
+	 * @param USER User who is logged in.
+	 * @param EXPENSESTATUS Expense status to filter.
+	 * @return List of expenses.
+	 */
+	public List<Expense> getExpensesByUserAndStatus(String USER, String EXPENSESTATUS){
+		System.out.println("System is searching expense status = "+ EXPENSESTATUS + " into the Database");
+		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSESTATUS, new Object[] {USER, EXPENSESTATUS} , new ExpenseMapper());
+	}
+	
+	/*
+	 * Gets a list of certain expense type made by the user.
+	 * @param USER User who is logged in.
+	 * @param SORTEXPENSE it is the sort type asc or desc.
+	 * @return List of expenses. 
+	 * */
+	public List<Expense> getExpensesBySortAsc(String USER){
+		System.out.println("System is sorting expense type = ASC into the Database");
+		return jdbcTemplate.query(SQL_GET_TOTAL_EXPENSES_SORT_ASC, new Object[] {USER} , new ExpenseMapper());
+	}
+	
+	public List<Expense> getExpensesBySortDesc(String USER){
+		System.out.println("System is sorting expense type = DESC into the Database");
+		return jdbcTemplate.query(SQL_GET_TOTAL_EXPENSES_SORT_DESC, new Object[] {USER} , new ExpenseMapper());
+	}
+	
 
 	/**
 	 * Gets a list of everyone single expense in the database.
