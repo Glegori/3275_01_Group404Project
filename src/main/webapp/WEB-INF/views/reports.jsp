@@ -13,13 +13,52 @@
 	rel="stylesheet">
 <script src="<c:url value="/static/js/highcharts.js" />"></script>
 <script src="<c:url value="/static/js/script.js" />"></script>
+<script src="<c:url value="/static/js/charts.js" />"></script>
 <script src="<c:url value="/static/js/charts2.js" />"></script>
 <script src="<c:url value="/static/js/jquery-1.11.1.min.js" />"></script>
 <script>var expenseCost = [];
-		var expenseUser = [];
+		var expenseType = [];
+		totalCost = 0;
+		
 		</script>
 	
-<t:forEach var="expense" items="${expenseCost}">
+<t:forEach var="expense" items="${expenseCategory}">
+<div hidden id="type">${expense.EXPENSETYPE}</div>
+<script> 
+expenseCost.push(${expense.TOTALCOST});
+totalCost+= ${expense.TOTALCOST};
+expenseType.push('${expense.EXPENSETYPE}');
+		</script>
+</t:forEach>
+		
+
+</head>
+<body>
+<h1>Expense Reports</h1>
+<div id="containerPieCategory"></div>
+<div id="containerCategory"></div>
+<div>
+<table class="table table-striped table-bordered">
+		<td><strong>Expense Type</strong></td>
+		<td><strong>Average Cost</strong></td>
+		<td><strong>Total Expenses</strong></td>
+		<t:forEach var="expense" items="${expenseCategory}">
+			<tr>
+
+			</tr>
+			<tr>
+				<td>${expense.EXPENSETYPE}</td>
+				<td>${expense.AVERAGECOST}</td>
+				<td>${expense.TOTALCOUNT }</td>
+			</tr>
+		</t:forEach>
+	</table>
+	</div>
+	<script>var expenseCost = [];
+		var expenseUser = [];
+		</script>
+<h1>User Reports</h1>
+<t:forEach var="expense" items="${expenseUser}">
 <script> 
 expenseCost.push(${expense.TOTALCOST});
 expenseUser.push('${expense.USER}');
@@ -35,8 +74,8 @@ expenseUser.push('${expense.USER}');
 <table class="table table-striped table-bordered">
 		<td><strong>Expense Type</strong></td>
 		<td><strong>Average Cost</strong></td>
-		<td><strong>Total Number of Expenses</strong></td>
-		<t:forEach var="expense" items="${expenseCost}">
+		<td><strong>Total Expenses</strong></td>
+		<t:forEach var="expense" items="${expenseUser}">
 			<tr>
 
 			</tr>

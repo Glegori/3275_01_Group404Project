@@ -119,28 +119,18 @@ public class BootController {
 		return "decisionPage";
 	}
 	/**
-	 * Page that shows the the bar graph and some statistics of the expenses.
-	 * @param model Holds expense statistics to be shown in a bar graph as well as table
+	 * Page that shows various reports for expenses and users.
+	 * @param model Holds expense statistics to be shown in graphs as well as table
 	 * by the expense category.
-	 * @return Redirects to the bar graph page.
+	 * @return Redirects to the reports page.
 	 */
-	@GetMapping("/barGraphCategory")
+	@GetMapping("/reports")
 	public String barGraphCategory(Model model) {
-		List<Map<String, Object>> expenseCost = expenseDao.getTotalCost();
-		model.addAttribute("expenseCost", expenseCost);
-		return "barGraphCategory";
-	}
-	/**
-	 * Page that shows the bar graph and some statistics of the expenses.
-	 * @param model Holds expense statistics to be shown in a bar graph as well as table
-	 * by the users category.
-	 * @return Redirects to the bar graph page.
-	 */
-	@GetMapping("/barGraphUser")
-	public String barGraphUser(Model model) {
-		List<Map<String, Object>> expenseCost = expenseDao.getTotalCostByUser();
-		model.addAttribute("expenseCost", expenseCost);
-		return "barGraphUser";
+		List<Map<String, Object>> expenseCategory = expenseDao.getTotalCost();
+		List<Map<String, Object>> expenseUser = expenseDao.getTotalCostByUser();
+			model.addAttribute("expenseCategory", expenseCategory);
+		model.addAttribute("expenseUser", expenseUser);
+		return "reports";
 	}
 
 	//checkLogin

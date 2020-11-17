@@ -23,8 +23,7 @@
 		<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>
 		<a href="javascript:void(0)" onclick="location.href = '/createUser'">Create New User</a>
 		<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
-		<a href="javascript:void(0)" onclick="location.href = '/barGraphCategory'">View Reports By <br>Category</a>
-		<a href="javascript:void(0)" onclick="location.href = '/barGraphUser'">View Reports By <br>User</a>
+		<a href="javascript:void(0)" onclick="location.href = '/reports'">View Reports</a>
   	</div>
 
 	<div id="top">

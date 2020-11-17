@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'bar'
             },
             title: {
-                text: 'Total Costs By Category'
+                text: 'Total Costs Summed By User'
             },
             xAxis: {
                categories: expenseUser,
