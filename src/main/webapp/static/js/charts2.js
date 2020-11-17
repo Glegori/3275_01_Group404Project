@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: 'Total Costs Summed By User'
             },
             xAxis: {
-               categories: expenseUser,
+               categories: expenseTypeUser,
                title: {
                     text: 'Expense Type'
                 }
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             series: [{
             	name: 'Total Cost',
-                data: expenseCost,
+                data: expenseCostUser,
                 color: '#0d0d0d'
             }]
         });

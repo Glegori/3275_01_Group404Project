@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: 'Total Costs Summed By Expense Type'
             },
             xAxis: {
-               categories: expenseType,
+               categories: expenseTypeCategory,
                title: {
                     text: 'Expense Type'
                 }
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             series: [{
             	name: 'Total Cost',
-                data: expenseCost,
+                data: expenseCostCategory,
                 color: '#0d0d0d'
             }]
         });
@@ -57,21 +57,21 @@ document.addEventListener('DOMContentLoaded', function () {
         name: 'Categories',
         colorByPoint: true,
         data: [{
-            name: expenseType[0],
-            y: (expenseCost[0]/totalCost),
+            name: expenseTypeCategory[0],
+            y: (expenseCostCategory[0]/totalCostCategory),
             
         }, {
-            name: expenseType[1],
-            y: (expenseCost[1]/totalCost)
+            name: expenseTypeCategory[1],
+            y: (expenseCostCategory[1]/totalCostCategory)
         }, {
-            name: expenseType[2],
-            y: (expenseCost[2]/totalCost)
+            name: expenseTypeCategory[2],
+            y: (expenseCostCategory[2]/totalCostCategory)
         }, {
-            name: expenseType[3],
-            y: (expenseCost[3]/totalCost)
+            name: expenseTypeCategory[3],
+            y: (expenseCostCategory[3]/totalCostCategory)
         }, {
-            name:expenseType[4],
-            y: (expenseCost[4]/totalCost)
+            name: expenseTypeCategory[4],
+            y: (expenseCostCategory[4]/totalCostCategory)
         }]
     }]
     });

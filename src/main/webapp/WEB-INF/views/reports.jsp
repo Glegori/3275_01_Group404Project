@@ -16,18 +16,18 @@
 <script src="<c:url value="/static/js/charts.js" />"></script>
 <script src="<c:url value="/static/js/charts2.js" />"></script>
 <script src="<c:url value="/static/js/jquery-1.11.1.min.js" />"></script>
-<script>var expenseCost = [];
-		var expenseType = [];
-		totalCost = 0;
+<script>var expenseCostCategory = [];
+		var expenseTypeCategory = [];
+		totalCostCategory = 0;
 		
 		</script>
 	
 <t:forEach var="expense" items="${expenseCategory}">
-<div hidden id="type">${expense.EXPENSETYPE}</div>
 <script> 
-expenseCost.push(${expense.TOTALCOST});
-totalCost+= ${expense.TOTALCOST};
-expenseType.push('${expense.EXPENSETYPE}');
+expenseTypeCategory.push('${expense.EXPENSETYPE}');
+expenseCostCategory.push(${expense.TOTALCOST});
+totalCostCategory+= ${expense.TOTALCOST};
+
 		</script>
 </t:forEach>
 		
@@ -54,14 +54,14 @@ expenseType.push('${expense.EXPENSETYPE}');
 		</t:forEach>
 	</table>
 	</div>
-	<script>var expenseCost = [];
-		var expenseUser = [];
+	<script>var expenseCostUser = [];
+		var expenseTypeUser = [];
 		</script>
 <h1>User Reports</h1>
 <t:forEach var="expense" items="${expenseUser}">
 <script> 
-expenseCost.push(${expense.TOTALCOST});
-expenseUser.push('${expense.USER}');
+expenseCostUser.push(${expense.TOTALCOST});
+expenseTypeUser.push('${expense.USER}');
 		</script>
 </t:forEach>
 		
