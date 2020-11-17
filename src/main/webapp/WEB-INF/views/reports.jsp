@@ -72,7 +72,7 @@ expenseTypeUser.push('${expense.USER}');
 <div id="containerUser"></div>
 <div>
 <table class="table table-striped table-bordered">
-		<td><strong>Expense Type</strong></td>
+		<td><strong>User</strong></td>
 		<td><strong>Average Cost</strong></td>
 		<td><strong>Total Expenses</strong></td>
 		<t:forEach var="expense" items="${expenseUser}">
