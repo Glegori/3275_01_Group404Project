@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             xAxis: {
                categories: expenseTypeUser,
                title: {
-                    text: 'Expense Type'
+                    text: 'User'
                 }
             },
             yAxis: {
