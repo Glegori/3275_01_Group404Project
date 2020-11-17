@@ -68,6 +68,7 @@
 		<td><strong>Expense Date</strong></td>
 		<td><strong>Expense Type</strong></td>
 		<td><strong>Expense Status</strong></td>
+		<td><strong>Expense Description</strong></td>
 		<t:forEach var="expense" items="${currentUserExpenses}">
 			<tr>
 
@@ -78,6 +79,7 @@
 				<td>${expense.date}</td>
 				<td>${expense.expenseType}</td>
 				<td>${expense.expenseStatus}</td>
+				<td>${expense.expenseDesc}</td>
 			</tr>
 		</t:forEach>
 	</table>

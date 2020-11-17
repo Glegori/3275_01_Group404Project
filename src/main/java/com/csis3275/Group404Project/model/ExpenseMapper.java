@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
  *
  *
  */
-
 public class ExpenseMapper implements RowMapper<Expense> {
 
 	/**
@@ -25,6 +24,7 @@ public class ExpenseMapper implements RowMapper<Expense> {
 		expense.setDate(resultSet.getString("date"));
 		expense.setExpenseType(resultSet.getString("expenseType"));
 		expense.setExpenseStatus(resultSet.getString("expenseStatus"));
+		expense.setExpenseDesc(resultSet.getString("expenseDesc"));
 		expense.setBillImage(resultSet.getString("billImage"));
 		expense.setUser(resultSet.getString("user"));
 		return expense;

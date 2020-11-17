@@ -22,9 +22,6 @@ public class LoginUserDetails implements UserDetails {
 
     private SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
 
-
-
-
     public LoginUserDetails(USER_404_PROJECT user){
         this.userName = user.getUserName();
         this.password = user.getPassword();
@@ -37,16 +34,10 @@ public class LoginUserDetails implements UserDetails {
         }
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(authority);
     }
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-//    }
 
     public String getPassword() {
         System.out.println("Password is" + this.password);
@@ -54,8 +45,6 @@ public class LoginUserDetails implements UserDetails {
     }
 
     public String getUsername() {
-        //System.out.println("I am in details");
-        //System.out.println(this.userName);
         return this.userName;
     }
 

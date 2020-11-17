@@ -21,8 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *   CRUD operations in the later test (methods named appropriately).
  *   @author = Shubham
  */
-
-
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -34,11 +32,9 @@ public class SystemTest_CRUDForExpenseTable {
     @Autowired
     userDAO userDAO;
 
-
     USER_404_PROJECT user = new USER_404_PROJECT();
     Expense expense = new Expense();
     Boolean insertExpense = false;
-
 
     @BeforeAll
     public void assembleExpenseAndUserObjects() {
@@ -64,12 +60,10 @@ public class SystemTest_CRUDForExpenseTable {
         System.out.println(expense.getId());
     }
 
-
     @Test
     @Order(1)
     public void createExpense() {
         assertTrue(insertExpense);
-
     }
 
     @Test
@@ -77,6 +71,7 @@ public class SystemTest_CRUDForExpenseTable {
     public void readExpense() {
         assertEquals(userDAO.getUserByUserName(user.getUserName()).get(0).getTotal(), expenseDAO.getTotalByUserName(user.getUserName()));
     }
+
     @Test
     @Order(3)
     public void updateExpense() {
@@ -84,6 +79,7 @@ public class SystemTest_CRUDForExpenseTable {
         modifyingExpense.setExpenseStatus("Denied");
         assertTrue(expenseDAO.modifyStatus(modifyingExpense));
     }
+
     @Test
     @Order(4)
     public void deleteExpense(){

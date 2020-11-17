@@ -14,30 +14,25 @@ $(document).ready(function(){
    $('#expenseForm').load("/submitExpense");
 });
 }
-function openModifyForm(id, expenseUser, expenseName, expenseCost,expenseDate, expenseType, expenseStatus, billImage){
+function openModifyForm(id, expenseUser, expenseName, expenseCost,expenseDate, expenseType, expenseStatus, billImage,expenseDesc){
     document.getElementById("modifyForm").style.width = "45%";
     document.getElementById("modifyForm").style.display = "block";
-    console.log(expenseDate);
 //this needs some modification for formatting
     $(document).ready(function() {
         $('#id').val(id);
         $('#expenseUser').val(expenseUser);
-        $('#labelExpenseUser').html('<p class="col-md-12 control-label" id="labelExpenseUser">Expense Submitter: </p>');
-        $('#labelExpenseUser').append(expenseUser);
+        $('#labelExpenseUser').html('<p class="col-md-12 control-label" id="labelExpenseUser"><strong>Expense Submitter: </strong>' + expenseUser + '</p>');
         $('#expenseName').val(expenseName);
-        $('#labelExpenseName').html('<p class="col-md-12 control-label" id="labelExpenseName">Expense Name: </p>');
-        $('#labelExpenseName').append(expenseName);
+        $('#labelExpenseName').html('<p class="col-md-12 control-label" id="labelExpenseName"><strong>Expense Name: </strong>' + expenseName + '</p>');
         $('#expenseCost').val(expenseCost);
-        $('#labelExpenseCost').html('<p class="col-md-12 control-label" id="labelExpenseCost">Expense Cost: </p>');
-        $('#labelExpenseCost').append(expenseCost);
+        $('#labelExpenseCost').html('<p class="col-md-12 control-label" id="labelExpenseCost"><strong>Expense Cost: </strong>' + expenseCost + '</p>');
+        $('#labelDate').html('<p class="col-md-12 control-label" id="labelExpenseDate"><strong>Date of Submission: </strong>' + expenseDate + '</p>');
         $('#expenseDate').val(expenseDate);
-        //$('#labelExpenseDate').html('<p class="col-md-12 control-label" id="labelExpenseDate">Date of Submission: </p>');
-        //$('#labelExpenseDate').append(expenseDate);
         $('#expenseType').val(expenseType);
-        $('#labelExpenseType').html('<p class="col-md-12 control-label" id="labelExpenseType">Expense Type: </p>');
-        $('#labelExpenseType').append(expenseType);
+        $('#labelExpenseType').html('<p class="col-md-12 control-label" id="labelExpenseType"><strong>Expense Type: </strong>' + expenseType + '</p>');
         $('#billImage').val(billImage);
         $('#expenseStatus').val(expenseStatus);
+        $('#expenseDesc').val(expenseDesc);
     });
 }
 function closeSide(){

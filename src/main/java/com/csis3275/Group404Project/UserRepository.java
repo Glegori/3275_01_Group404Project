@@ -12,9 +12,5 @@ import java.util.Optional;
  *
  */
 public interface UserRepository extends JpaRepository<USER_404_PROJECT, Integer> {
-
     Optional<USER_404_PROJECT> findByUserName(String USERNAME);
-
-
-
 }

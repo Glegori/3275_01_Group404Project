@@ -23,7 +23,6 @@ public class UnitTest_UserRegistrationAndPasswordChange {
     @Autowired
     userDAO dao;
 
-
     USER_404_PROJECT newUser = new USER_404_PROJECT();
 
     /**    We are using the dao to create a new user in the database, then we use the dao to get the data about the same user
@@ -39,7 +38,6 @@ public class UnitTest_UserRegistrationAndPasswordChange {
         newUser.setUserType("user");
         newUser.setTotal(20.00);
         dao.createUser(newUser);
-
     }
 
     @Test
@@ -78,5 +76,4 @@ public class UnitTest_UserRegistrationAndPasswordChange {
         dao.updatePasswordByUserName(dao.getUserByUserName("TestUser1").get(0).getUserName(), "abcde");
         assertEquals("abcde", dao.getUserByUserName("TestUser1").get(0).getPassword());
     }
-
 }

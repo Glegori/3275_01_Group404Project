@@ -47,7 +47,6 @@ public class userDAO {
                 user.getUserType(), user.getTotal()) > 0;
     }
 
-
     /**
      * Gets the user information based on the username.
      * @param userName The name of the user.
@@ -64,7 +63,6 @@ public class userDAO {
      * @param expenseCost
      * @return List of users.
      */
-
     public boolean updateUserTotal(String userName, Double expenseCost){
         Double currentTotal = getUserByUserName(userName).get(0).getTotal();
         Double newTotal = currentTotal + expenseCost;
@@ -89,5 +87,4 @@ public class userDAO {
     public boolean updatePasswordByUserName(String userName, String newPassword){
         return jdbcTemplate.update(SQL_UPDATE_PASSWORD_BY_USERNAME, newPassword, userName) > 0;
     }
-
 }

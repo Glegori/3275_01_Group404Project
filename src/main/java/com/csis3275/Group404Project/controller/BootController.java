@@ -32,11 +32,6 @@ import java.util.Map;
 @Controller
 public class BootController {
 
-//	@RequestMapping("/")
-//	public String index() {
-//		return "Greetings from Spring Boot!";
-//	}
-//
 	@Autowired
 	expenseDAO expenseDao;
 
@@ -47,7 +42,6 @@ public class BootController {
 	 * Saves our Expense class to be used in models.
 	 * @return
 	 */
-	
 	@ModelAttribute("Expense")
 	public Expense setupAddForm() {
 		return new Expense();
@@ -133,16 +127,6 @@ public class BootController {
 		return "reports";
 	}
 
-	//checkLogin
-	//	@PostMapping("/loginScreen")
-//		public String loginScreen(@ModelAttribute("loginScreen") user checkUser, Model model)	{
-			
-			//do something
-			 
-	//		return "submitExpense";
-	//	}
-	//showForm
-
 	/**
 	 *
 	 * Page allows you to add an expense to the database.
@@ -150,11 +134,6 @@ public class BootController {
 	 */
 	@GetMapping("/submitExpense")
 	public String submitExpense(HttpSession session, Model model) {
-		
-		//List<expense> expense = expenseDao.getAllExpenses();
-
-		//model.addAttribute("loginScreen", expense);
-
 	    return "submitExpense";
 	}
 
@@ -166,17 +145,8 @@ public class BootController {
 	//ShowExpenses
 	@GetMapping("/showExpenses")
 	public String showExpenses(HttpSession session, Model model) {
-		//List<expense> expense = expenseDao.getAllExpenses();
-		//model.addAttribute("expenses", expense);
 	    return "showExpense";
 	}
-//CreateExpenses
-//	@PostMapping("/submitExpense")
-//	public String createExpense(@ModelAttribute("expense") Expense createExpense, Model model)	{
-//
-//		 return "showExpense";
-//	}
-
 
 	/**
 	 *
@@ -214,10 +184,6 @@ public class BootController {
 		model.addAttribute("reportingUserExpenses", expenses);
 		return "decisionPage";
 	}
-//	@GetMapping("/createUser")
-//	public String createNewUser(HttpSession session, Model model){
-//		return "createUser";
-//	}
 
 	/**
 	 * Redirects user to be able to either create a new user if they're an admin
@@ -235,11 +201,8 @@ public class BootController {
 		if(user.getUserType().equals("admin")){
 			return ("createUser");
 		} else {
-
 			return("forbidden");
-
 		}
-
 	}
 	/**
 	 * Error page if the user entered a page they weren't suppose to see.
@@ -295,9 +258,7 @@ public class BootController {
 		} else {
 			model.addAttribute("error", "Cannot update password for the current user. " +
 					"Please try again, if the issue persists please contact an admin.");
-
 		}
-
 		return ("changePassword");
 	}
 
@@ -321,7 +282,6 @@ public class BootController {
 		 
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
-		
 		return "homePage";
 	}
 	
@@ -338,8 +298,7 @@ public class BootController {
 		
 		System.out.println("I am inside sortexpense Method");
 		System.out.println("Value of sortExpense is = "+sortExpense);
-		
-		
+
 		//BRING LIST
 		if(sortExpense.equals("ASC"))
 		{
@@ -355,7 +314,6 @@ public class BootController {
 			//MODEL
 			model.addAttribute("currentUserExpenses", expenses);
 		}
-		
 		return "homePage";
 	}
 	
@@ -379,11 +337,7 @@ public class BootController {
 		 
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
-		
 		return "homePage";
 	}
-	
-	
-
 }
 

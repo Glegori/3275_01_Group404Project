@@ -27,7 +27,6 @@ public class IntegrationTest_ExpenseAndUserInteraction {
 
     Expense expense = new Expense();
 
-
     @BeforeEach
     public void addExpense(){
         expense.setExpenseName("NewTestExpense");
@@ -39,7 +38,6 @@ public class IntegrationTest_ExpenseAndUserInteraction {
         expense.setExpenseCost(2200);
     }
 
-
     @Test
     //We currently don't have a constraint to update the User table total and a new expense being added, 
     //we use the interaction between the DAOs to update the table.
@@ -48,5 +46,4 @@ public class IntegrationTest_ExpenseAndUserInteraction {
 
         assertEquals(2200, userDAO.getUserByUserName("Shubham").get(0).getTotal());
     }
-
 }

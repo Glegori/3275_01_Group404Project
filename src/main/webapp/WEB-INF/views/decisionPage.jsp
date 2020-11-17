@@ -50,7 +50,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-9">
-					<p class="col-md-3 control-label" id="labelBillImage">*bill image location*</p>
+					<p class="col-md-3 control-label" id="labelBillImage">*bill image*</p>
 				</div>
 			</div>
 			<div class="form-group">
@@ -61,6 +61,12 @@
 						<form:option value="Approved" label="Approved"/>
 						<form:option value="Denied" label="Denied"/>
 					</form:select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="expenseDesc" class="col-md-3 control-label">Expense Status</label>
+				<div class="col-md-9">
+					<form:textarea path="expenseDesc" id="expenseDesc" rows="5" cols="20" maxlength="255" cssClass="form-control"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -87,6 +93,7 @@
 	<td><strong>Expense Date</strong></td>
 	<td><strong>Expense Type</strong></td>
 	<td><strong>Expense Status</strong></td>
+	<td><strong>Expense Description</strong></td>
 	<td><strong>Modify Expense Status</strong></td>
 	<t:forEach var="expense" items="${reportingUserExpenses}">
 	<tr>
@@ -99,8 +106,9 @@
                             <td>${expense.date}</td>
                             <td>${expense.expenseType}</td>
                             <td>${expense.expenseStatus}</td>
-                            <td><a href="javascript:void(0)" onclick="openModifyForm('${expense.id}','${expense.user}', '${expense.expenseName}', '${expense.expenseCost}', '${expense.date}',
-								'${expense.expenseType}', '${expense.expenseStatus}', '${expense.billImage}')">Modify Status</a></td>
+					  		<td>${expense.expenseDesc}</td>
+					  <td><a href="javascript:void(0)" onclick="openModifyForm('${expense.id}','${expense.user}', '${expense.expenseName}', '${expense.expenseCost}', '${expense.date}',
+								'${expense.expenseType}', '${expense.expenseStatus}', '${expense.billImage}', '${expense.expenseDesc}')">Modify Status</a></td>
                         </tr>
                     </t:forEach>
                     </table>

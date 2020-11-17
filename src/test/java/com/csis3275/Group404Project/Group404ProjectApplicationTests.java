@@ -9,5 +9,4 @@ class Group404ProjectApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

@@ -19,10 +19,8 @@ class GetExpensesBySort {
 	    expenseDAO dao;
 	    Expense expense = new Expense();
 
-
 	    @BeforeEach
 	    public void addDummyExpense(){
-
 	        expense.setExpenseName("Dinner");
 	        expense.setExpenseCost(120);
 	        expense.setDate("2020-12-22");

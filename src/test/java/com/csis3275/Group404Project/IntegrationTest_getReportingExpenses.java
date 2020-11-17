@@ -54,6 +54,7 @@ public class IntegrationTest_getReportingExpenses {
         newUser.setTotal(20.00);
         userDAO.createUser(newUser);
     }
+
     public void addExpense(){
         newExpense.setExpenseName("TestExpense");
         newExpense.setExpenseCost(100);
@@ -63,6 +64,7 @@ public class IntegrationTest_getReportingExpenses {
         newExpense.setBillImage("fileString");
         expenseDAO.createExpense(newExpense, "Francis");
     }
+
     @Test
     public void testExpenseName(){
         List<Expense> list = expenseDAO.getReportingExpenses("TestUser");
@@ -74,26 +76,31 @@ public class IntegrationTest_getReportingExpenses {
         List<Expense> list = expenseDAO.getReportingExpenses("TestUser");
         assertEquals(100, list.get(list.size()-1).getExpenseCost());
     }
+
     @Test
     public void testDate(){
         List<Expense> list = expenseDAO.getReportingExpenses("TestUser");
         assertEquals("2020-11-05", list.get(list.size()-1).getDate());
     }
+
     @Test
     public void testExpenseType(){
         List<Expense> list = expenseDAO.getReportingExpenses("TestUser");
         assertEquals("Personal", list.get(list.size()-1).getExpenseType());
     }
+
     @Test
     public void testExpenseStatus(){
         List<Expense> list = expenseDAO.getReportingExpenses("TestUser");
         assertEquals("Pending", list.get(list.size()-1).getExpenseStatus());
     }
+
     @Test
     public void testBillImage(){
         List<Expense> list = expenseDAO.getReportingExpenses("TestUser");
         assertEquals("fileString", list.get(list.size()-1).getBillImage());
     }
+
     @Test
     public void testUserName(){
         List<Expense> list = expenseDAO.getReportingExpenses("TestUser");
