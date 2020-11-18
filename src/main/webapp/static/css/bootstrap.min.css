@@ -14,7 +14,7 @@
   width: 0;
   position: fixed;
   background-color: #0d0d0d;
-  overflow: hidden;
+  overflow: auto;
   transition: 0.2s;
   border-style: solid;
 }
@@ -71,5 +71,12 @@ transition:0.4s;
 }
 h3 {
 	color: #5f5f5f;
+}
+#modifyForm{
+    background-color: #0d0d0d;
+    position: absolute;
+    width: 0;
+    height:100%;
+    transition:0.4s;
 }
 

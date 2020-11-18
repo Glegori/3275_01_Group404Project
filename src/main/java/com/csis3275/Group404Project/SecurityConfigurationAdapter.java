@@ -11,6 +11,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ *
+ * Checks that the username entered matches the password from the database. Depending on the role and whether the password is successful,
+ * it will show either an error page or the homepage.
+ *
+ */
+
 @EnableWebSecurity
 public class SecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
@@ -20,12 +27,17 @@ public class SecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
     UserDetailsService userDetailsService;
 
 
+    /**
+     * Authorizes username and password inputted.
+     */
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
-
+    /**
+     * Redirects the page based on the authorization.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -36,8 +48,10 @@ public class SecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
                 .and().formLogin().defaultSuccessUrl("/homePage");
 
     }
-
-
+    /**
+     * Password encoder method.
+     * @return No encoder.
+     */
     @Bean
     public PasswordEncoder getPasswordEncoder(){
 

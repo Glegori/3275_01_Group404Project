@@ -1,14 +1,41 @@
 package com.csis3275.Group404Project.model;
 
+import javax.persistence.*;
+
+/**
+ * Getters and setters for the expense class.
+ *
+ *
+ */
+@Entity
+@Table(name = "EXPENSE_404_PROJECT")
 public class Expense{
 
+
+	@Id
+	@GeneratedValue(strategy =  GenerationType.AUTO)
 	private int id;
+
+
+	@Column(name = "EXPENSENAME")
 	private String expenseName;
+
+	@Column(name = "EXPENSECOST")
 	private double expenseCost;
+
+	@Column(name = "DATE")
 	private String date;
+
+	@Column(name = "EXPENSETYPE")
 	private String expenseType;
+
+	@Column(name = "EXPENSESTATUS")
 	private String expenseStatus;
+
+	@Column(name = "BILLIMAGE")
 	private String billImage;
+
+	@Column(name = "USER")
 	private String user;
 
 

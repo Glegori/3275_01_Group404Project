@@ -18,13 +18,13 @@
 <body>
 
 	<div id="idSideMenu" class="sideMenu">
-		<a href="javascript:void(0)" id="closeButton" class="sideButton"
-			onclick="closeMenu()">&#9668;</a>
-			 <a href="javascript:void(0)"
-			onclick="openExpenseForm()">Add An Expense</a>
-			<a href="/barGraph"> View reports</a>
-
-	</div>
+  		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
+		<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>
+		<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>
+		<a href="javascript:void(0)" onclick="location.href = '/createUser'">Create New User</a>
+		<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
+		<a href="javascript:void(0)" onclick="location.href = '/reports'">View Reports</a>
+  	</div>
 
 	<div id="top">
 		<h2 class="header">404 Expense Tracker</h2>
@@ -37,7 +37,21 @@
 			<option value="/filterExpense/?expenseType=FOOD" label="Food" />
 			<option value="/filterExpense/?expenseType=TRAVEL" label="Travel" />
 			<option value="/filterExpense/?expenseType=SUPPLIERS" label="Suppliers" />
-			<option value="/filterExpense/?expenseType=SERVICES" label="SERVICES" />
+			<option value="/filterExpense/?expenseType=SERVICES" label="Services" />
+			<option value="/filterExpense/?expenseType=PERSONAL" label="Personal" />
+		</select>
+		
+		<select onchange="location = this.value">
+			<option value="-" label="-- Sort Date by --" />
+			<option value="/sortExpenseDate/?sortExpense=ASC" label="Asc" />
+			<option value="/sortExpenseDate/?sortExpense=DESC" label="Desc" />
+		</select>
+		
+		<select onchange="location = this.value">
+			<option value="-" label="-- Please Select an expense Status --" />
+			<option value="/filterExpenseByStatus/?expenseStatus=Pending" label="Pending" />
+			<option value="/filterExpenseByStatus/?expenseStatus=Approved" label="Approved" />
+			<option value="/filterExpenseByStatus/?expenseStatus=Denied" label="Denied" />
 		</select>
 		
 		<button onclick="location.href = '/homePage';" id="clean" type="button"
@@ -46,6 +60,7 @@
 	</div>
 
 	<div class="sideButton" onclick="openMenu()">&#x25ba; Menu</div>
+
 	<div id="expenseForm">&nbsp;</div>
 	<table class="table table-striped table-bordered">
 		<td><strong>Expense Name</strong></td>

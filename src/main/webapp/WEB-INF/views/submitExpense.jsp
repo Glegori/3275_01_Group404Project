@@ -32,21 +32,23 @@
 			<div class="form-group">
 				<label for="date" class="col-md-3 control-label">Date</label>
 				<div class="col-md-9">
-					<form:input path="date" cssClass="form-control" />
+					<form:input type="date" path="date" cssClass="form-control" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="expenseType" class="col-md-3 control-label">Expense Type</label>
 				<div class="col-md-9">
-					<form:input path="expenseType" cssClass="form-control" />
+					<form:select path="expenseType" cssClass="form-control" >
+						<option value="">Select an Expense type</option>
+						<option value="SERVICES">Services</option>
+						<option value="FOOD">Food</option>
+						<option value="SUPPLIERS">Suppliers</option>
+						<option value="TRAVEL">Travel</option>
+						<option value="PERSONAL">Personal</option>
+					</form:select>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="expenseStatus" class="col-md-3 control-label">Expense Status</label>
-				<div class="col-md-9">
-					<form:input path="expenseStatus" cssClass="form-control" />
-				</div>
-			</div>
+
 			<div class="form-group">
 				<label for="billImage" class="col-md-3 control-label">Upload Bill Image</label>
 				<div class="col-md-9">
@@ -54,20 +56,15 @@
 				</div>
 			</div>
 			
-			
-			
 			<div class="form-group">
 				<!-- Button -->
 				<div class="col-md-offset-3 col-md-9">
+					<form:input type="hidden" path="expenseStatus" value="Pending" cssClass="form-control" />
 					<form:button cssClass="btn btn-dark btn-lg">Submit</form:button>
 				</div>
 			</div>
 
 		</form:form>
-			
 		</div>
-		
-
-
 </body>
 </html>

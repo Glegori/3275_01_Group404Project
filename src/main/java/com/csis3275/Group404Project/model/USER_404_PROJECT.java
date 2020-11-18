@@ -2,6 +2,11 @@ package com.csis3275.Group404Project.model;
 
 import javax.persistence.*;
 
+/**
+ * Getters and setters for the user class for login.
+ *
+ *
+ */
 @Entity
 @Table(name = "USER_404_PROJECT")
 public class USER_404_PROJECT {
@@ -17,14 +22,14 @@ public class USER_404_PROJECT {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "REPORTTO")
-    private String reportTO;
+    @Column(name = "REPORTSFROM")
+    private String reportsFrom;
 
     @Column(name = "USERTYPE")
     private String userType;
 
     @Column(name = "TOTAL")
-    private String total;
+    private double total;
 
     public int getID() {
         return ID;
@@ -50,12 +55,13 @@ public class USER_404_PROJECT {
         this.password = password;
     }
 
-    public String getReportTO() {
-        return reportTO;
+
+    public String getReportsFrom() {
+        return reportsFrom;
     }
 
-    public void setReportTO(String reportTo) {
-        this.reportTO = reportTo;
+    public void setReportsFrom(String reportsFrom) {
+        this.reportsFrom = reportsFrom;
     }
 
     public String getUserType() {
@@ -66,11 +72,11 @@ public class USER_404_PROJECT {
         this.userType = userType;
     }
 
-    public String getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 }

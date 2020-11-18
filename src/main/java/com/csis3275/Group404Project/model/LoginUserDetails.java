@@ -7,14 +7,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-
+/**
+ *
+ * Login details for the login page. Grants authority based on roles and has the ability returns password and username for the login page.
+ *
+ */
 public class LoginUserDetails implements UserDetails {
 
     private String userName;
     private String password;
-    private String reportTo;
+    private String reportsFrom;
     private String userType;
-    private String total;
+    private double total;
 
     private SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
 
@@ -24,7 +28,7 @@ public class LoginUserDetails implements UserDetails {
     public LoginUserDetails(USER_404_PROJECT user){
         this.userName = user.getUserName();
         this.password = user.getPassword();
-        this.reportTo = user.getReportTO();
+        this.reportsFrom = user.getReportsFrom();
         this.userType = user.getUserType();
         this.total = user.getTotal();
 
@@ -50,8 +54,8 @@ public class LoginUserDetails implements UserDetails {
     }
 
     public String getUsername() {
-        System.out.println("I am in details");
-        System.out.println(this.userName);
+        //System.out.println("I am in details");
+        //System.out.println(this.userName);
         return this.userName;
     }
 
