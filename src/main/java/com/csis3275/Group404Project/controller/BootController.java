@@ -119,7 +119,7 @@ public class BootController {
 	 * @return Redirects to the reports page.
 	 */
 	@GetMapping("/reports")
-	public String barGraphCategory(Model model) {
+	public String reports(Model model) {
 		List<Map<String, Object>> expenseCategory = expenseDao.getTotalCost();
 		List<Map<String, Object>> expenseUser = expenseDao.getTotalCostByUser();
 			model.addAttribute("expenseCategory", expenseCategory);
