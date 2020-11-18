@@ -64,7 +64,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="expenseDesc" class="col-md-3 control-label">Expense Status</label>
+				<label for="expenseDesc" class="col-md-3 control-label">Decision Explanation</label>
 				<div class="col-md-9">
 					<form:textarea path="expenseDesc" id="expenseDesc" rows="5" cols="20" maxlength="255" cssClass="form-control"/>
 				</div>
