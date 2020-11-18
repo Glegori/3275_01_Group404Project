@@ -40,7 +40,6 @@ public class LoginUserDetails implements UserDetails {
     }
 
     public String getPassword() {
-        System.out.println("Password is" + this.password);
         return this.password;
     }
 

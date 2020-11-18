@@ -82,19 +82,22 @@ public class expenseDAO {
 	public List<Expense> getReportingExpenses(String S_USER){
 		List<USER_404_PROJECT> userList = jdbcTemplate.query(SQL_GET_REPORTS_FROM, new Object[] {S_USER}, new UserMapper());
 		String[] users = new String[100];
+
 		for(USER_404_PROJECT user:userList) {
 
 			users = user.getReportsFrom().replaceAll("\\s+","").split(",");
 		}
+
 		List<Expense> returningExpenses = new ArrayList<>();
+
 		for(String user:users) {
-			System.out.println("Query for:" + user);
 			List<Expense> list = getExpensesByUserName(user);
-			System.out.println(list.size() + " Queries found");
+
 			for(Expense expense:list){
 				returningExpenses.add(expense);
 			}
 		}
+
 		return returningExpenses;
 	}
 
@@ -115,7 +118,7 @@ public class expenseDAO {
 	 * @return List of expenses.
 	 */
 	public List<Expense> getExpensesByUserNameAndExpenseType(String USER, String EXPENSETYPE){
-		System.out.println("System is searching expense type = "+ EXPENSETYPE + " into the Database");
+
 		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSETYPE, new Object[] {USER, EXPENSETYPE} , new ExpenseMapper());
 	}
 	
@@ -127,7 +130,7 @@ public class expenseDAO {
 	 * @return List of expenses.
 	 */
 	public List<Expense> getExpensesByUserAndStatus(String USER, String EXPENSESTATUS){
-		System.out.println("System is searching expense status = "+ EXPENSESTATUS + " into the Database");
+
 		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSESTATUS, new Object[] {USER, EXPENSESTATUS} , new ExpenseMapper());
 	}
 	
@@ -138,12 +141,12 @@ public class expenseDAO {
 	 * @return List of expenses. 
 	 * */
 	public List<Expense> getExpensesBySortAsc(String USER){
-		System.out.println("System is sorting expense type = ASC into the Database");
+
 		return jdbcTemplate.query(SQL_GET_TOTAL_EXPENSES_SORT_ASC, new Object[] {USER} , new ExpenseMapper());
 	}
 	
 	public List<Expense> getExpensesBySortDesc(String USER){
-		System.out.println("System is sorting expense type = DESC into the Database");
+
 		return jdbcTemplate.query(SQL_GET_TOTAL_EXPENSES_SORT_DESC, new Object[] {USER} , new ExpenseMapper());
 	}
 
@@ -161,7 +164,6 @@ public class expenseDAO {
 	 * @return Executes query to update status of the expense.
 	 */
 	public boolean modifyStatus(Expense expense){
-		System.out.println("THE DATA YOUR LOOKING FOR " + expense.getId() + " " + expense.getExpenseName()+ " " + expense.getExpenseStatus() + " " + expense.getExpenseStatus());
 		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getExpenseDesc(), expense.getId()) > 0;
 	}
 
@@ -186,7 +188,7 @@ public class expenseDAO {
 	 * @return Returns list of expense statistics.
 	 */
 	public boolean deleteExpense(Expense expense){
-		System.out.println("The ID of the expense your deleting is: " + expense.getId());
+
 		return jdbcTemplate.update(SQL_DELETE_BY_EXPENSE_ID,  expense.getId()) > 0;
 	}
 }

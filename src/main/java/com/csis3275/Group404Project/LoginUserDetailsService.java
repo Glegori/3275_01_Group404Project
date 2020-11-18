@@ -27,10 +27,7 @@ public class LoginUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String USERNAME) throws UsernameNotFoundException {
-        System.out.println("I am here");
         Optional<USER_404_PROJECT> user = userRepository.findByUserName(USERNAME);
-        System.out.println(USERNAME);
-        System.out.println(user);
         user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + USERNAME));
 
         return user.map(LoginUserDetails::new).get();

@@ -156,12 +156,10 @@ public class BootController {
 	 */
 	@PostMapping("/createExpense")
 	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
-//		List<Expense> expenses = expenseDao.getAllExpenses();
-//		model.addAttribute("")
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		expenseDao.createExpense(createExpense, currentPrincipalName);
-		System.out.println("I am in create Expense and my userName is " + currentPrincipalName);
+
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
         model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
@@ -273,12 +271,10 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		
-		System.out.println("I am inside filterExpense Method");
-		System.out.println("Value of expenseType is = "+expenseType);
-		
+
 		//BRING LIST
 		List<Expense> expenses = expenseDao.getExpensesByUserNameAndExpenseType(currentPrincipalName, expenseType);
-		System.out.println("Database returns a total of: " + expenses.size() + " rows");
+
 		 
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
@@ -295,22 +291,20 @@ public class BootController {
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
-		System.out.println("I am inside sortexpense Method");
-		System.out.println("Value of sortExpense is = "+sortExpense);
+
 
 		//BRING LIST
 		if(sortExpense.equals("ASC"))
 		{
 			List<Expense> expenses = expenseDao.getExpensesBySortAsc(currentPrincipalName);
-			System.out.println("Database returns a total of: " + expenses.size() + " rows order by date asc");
+
 			//MODEL
 			model.addAttribute("currentUserExpenses", expenses);
 		}
 		else if(sortExpense.equals("DESC"))
 		{
 			List<Expense> expenses = expenseDao.getExpensesBySortDesc(currentPrincipalName);
-			System.out.println("Database returns a total of: " + expenses.size() + " rows order by date desc");
+
 			//MODEL
 			model.addAttribute("currentUserExpenses", expenses);
 		}
@@ -327,14 +321,10 @@ public class BootController {
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
-		System.out.println("I am inside filterExpense by status Method");
-		System.out.println("Value of expenseType status is = "+expenseStatus);
-		
+
 		//BRING LIST
 		List<Expense> expenses = expenseDao.getExpensesByUserAndStatus(currentPrincipalName, expenseStatus);
-		System.out.println("Database returns a total of: " + expenses.size() + " rows expenses by expenses status");
-		 
+
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
