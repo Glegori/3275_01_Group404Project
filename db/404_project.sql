@@ -18,6 +18,7 @@ expenseCost double,
 date VARCHAR(20),
 expenseType VARCHAR(20),
 expenseStatus VARCHAR(10),
+EXPENSEDESC varchar (255),
 billImage VARCHAR(240),
 user VARCHAR(30),
 FOREIGN KEY (user) REFERENCES USER_404_project(USERNAME)

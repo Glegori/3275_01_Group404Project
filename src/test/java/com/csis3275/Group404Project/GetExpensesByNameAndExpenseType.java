@@ -22,10 +22,8 @@ public class GetExpensesByNameAndExpenseType {
     expenseDAO dao;
     Expense expense = new Expense();
 
-
     @BeforeEach
     public void addDummyExpense(){
-
         expense.setExpenseName("Dinner");
         expense.setExpenseCost(120);
         expense.setDate("2020-12-22");
@@ -35,6 +33,7 @@ public class GetExpensesByNameAndExpenseType {
         expense.setUser("Alfredo");
         dao.createExpense(expense, "Alfredo");
     }
+
     @Test
     public void getExpenseType(){
     	 assertEquals("FOOD", dao.getExpensesByUserNameAndExpenseType("Alfredo","FOOD").get(0).getExpenseType());

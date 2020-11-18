@@ -19,11 +19,8 @@ import java.util.Optional;
 @Service
 public class LoginUserDetailsService implements UserDetailsService {
 
-
     @Autowired
     UserRepository userRepository;
-
-
 
     /**
      * If the user exists, send back a mapped object, otherwise throw an error.
@@ -36,10 +33,7 @@ public class LoginUserDetailsService implements UserDetailsService {
         System.out.println(user);
         user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + USERNAME));
 
-
         return user.map(LoginUserDetails::new).get();
     }
-
-
 }
 

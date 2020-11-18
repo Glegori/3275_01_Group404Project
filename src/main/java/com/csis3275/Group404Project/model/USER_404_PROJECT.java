@@ -34,7 +34,6 @@ public class USER_404_PROJECT {
     public int getID() {
         return ID;
     }
-
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -42,7 +41,6 @@ public class USER_404_PROJECT {
     public String getUserName() {
         return userName;
     }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -50,7 +48,6 @@ public class USER_404_PROJECT {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -59,7 +56,6 @@ public class USER_404_PROJECT {
     public String getReportsFrom() {
         return reportsFrom;
     }
-
     public void setReportsFrom(String reportsFrom) {
         this.reportsFrom = reportsFrom;
     }
@@ -67,7 +63,6 @@ public class USER_404_PROJECT {
     public String getUserType() {
         return userType;
     }
-
     public void setUserType(String userType) {
         this.userType = userType;
     }
@@ -75,7 +70,6 @@ public class USER_404_PROJECT {
     public double getTotal() {
         return total;
     }
-
     public void setTotal(double total) {
         this.total = total;
     }

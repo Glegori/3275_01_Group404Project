@@ -79,4 +79,10 @@ h3 {
     height:100%;
     transition:0.4s;
 }
+table{
+    table-layout: fixed;
+}
+td{
+    word-wrap: break-word;
+}
 

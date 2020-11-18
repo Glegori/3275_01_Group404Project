@@ -20,10 +20,8 @@ class GetExpensesByStatus {
 	    expenseDAO dao;
 	    Expense expense = new Expense();
 
-
 	    @BeforeEach
 	    public void addDummyExpense(){
-
 	        expense.setExpenseName("Dinner");
 	        expense.setExpenseCost(120);
 	        expense.setDate("2020-12-22");
@@ -37,6 +35,4 @@ class GetExpensesByStatus {
 	    public void getExpenseStatus(){
 	    	 assertEquals("Pending", dao.getExpensesByUserAndStatus("Alfredo", "Pending").get(0).getExpenseStatus());
 	    }
-
-
 }

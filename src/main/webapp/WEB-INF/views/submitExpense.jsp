@@ -20,7 +20,7 @@
 			<div class="form-group">
 				<label for="expenseName" class="col-md-3 control-label">Name of Expense</label>
 				<div class="col-md-9">
-					<form:input path="expenseName" cssClass="form-control" />
+					<form:input path="expenseName" maxlength="30" cssClass="form-control" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -48,11 +48,10 @@
 					</form:select>
 				</div>
 			</div>
-
 			<div class="form-group">
 				<label for="billImage" class="col-md-3 control-label">Upload Bill Image</label>
 				<div class="col-md-9">
-					<form:input type="file" path="billImage" cssClass="form-control" />
+					<form:input type="file" path="billImage" maxlength="240" cssClass="form-control" />
 				</div>
 			</div>
 			
@@ -60,6 +59,7 @@
 				<!-- Button -->
 				<div class="col-md-offset-3 col-md-9">
 					<form:input type="hidden" path="expenseStatus" value="Pending" cssClass="form-control" />
+					<form:input type="hidden" path="expenseDesc" value="" />
 					<form:button cssClass="btn btn-dark btn-lg">Submit</form:button>
 				</div>
 			</div>

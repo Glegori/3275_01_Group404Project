@@ -21,20 +21,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
-
     @Qualifier("loginUserDetailsService")
     @Autowired
     UserDetailsService userDetailsService;
 
-
     /**
      * Authorizes username and password inputted.
      */
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
+
     /**
      * Redirects the page based on the authorization.
      */
@@ -46,17 +44,14 @@ public class SecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/error").permitAll()
                 .antMatchers("/").permitAll()
                 .and().formLogin().defaultSuccessUrl("/homePage");
-
     }
+
     /**
      * Password encoder method.
      * @return No encoder.
      */
     @Bean
     public PasswordEncoder getPasswordEncoder(){
-
         return NoOpPasswordEncoder.getInstance();
-
     }
-
 }

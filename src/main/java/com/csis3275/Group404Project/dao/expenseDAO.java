@@ -35,10 +35,10 @@ public class expenseDAO {
 	private final String SQL_GET_ALL = "select * from EXPENSE_404_project";
 	private final String SQL_GET_ALL_EXPENSES_BY_USERNAME = "select * from EXPENSE_404_project where USER = ?";
 	private final String SQL_GET_REPORTS_FROM = "select * from USER_404_project where USERNAME = ?";
-	private final String SQL_UPDATE_STATUS = "update EXPENSE_404_project SET expenseStatus = ? WHERE id = ?";
+	private final String SQL_UPDATE_STATUS = "update EXPENSE_404_project SET expenseStatus = ?, expenseDesc = ? WHERE id = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSESTATUS = ?";
-	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, billImage, user) values(?,?,?,?,?,?,?)";
+	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, expenseDesc, billImage, user) values(?,?,?,?,?,?,?,?)";
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project WHERE EXPENSESTATUS = 'Approved' GROUP BY EXPENSETYPE";
 	private final String SQL_GET_TOTAL_COST_BY_USER = "SELECT USER, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project WHERE EXPENSESTATUS = 'Approved' GROUP BY USER";
 	private final String SQL_DELETE_BY_EXPENSE_ID = "delete from EXPENSE_404_project where id = ?";
@@ -69,7 +69,7 @@ public class expenseDAO {
 		userDAO.updateUserTotal(userName, expense.getExpenseCost());
 		return jdbcTemplate.update(SQL_INSERT_EXPENSE, expense.getExpenseName() ,
 				expense.getExpenseCost(), expense.getDate(),
-				expense.getExpenseType(), expense.getExpenseStatus(),
+				expense.getExpenseType(), expense.getExpenseStatus(), expense.getExpenseDesc(),
 				expense.getBillImage(), userName) > 0;
 	}
 
@@ -131,7 +131,7 @@ public class expenseDAO {
 		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSESTATUS, new Object[] {USER, EXPENSESTATUS} , new ExpenseMapper());
 	}
 	
-	/*
+	/**
 	 * Gets a list of certain expense type made by the user.
 	 * @param USER User who is logged in.
 	 * @param SORTEXPENSE it is the sort type asc or desc.
@@ -146,7 +146,6 @@ public class expenseDAO {
 		System.out.println("System is sorting expense type = DESC into the Database");
 		return jdbcTemplate.query(SQL_GET_TOTAL_EXPENSES_SORT_DESC, new Object[] {USER} , new ExpenseMapper());
 	}
-	
 
 	/**
 	 * Gets a list of everyone single expense in the database.
@@ -163,9 +162,8 @@ public class expenseDAO {
 	 */
 	public boolean modifyStatus(Expense expense){
 		System.out.println("THE DATA YOUR LOOKING FOR " + expense.getId() + " " + expense.getExpenseName()+ " " + expense.getExpenseStatus() + " " + expense.getExpenseStatus());
-		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getId()) > 0;
+		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getExpenseDesc(), expense.getId()) > 0;
 	}
-
 
 	/**
 	 * Gets various statistics from the database based on category.
@@ -179,7 +177,6 @@ public class expenseDAO {
 	 * Gets various statistics from the database based on user.
 	 * @return Returns list of expense statistics.
 	 */
-
 	public List<Map<String, Object>> getTotalCostByUser() {
 		return jdbcTemplate.queryForList(SQL_GET_TOTAL_COST_BY_USER);
 	}
@@ -192,9 +189,6 @@ public class expenseDAO {
 		System.out.println("The ID of the expense your deleting is: " + expense.getId());
 		return jdbcTemplate.update(SQL_DELETE_BY_EXPENSE_ID,  expense.getId()) > 0;
 	}
-
-
-
 }
 
 
