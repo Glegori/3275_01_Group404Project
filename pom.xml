@@ -92,6 +92,17 @@
         <version>1.2</version>
     </dependency>
 
+		<!-- Dependency for import csv file 
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency> -->
+		
+		<dependency>
+		    <groupId>com.opencsv</groupId>
+		    <artifactId>opencsv</artifactId>
+		    <version>5.0</version>
+		</dependency>
 
 	</dependencies>
 
