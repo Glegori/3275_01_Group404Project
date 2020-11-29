@@ -70,6 +70,7 @@
 		<td><strong>Expense Type</strong></td>
 		<td><strong>Expense Status</strong></td>
 		<td><strong>Expense Description</strong></td>
+		<td><strong>Image name</strong></td>
 		
 		<t:forEach var="expense" items="${currentUserExpenses}">
 			<tr>
@@ -82,6 +83,7 @@
 				<td>${expense.expenseType}</td>
 				<td>${expense.expenseStatus}</td>
 				<td>${expense.expenseDesc}</td>
+				<td><a href="/showImage/?pathImage=${expense.billImage}">${expense.billImage}</a></td>
 			</tr>
 		</t:forEach>
 	</table>
