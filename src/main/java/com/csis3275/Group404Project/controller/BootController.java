@@ -398,7 +398,6 @@ public class BootController {
 	        	 // parse CSV file to create a list of `User` objects
 	            try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) 
 	            {
-	            	System.out.println("PARSING THE CSV FILE");
 	                
 	            	String line;
 	            	
