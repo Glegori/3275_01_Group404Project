@@ -20,7 +20,7 @@
 	<div id="idSideMenu" class="sideMenu">
   		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
 		<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>
-		<a href="javascript:void(0)" onclick="location.href = '/importCSV'">Import Expenses by CSV file</a>
+		<a href="javascript:void(0)" onclick="location.href = '/importCSV'">Import Expenses<br>by CSV file</a>
 		<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>
 		<a href="javascript:void(0)" onclick="location.href = '/createUser'">Create New User</a>
 		<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
