@@ -5,6 +5,12 @@ import javax.servlet.http.HttpSession;
 
 import com.csis3275.Group404Project.dao.userDAO;
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+
+import antlr.StringUtils;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +25,12 @@ import com.csis3275.Group404Project.model.Expense;
 
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +49,7 @@ public class BootController {
 
 	@Autowired
 	userDAO userDAO;
+	
 
 	/**
 	 * Saves our Expense class to be used in models.
@@ -153,17 +166,46 @@ public class BootController {
 	 * Grabs all the data that was entered into the form and create a new expense. This expense
 	 * is then added to the database.
 	 * @return Redirects back to homepage.
+	 * @throws IOException 
 	 */
 	@PostMapping("/createExpense")
 	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+			
 		expenseDao.createExpense(createExpense, currentPrincipalName);
 
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
         model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
 	}
+	
+	/*@PostMapping("/addImage")
+	public String addImage(@ModelAttribute("Expense") Expense updateExpense, Model model) throws IOException{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+ 
+		System.out.println("VALUE OF NAmE: " + updateExpense.getId());
+		System.out.println("VALUE OF bill image: " + updateExpense.getBillImage());
+		
+		expenseDao.createExpense(updateExpense, currentPrincipalName);
+		
+		String uploadDir = "../../../../../../../billImages/" + createExpense.getBillImage() + "-" + createExpense.getDate();
+		
+		File newFile2 = new File(createExpense.getBillImage());
+		
+		Path uploadPath = Paths.get(uploadDir);
+        
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+       
+
+		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+        model.addAttribute("currentUserExpenses", expenses);
+		return "homePage";
+	} */
 
 	/**
 	 * Grabs the expense that needs to be modified and edits the status in the database based
@@ -328,6 +370,84 @@ public class BootController {
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
+	}
+	
+	/*
+	 * 
+	 * Import file
+	 * @return Redirects to home page.
+	 * /
+	 */
+	@PostMapping("/uploadExpensesFile")
+    public String uploadCSVFile(@RequestParam("billImage") MultipartFile file, Model model) 
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		Expense newExpense = new Expense();
+		
+		// validate file
+        if (file.isEmpty()) 
+        {
+            model.addAttribute("message", "Please select a CSV file to upload.");
+            model.addAttribute("status", false);
+        } else 
+        	{
+        		String[] csvFileValue = new String[7];
+        		
+	        	 // parse CSV file to create a list of `User` objects
+	            try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) 
+	            {
+	            	System.out.println("PARSING THE CSV FILE");
+	                
+	            	String line;
+	            	
+	            	//read lines of the file
+	                while ((line = reader.readLine()) != null) {
+	                	csvFileValue = line.split(",");
+	                	
+	                	//Setting the new expense
+	                    newExpense.setExpenseName(csvFileValue[0]);
+	                    newExpense.setExpenseCost(Integer.parseInt(csvFileValue[1]));
+	                    newExpense.setDate(csvFileValue[2]);
+	                    newExpense.setExpenseType(csvFileValue[3]);
+	                    newExpense.setExpenseStatus(csvFileValue[4]);
+	                    newExpense.setExpenseDesc("");
+	                    newExpense.setBillImage("");
+	                    newExpense.setUser(csvFileValue[7]);
+	                    
+	                    //Send the new expense to the Expense table in the database
+	                    expenseDao.createExpense(newExpense, currentPrincipalName);
+	                }
+	                
+	            } catch (Exception ex) 
+	            {
+            	
+	            	model.addAttribute("message", "An error occurred while processing the CSV file.");
+	                //model.addAttribute("status", false);
+	            }
+            
+        	}
+        
+        List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+        model.addAttribute("currentUserExpenses", expenses);
+        
+        return "homePage";
+	}
+	
+	/**
+	 * Redirects user to be able to import a csv file with expenses
+	 * @return redirect to importExpensesCsvFile page.
+	 */
+	@GetMapping("/importCSV")
+	public String importCSV(){
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		return ("importExpensesCsvFile");
 	}
 }
 
