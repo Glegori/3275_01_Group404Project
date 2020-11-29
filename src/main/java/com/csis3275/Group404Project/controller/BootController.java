@@ -29,6 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -169,43 +171,63 @@ public class BootController {
 	 * @throws IOException 
 	 */
 	@PostMapping("/createExpense")
-	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
+	public String createExpense(@RequestParam("billImage") MultipartFile file,
+			@RequestParam("expenseName") String expenseName, @RequestParam("expenseCost") double expenseCost, 
+			@RequestParam("date") String date, @RequestParam("expenseType") String expenseType, 
+			@RequestParam("expenseStatus") String expenseStatus, @RequestParam("expenseDesc") String expenseDesc,
+			Model model){
+		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-			
-		expenseDao.createExpense(createExpense, currentPrincipalName);
 
+		String UPLOADED_FOLDER = "c://uploadPhotos//";
+		
+		//check if the uploadPhotos folder exist
+		File directory = new File(UPLOADED_FOLDER);
+		if (!directory.exists()){
+			directory.mkdirs();
+		}
+		
+		//check if the file is empty
+		if (file.isEmpty()) {
+            //redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+			return "homePage";
+        }
+		
+		try {
+			
+			DateTimeFormatter dateAndTime = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+			LocalDateTime now = LocalDateTime.now();  
+			String datePath = dateAndTime.format(now);
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + datePath + "-" + file.getOriginalFilename());
+            Files.write(path, bytes);
+            
+            Expense createExpense = new Expense();
+            
+            String imagePath = datePath + "-" + file.getOriginalFilename();
+            System.out.println("  ==== image path ==== " + imagePath);
+            createExpense.setExpenseName(expenseName);
+            createExpense.setDate(date);
+            createExpense.setExpenseCost(expenseCost);
+            createExpense.setExpenseType(expenseType);
+            createExpense.setExpenseStatus(expenseStatus);
+            createExpense.setBillImage(imagePath);
+            createExpense.setExpenseDesc(expenseDesc);
+            
+            expenseDao.createExpense(createExpense, currentPrincipalName);
+
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
+
+      
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
         model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
 	}
 	
-	/*@PostMapping("/addImage")
-	public String addImage(@ModelAttribute("Expense") Expense updateExpense, Model model) throws IOException{
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		
- 
-		System.out.println("VALUE OF NAmE: " + updateExpense.getId());
-		System.out.println("VALUE OF bill image: " + updateExpense.getBillImage());
-		
-		expenseDao.createExpense(updateExpense, currentPrincipalName);
-		
-		String uploadDir = "../../../../../../../billImages/" + createExpense.getBillImage() + "-" + createExpense.getDate();
-		
-		File newFile2 = new File(createExpense.getBillImage());
-		
-		Path uploadPath = Paths.get(uploadDir);
-        
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-       
-
-		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
-        model.addAttribute("currentUserExpenses", expenses);
-		return "homePage";
-	} */
 
 	/**
 	 * Grabs the expense that needs to be modified and edits the status in the database based
@@ -423,7 +445,7 @@ public class BootController {
 	            {
             	
 	            	model.addAttribute("message", "An error occurred while processing the CSV file.");
-	                //model.addAttribute("status", false);
+	                model.addAttribute("status", false);
 	            }
             
         	}
@@ -433,6 +455,7 @@ public class BootController {
         
         return "homePage";
 	}
+	
 	
 	/**
 	 * Redirects user to be able to import a csv file with expenses
@@ -447,6 +470,25 @@ public class BootController {
 		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
 
 		return ("importExpensesCsvFile");
+	}
+	
+	/**
+	 *
+	 * This method receive the path of the image and then search it in the database
+	 * @return Redirects to show image page
+	 */
+	@GetMapping("/showImage")
+	public String showImage(@RequestParam(required = true) String pathImage, Model model)
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		//BRING LIST
+		//List<Expense> expenses = expenseDao.getExpensesByUserAndStatus(currentPrincipalName, expenseStatus);
+
+		//MODEL
+		//model.addAttribute("currentUserExpenses", expenses);
+		return "showImage";
 	}
 }
 
