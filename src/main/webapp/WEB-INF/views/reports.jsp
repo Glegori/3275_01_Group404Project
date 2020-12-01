@@ -19,16 +19,14 @@
 <script>var expenseCostCategory = [];
 		var expenseTypeCategory = [];
 		totalCostCategory = 0;
-		
-		</script>
+</script>
 	
 <t:forEach var="expense" items="${expenseCategory}">
 <script> 
 expenseTypeCategory.push('${expense.EXPENSETYPE}');
 expenseCostCategory.push(${expense.TOTALCOST});
 totalCostCategory+= ${expense.TOTALCOST};
-
-		</script>
+</script>
 </t:forEach>
 		
 
@@ -66,7 +64,7 @@ expenseTypeUser.push('${expense.USER}');
 </t:forEach>
 		
 
-</head>
+</body>
 <body>
 
 <div id="containerUser"></div>

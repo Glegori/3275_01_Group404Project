@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
+
+import java.sql.Date;
+
 /**
  * Tests that the expenses are returned sorted.
  * @author Alfredo

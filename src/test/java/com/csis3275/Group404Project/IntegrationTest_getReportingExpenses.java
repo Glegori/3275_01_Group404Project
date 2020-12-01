@@ -19,6 +19,7 @@ import org.springframework.test.context.event.annotation.BeforeTestExecution;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Entity;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -58,7 +59,7 @@ public class IntegrationTest_getReportingExpenses {
     public void addExpense(){
         newExpense.setExpenseName("TestExpense");
         newExpense.setExpenseCost(100);
-        newExpense.setDate("2020-11-05");
+        newExpense.setDate("2020-12-22");
         newExpense.setExpenseType("Personal");
         newExpense.setExpenseStatus("Pending");
         newExpense.setBillImage("fileString");

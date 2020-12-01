@@ -1,6 +1,7 @@
 package com.csis3275.Group404Project.model;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * Getters and setters for the expense class.

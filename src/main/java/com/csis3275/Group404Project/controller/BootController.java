@@ -19,6 +19,9 @@ import com.csis3275.Group404Project.model.Expense;
 
 
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -158,7 +161,7 @@ public class BootController {
 	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		expenseDao.createExpense(createExpense, currentPrincipalName);
+		expenseDao. createExpense(createExpense, currentPrincipalName);
 
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
         model.addAttribute("currentUserExpenses", expenses);
@@ -329,5 +332,29 @@ public class BootController {
 		model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
 	}
+
+	@GetMapping("/expensesOverTime")
+	public String expensesOverTime(){
+		return ("expensesByTime");
+	}
+
+	@PostMapping("/expensesOverTime")
+	public String displayExpensesOverTime(@RequestParam Date startDate, @RequestParam Date endDate, Model model){
+		System.out.println(startDate);
+//		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
+//		Date date1 = formatter.parse(startDate);
+		List<Expense> expenses = expenseDao.getExpensesBetweenDates(startDate, endDate);
+
+		model.addAttribute("startDate", startDate.toString());
+		model.addAttribute("endDate", endDate.toString());
+		model.addAttribute("listOfExpensesBetweenDates",expenses);
+		System.out.println(expenses.toString());
+
+		return ("expensesByTimeGraphs");
+
+	}
+
+
+
 }
 

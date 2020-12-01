@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.csis3275.Group404Project.dao.expenseDAO;
 
+import java.sql.Date;
+
 /**
  * Tests that the expenses are returned.
  * @author Alfredo Morales
