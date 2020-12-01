@@ -27,6 +27,7 @@ import com.csis3275.Group404Project.model.Expense;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.Desktop;
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
@@ -180,7 +181,7 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-		String UPLOADED_FOLDER = "c://uploadPhotos//";
+		String UPLOADED_FOLDER = "C:\\Users\\Alfredo Morales\\Documents\\Douglas College\\Software Engineering\\workspace\\Project\\uploadPhotos\\";
 		
 		//check if the uploadPhotos folder exist
 		File directory = new File(UPLOADED_FOLDER);
@@ -201,13 +202,13 @@ public class BootController {
 			String datePath = dateAndTime.format(now);
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + datePath + "-" + file.getOriginalFilename());
+            String completePath = UPLOADED_FOLDER + datePath + "-" + file.getOriginalFilename();
+            Path path = Paths.get(completePath);
             Files.write(path, bytes);
             
             Expense createExpense = new Expense();
             
             String imagePath = datePath + "-" + file.getOriginalFilename();
-            System.out.println("  ==== image path ==== " + imagePath);
             createExpense.setExpenseName(expenseName);
             createExpense.setDate(date);
             createExpense.setExpenseCost(expenseCost);
@@ -215,7 +216,7 @@ public class BootController {
             createExpense.setExpenseStatus(expenseStatus);
             createExpense.setBillImage(imagePath);
             createExpense.setExpenseDesc(expenseDesc);
-            
+            System.out.println("=== PATH === " + completePath);
             expenseDao.createExpense(createExpense, currentPrincipalName);
 
 		} catch (IOException e) {
@@ -327,6 +328,8 @@ public class BootController {
 	/**
 	 *
 	 * Shows a filtered list of expenses based on the category selected.
+	 * @param STRING expenseType which is the type of the expense.
+	 * @param MODEL model.
 	 * @return Redirects to home page.
 	 */
 	@GetMapping("/filterExpense")
@@ -348,6 +351,8 @@ public class BootController {
 	/**
 	 *
 	 * Shows a filtered list of expenses based on the sorting method selected.
+	 * @param STRING sortExpense which is the type of the sort of the expense.
+	 * @param MODEL model.
 	 * @return Redirects to home page.
 	 */
 	@GetMapping("/sortExpenseDate")
@@ -376,7 +381,7 @@ public class BootController {
 	}
 	
 	/**
-	 *
+	 *@param STRING sortExpense which is the type of the sort of the expense.
 	 * Shows a filtered list of expenses based on the expense status selected.
 	 * @return Redirects to home page.
 	 */
@@ -394,11 +399,11 @@ public class BootController {
 		return "homePage";
 	}
 	
-	/*
-	 * 
-	 * Import file
+	/**
+	 * Import Bill image to support the expense.
+	 * @param MULTIFILE file which is the image file.
+	 * @param Model model.
 	 * @return Redirects to home page.
-	 * /
 	 */
 	@PostMapping("/uploadExpensesFile")
     public String uploadCSVFile(@RequestParam("billImage") MultipartFile file, Model model) 
@@ -475,6 +480,8 @@ public class BootController {
 	/**
 	 *
 	 * This method receive the path of the image and then search it in the database
+	 * @param STRING pathImage which is the directory of the image.
+	 * @param MODEL model.
 	 * @return Redirects to show image page
 	 */
 	@GetMapping("/showImage")
@@ -484,11 +491,89 @@ public class BootController {
 		String currentPrincipalName = authentication.getName();
 		
 		//BRING LIST
-		//List<Expense> expenses = expenseDao.getExpensesByUserAndStatus(currentPrincipalName, expenseStatus);
-
+		List<Expense> expenses = expenseDao.getExpensesByImage(currentPrincipalName, pathImage);
+		
 		//MODEL
-		//model.addAttribute("currentUserExpenses", expenses);
+		model.addAttribute("currentUserExpenses", expenses);
 		return "showImage";
 	}
+	
+	/**
+	 * Redirects user to be able to upload a bill image file
+	 * @return redirect to updatebillImage page.
+	 */
+	@GetMapping("/updateImage")
+	public String updateImage(@RequestParam("expenseID") int expenseID, Model model){
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		List<Expense> expenses = expenseDao.getExpensesByID(expenseID);
+		
+		//MODEL
+		model.addAttribute("currentUserExpenses", expenses);
+		
+		return ("updateImage");
+	}
+	
+	/**
+	 *
+	 * Grabs expense id and expense bill image to update the expense 
+	 * is then added to the database.
+	 * @param MultipartFile file which is the bill image file
+	 * @param INT id which is the expense ID
+	 * @param MODEL model.
+	 * @return Redirects back to homepage.
+	 * @throws IOException 
+	 */
+	@PostMapping("/uploadExpensesImage")
+	public String uploadExpensesImage(@RequestParam("billImage") MultipartFile file,
+			@RequestParam("id") int id, Model model){
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		String UPLOADED_FOLDER = "C:\\Users\\Alfredo Morales\\Documents\\Douglas College\\Software Engineering\\workspace\\Project\\uploadPhotos\\";
+		
+		//check if the uploadPhotos folder exist
+		File directory = new File(UPLOADED_FOLDER);
+		if (!directory.exists()){
+			directory.mkdirs();
+		}
+		
+		//check if the file is empty
+		if (file.isEmpty()) {
+           //redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+			return "homePage";
+       }
+		
+		try {
+			
+			DateTimeFormatter dateAndTime = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+			LocalDateTime now = LocalDateTime.now();  
+			String datePath = dateAndTime.format(now);
+           // Get the file and save it somewhere
+           byte[] bytes = file.getBytes();
+           String completePath = UPLOADED_FOLDER + datePath + "-" + file.getOriginalFilename();
+           Path path = Paths.get(completePath);
+           Files.write(path, bytes);
+           
+           Expense updateExpense = new Expense();
+           
+           String imagePath = datePath + "-" + file.getOriginalFilename();
+           updateExpense.setBillImage(imagePath);
+           updateExpense.setId(id);
+           expenseDao.updateImage(updateExpense);
+
+		} catch (IOException e) {
+           e.printStackTrace();
+       }
+
+     
+		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+       model.addAttribute("currentUserExpenses", expenses);
+		return "homePage";
+	}
+	
 }
 
