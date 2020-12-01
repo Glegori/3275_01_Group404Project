@@ -5,7 +5,12 @@ import javax.servlet.http.HttpSession;
 
 import com.csis3275.Group404Project.dao.userDAO;
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
+import org.apache.tomcat.jni.File;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -16,9 +21,11 @@ import org.springframework.web.bind.annotation.*;
 import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
 
-
+import com.csis3275.Group404Project.excelConverter;
 
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -182,6 +189,38 @@ public class BootController {
 		model.addAttribute("reportingUserExpenses", expenses);
 		return "decisionPage";
 	}
+
+	//MediaType mediaType = ;
+	/**
+	 *this returns your file with the excel file extension in byte form, only works when database is under 2gb after that switch copy to copyLarge
+	 * @return your file in byte form
+	 * @throws IOException
+	 */
+	@GetMapping(value = "/excel")
+	public ResponseEntity fileReturn(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		if(user.getUserType().equals("admin")) {
+			File excelFile = excelConverter.getExcelFile(expenseDao.getExpenseByStatus("Approved"));
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=data.xlsx")
+					.contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+					.body(excelFile);
+		}
+		else {
+			File excelFile = excelConverter.getExcelFile(expenseDao.getExpensesByUserAndStatus(currentPrincipalName,"Approved"));
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=data.xlsx")
+					.contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+					.body(excelFile);
+		}
+	}
+
+	//@GetMapping(value = "/csv", produces = "text/csv")
+
 
 	/**
 	 * Redirects user to be able to either create a new user if they're an admin

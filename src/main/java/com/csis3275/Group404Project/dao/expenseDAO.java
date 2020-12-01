@@ -37,6 +37,7 @@ public class expenseDAO {
 	private final String SQL_GET_REPORTS_FROM = "select * from USER_404_project where USERNAME = ?";
 	private final String SQL_UPDATE_STATUS = "update EXPENSE_404_project SET expenseStatus = ?, expenseDesc = ? WHERE id = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
+	private final String SQL_GET_USER_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE EXPENSESTATUS = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSESTATUS = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, expenseDesc, billImage, user) values(?,?,?,?,?,?,?,?)";
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project WHERE EXPENSESTATUS = 'Approved' GROUP BY EXPENSETYPE";
@@ -131,9 +132,17 @@ public class expenseDAO {
 	 */
 	public List<Expense> getExpensesByUserAndStatus(String USER, String EXPENSESTATUS){
 
-		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSESTATUS, new Object[] {USER, EXPENSESTATUS} , new ExpenseMapper());
+		return jdbcTemplate.query(SQL_GET_USER_EXPENSE_BY_EXPENSESTATUS, new Object[] {USER, EXPENSESTATUS} , new ExpenseMapper());
 	}
-	
+
+	/**
+	 * Gets a list of expenses from all users based on status
+	 * @param EXPENSESTATUS
+	 * @return
+	 */
+	public List<Expense> getExpenseByStatus(String EXPENSESTATUS){
+		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSESTATUS, new Object[] {EXPENSESTATUS} , new ExpenseMapper());
+	}
 	/**
 	 * Gets a list of certain expense type made by the user.
 	 * @param USER User who is logged in.
