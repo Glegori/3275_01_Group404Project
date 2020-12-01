@@ -20,7 +20,7 @@ public class imageConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        exposeDirectory("uploadPhotos", registry);
+        exposeDirectory("src/main/uploadPhotos", registry);
     }
      
     /**
