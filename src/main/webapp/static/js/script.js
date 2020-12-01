@@ -33,6 +33,8 @@ function openModifyForm(id, expenseUser, expenseName, expenseCost,expenseDate, e
         $('#billImage').val(billImage);
         $('#expenseStatus').val(expenseStatus);
         $('#expenseDesc').val(expenseDesc);
+
+
     });
 }
 function closeSide(){

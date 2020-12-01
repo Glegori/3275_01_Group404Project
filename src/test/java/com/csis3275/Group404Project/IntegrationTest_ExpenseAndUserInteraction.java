@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.sql.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -30,7 +33,7 @@ public class IntegrationTest_ExpenseAndUserInteraction {
     @BeforeEach
     public void addExpense(){
         expense.setExpenseName("NewTestExpense");
-        expense.setDate("2020-10-11");
+        expense.setDate("2020-12-22");
         expense.setExpenseType("Personal");
         expense.setExpenseStatus("Denied");
         expense.setBillImage("");

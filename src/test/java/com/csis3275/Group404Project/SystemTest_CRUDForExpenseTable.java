@@ -12,6 +12,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
+import java.sql.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -50,7 +52,7 @@ public class SystemTest_CRUDForExpenseTable {
         //AssembleExpense
         expense.setExpenseName("NewExpense");
         expense.setExpenseCost(2000);
-        expense.setDate("2020-12-01");
+        expense.setDate("2020-12-22");
         expense.setExpenseType("Personal");
         expense.setExpenseStatus("Approved");
         expense.setBillImage("");

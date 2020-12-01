@@ -1,6 +1,7 @@
 package com.csis3275.Group404Project.dao;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,9 @@ public class expenseDAO {
 	private final String SQL_GET_TOTAL_EXPENSES_SORT_ASC = "SELECT * FROM EXPENSE_404_project WHERE USER = ? order by DATE ASC";
 	private final String SQL_GET_TOTAL_EXPENSES_SORT_DESC = "SELECT * FROM EXPENSE_404_project WHERE USER = ? order by DATE DESC";
 
+	//Expenses over Time stuff
+	private final String SQL_GET_DATA_BETWEEN_DATES = "SELECT * FROM EXPENSE_404_PROJECT WHERE DATE BETWEEN ? AND ? ORDER BY DATE ASC";
+
 	/**
 	 * Gets the jdbc connection to h2.
 	 *
@@ -59,6 +63,14 @@ public class expenseDAO {
 	public Double getTotalByUserName(String userName){
 		return jdbcTemplate.queryForObject(SQL_GET_TOTAL_BY_USERNAME, Double.class, userName);
 	}
+
+	public List<Expense> getExpensesBetweenDates(Date startDate, Date endDate){
+
+		return jdbcTemplate.query(SQL_GET_DATA_BETWEEN_DATES, new Object[] {startDate, endDate}, new ExpenseMapper());
+
+	}
+
+
 
 	/**
 	 * Adds an entry to the list of expenses table.
