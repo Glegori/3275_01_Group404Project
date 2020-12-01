@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.Desktop;
 import java.io.*;
+import java.net.URI;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -181,7 +182,7 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-		String UPLOADED_FOLDER = "C:\\Users\\Alfredo Morales\\Documents\\Douglas College\\Software Engineering\\workspace\\Project\\uploadPhotos\\";
+		String UPLOADED_FOLDER = new File("src\\main\\uploadPhotos\\").getAbsolutePath();
 		
 		//check if the uploadPhotos folder exist
 		File directory = new File(UPLOADED_FOLDER);
@@ -202,7 +203,7 @@ public class BootController {
 			String datePath = dateAndTime.format(now);
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-            String completePath = UPLOADED_FOLDER + datePath + "-" + file.getOriginalFilename();
+            String completePath = UPLOADED_FOLDER + "\\" + datePath + "-" + file.getOriginalFilename();
             Path path = Paths.get(completePath);
             Files.write(path, bytes);
             
@@ -533,8 +534,8 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-		String UPLOADED_FOLDER = "C:\\Users\\Alfredo Morales\\Documents\\Douglas College\\Software Engineering\\workspace\\Project\\uploadPhotos\\";
-		
+		String UPLOADED_FOLDER = new File("src\\main\\uploadPhotos\\").getAbsolutePath();
+	    
 		//check if the uploadPhotos folder exist
 		File directory = new File(UPLOADED_FOLDER);
 		if (!directory.exists()){
@@ -554,7 +555,7 @@ public class BootController {
 			String datePath = dateAndTime.format(now);
            // Get the file and save it somewhere
            byte[] bytes = file.getBytes();
-           String completePath = UPLOADED_FOLDER + datePath + "-" + file.getOriginalFilename();
+           String completePath = UPLOADED_FOLDER +"\\" + datePath + "-" + file.getOriginalFilename();
            Path path = Paths.get(completePath);
            Files.write(path, bytes);
            
