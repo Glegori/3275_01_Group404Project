@@ -70,7 +70,7 @@
 		<td><strong>Expense Type</strong></td>
 		<td><strong>Expense Status</strong></td>
 		<td><strong>Expense Description</strong></td>
-		<td><strong>Image name</strong></td>
+		<td><strong>Expense Bill Image</strong></td>
 		
 		<t:forEach var="expense" items="${currentUserExpenses}">
 			<tr>
@@ -83,7 +83,17 @@
 				<td>${expense.expenseType}</td>
 				<td>${expense.expenseStatus}</td>
 				<td>${expense.expenseDesc}</td>
-				<td><a href="/showImage/?pathImage=${expense.billImage}">${expense.billImage}</a></td>
+				
+
+					<t:set var="val" value="${expense.billImage}"/>
+					<t:choose> 
+					  <t:when test="${val == ''}">
+					    <td><a href="/updateImage/?expenseID=${expense.id}">Add Bill Image</a></td>
+					  </t:when>
+					  <t:otherwise>
+					    <td><a href="/showImage/?pathImage=${expense.billImage}">${expense.billImage}</a></td>
+					  </t:otherwise>
+					</t:choose>
 			</tr>
 		</t:forEach>
 	</table>
