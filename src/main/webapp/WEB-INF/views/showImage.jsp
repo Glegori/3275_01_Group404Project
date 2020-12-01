@@ -17,7 +17,7 @@
 	<h3>Bill Image</h3>
 		
 		<t:forEach var="expense" items="${currentUserExpenses}">
-			<img src="/uploadPhotos/${expense.billImage}" />
+			<img src="/src/main/uploadPhotos/${expense.billImage}" />
 		</t:forEach>
 
 		<div>
