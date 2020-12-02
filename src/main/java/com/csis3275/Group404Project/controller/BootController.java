@@ -255,22 +255,7 @@ public class BootController {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
-	try {
-		double totalCost = (double) expenseDao.getTotalCostForCategory(createExpense.getExpenseType()).get(0).get("TOTALCOST");
-		double totalBudget = (double) expenseDao.getBudgetForCategory(createExpense.getExpenseType()).get(0).get("BUDGET");
-		
-		if (totalBudget != -1 && (totalCost + createExpense.getExpenseCost()) > totalBudget) {
-			createExpense.setExpenseDesc("Declined due to expense going over budget");
-			createExpense.setExpenseStatus("Denied");
-		}
-	}
-	catch (Exception e) {
-		
-	}
-		
-		expenseDao.createExpense(createExpense, currentPrincipalName);
-
+	
 		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
 
 		model.addAttribute("currentUser", currentUser);
@@ -296,6 +281,20 @@ public class BootController {
 	            createExpense.setExpenseStatus(expenseStatus);
 	            createExpense.setBillImage("");
 	            createExpense.setExpenseDesc(expenseDesc);
+	            
+	            try {
+	        		double totalCost = (double) expenseDao.getTotalCostForCategory(createExpense.getExpenseType()).get(0).get("TOTALCOST");
+	        		double totalBudget = (double) expenseDao.getBudgetForCategory(createExpense.getExpenseType()).get(0).get("BUDGET");
+	        		
+	        		if (totalBudget != -1 && (totalCost + createExpense.getExpenseCost()) > totalBudget) {
+	        			createExpense.setExpenseDesc("Declined due to expense going over budget");
+	        			createExpense.setExpenseStatus("Denied");
+	        		}
+	        	}
+	        	catch (Exception e) {
+	        		
+	        	}
+	            
 	            expenseDao.createExpense(createExpense, currentPrincipalName);
 	
         }
