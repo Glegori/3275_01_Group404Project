@@ -129,9 +129,12 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
-		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
 
 		model.addAttribute("currentUser", currentUser);
+
+		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+
+
 		model.addAttribute("currentUserExpenses", expenses);
 
 		return "homePage";
@@ -205,6 +208,11 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		model.addAttribute("currentUser", currentUser);
+
+
 		String UPLOADED_FOLDER = new File("src\\main\\uploadPhotos\\").getAbsolutePath();
 		
 		//check if the uploadPhotos folder exist
@@ -215,6 +223,8 @@ public class BootController {
 		
 		//check if the file is empty
 		if (file.isEmpty()) {
+			List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+			model.addAttribute("currentUserExpenses", expenses);
             //redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
 			return "homePage";
         }
@@ -510,7 +520,11 @@ public class BootController {
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		model.addAttribute("currentUser", currentUser);
+
+
 		Expense newExpense = new Expense();
 		
 		// validate file
@@ -660,6 +674,10 @@ public class BootController {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		model.addAttribute("currentUser", currentUser);
+
 
 		String UPLOADED_FOLDER = new File("src\\main\\uploadPhotos\\").getAbsolutePath();
 	    
