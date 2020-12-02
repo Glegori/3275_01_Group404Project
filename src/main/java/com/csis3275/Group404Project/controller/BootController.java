@@ -94,6 +94,13 @@ public class BootController {
 		return new USER_404_PROJECT();
 	}
 
+
+	@ModelAttribute("currentUser")
+	public USER_404_PROJECT setupCurrentUser() {
+		return new USER_404_PROJECT();
+	}
+
+
 	/**
 	 *
 	 * Shows the login screen.
@@ -121,9 +128,10 @@ public class BootController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
-		
+
+		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("currentUserExpenses", expenses);
 
 		return "homePage";

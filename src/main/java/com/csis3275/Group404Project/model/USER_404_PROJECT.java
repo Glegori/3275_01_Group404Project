@@ -73,4 +73,13 @@ public class USER_404_PROJECT {
     public void setTotal(double total) {
         this.total = total;
     }
+
+    public boolean isUserAdmin(){
+        if (userType.equals("admin")){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
