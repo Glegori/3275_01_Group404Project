@@ -20,6 +20,7 @@
 	<div id="idSideMenu" class="sideMenu">
   		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
 		<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>
+		<a href="javascript:void(0)" onclick="location.href = '/importCSV'">Import Expenses<br>by CSV file</a>
 		<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>
 		<a href="javascript:void(0)" onclick="location.href = '/createUser'">Create New User</a>
 		<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
@@ -71,6 +72,8 @@
 		<td><strong>Expense Type</strong></td>
 		<td><strong>Expense Status</strong></td>
 		<td><strong>Expense Description</strong></td>
+		<td><strong>Expense Bill Image</strong></td>
+		
 		<t:forEach var="expense" items="${currentUserExpenses}">
 			<tr>
 
@@ -82,6 +85,17 @@
 				<td>${expense.expenseType}</td>
 				<td>${expense.expenseStatus}</td>
 				<td>${expense.expenseDesc}</td>
+				
+
+					<t:set var="val" value="${expense.billImage}"/>
+					<t:choose> 
+					  <t:when test="${val == ''}">
+					    <td><a href="/updateImage/?expenseID=${expense.id}">Add Bill Image</a></td>
+					  </t:when>
+					  <t:otherwise>
+					    <td><a href="/showImage/?pathImage=${expense.billImage}">${expense.billImage}</a></td>
+					  </t:otherwise>
+					</t:choose>
 			</tr>
 		</t:forEach>
 	</table>

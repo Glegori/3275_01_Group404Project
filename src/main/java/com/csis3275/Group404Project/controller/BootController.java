@@ -5,6 +5,12 @@ import javax.servlet.http.HttpSession;
 
 import com.csis3275.Group404Project.dao.userDAO;
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+
+import antlr.StringUtils;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,11 +24,21 @@ import com.csis3275.Group404Project.model.Expense;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import java.io.IOException;
 
 import java.sql.Date;
 
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.Desktop;
+import java.io.*;
+import java.net.URI;
+import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +57,7 @@ public class BootController {
 
 	@Autowired
 	userDAO userDAO;
+	
 
 	/**
 	 * Saves our Expense class to be used in models.
@@ -168,17 +185,66 @@ public class BootController {
 	 * Grabs all the data that was entered into the form and create a new expense. This expense
 	 * is then added to the database.
 	 * @return Redirects back to homepage.
+	 * @throws IOException 
 	 */
 	@PostMapping("/createExpense")
-	public String createExpense(@ModelAttribute("Expense") Expense createExpense, Model model){
+	public String createExpense(@RequestParam("billImage") MultipartFile file,
+			@RequestParam("expenseName") String expenseName, @RequestParam("expenseCost") double expenseCost, 
+			@RequestParam("date") String date, @RequestParam("expenseType") String expenseType, 
+			@RequestParam("expenseStatus") String expenseStatus, @RequestParam("expenseDesc") String expenseDesc,
+			Model model){
+		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		expenseDao. createExpense(createExpense, currentPrincipalName);
 
+		String UPLOADED_FOLDER = new File("src\\main\\uploadPhotos\\").getAbsolutePath();
+		
+		//check if the uploadPhotos folder exist
+		File directory = new File(UPLOADED_FOLDER);
+		if (!directory.exists()){
+			directory.mkdirs();
+		}
+		
+		//check if the file is empty
+		if (file.isEmpty()) {
+            //redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+			return "homePage";
+        }
+		
+		try {
+			
+			DateTimeFormatter dateAndTime = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+			LocalDateTime now = LocalDateTime.now();  
+			String datePath = dateAndTime.format(now);
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            String completePath = UPLOADED_FOLDER + "\\" + datePath + "-" + file.getOriginalFilename();
+            Path path = Paths.get(completePath);
+            Files.write(path, bytes);
+            
+            Expense createExpense = new Expense();
+            
+            String imagePath = datePath + "-" + file.getOriginalFilename();
+            createExpense.setExpenseName(expenseName);
+            createExpense.setDate(date);
+            createExpense.setExpenseCost(expenseCost);
+            createExpense.setExpenseType(expenseType);
+            createExpense.setExpenseStatus(expenseStatus);
+            createExpense.setBillImage(imagePath);
+            createExpense.setExpenseDesc(expenseDesc);
+            System.out.println("=== PATH === " + completePath);
+            expenseDao.createExpense(createExpense, currentPrincipalName);
+
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
+
+      
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
         model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
 	}
+	
 
 	/**
 	 * Grabs the expense that needs to be modified and edits the status in the database based
@@ -310,6 +376,8 @@ public class BootController {
 	/**
 	 *
 	 * Shows a filtered list of expenses based on the category selected.
+	 * @param STRING expenseType which is the type of the expense.
+	 * @param MODEL model.
 	 * @return Redirects to home page.
 	 */
 	@GetMapping("/filterExpense")
@@ -331,6 +399,8 @@ public class BootController {
 	/**
 	 *
 	 * Shows a filtered list of expenses based on the sorting method selected.
+	 * @param STRING sortExpense which is the type of the sort of the expense.
+	 * @param MODEL model.
 	 * @return Redirects to home page.
 	 */
 	@GetMapping("/sortExpenseDate")
@@ -359,7 +429,7 @@ public class BootController {
 	}
 	
 	/**
-	 *
+	 *@param STRING sortExpense which is the type of the sort of the expense.
 	 * Shows a filtered list of expenses based on the expense status selected.
 	 * @return Redirects to home page.
 	 */
@@ -401,25 +471,105 @@ public class BootController {
 
 
 	@GetMapping("/manageUsers")
-	public String manageUsersPage(HttpSession session, Model model) {
+    public String manageUsersPage(HttpSession session, Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+        if(user.getUserType().equals("admin")){
+
+            List<USER_404_PROJECT> currentUsers = userDAO.getAllUsers();
+            //System.out.println(currentUsers);
+            model.addAttribute("currentUsers", currentUsers);
+
+            return "manageUsers";
+        } else {
+            return("forbidden");
+        }
+
+    }
+	
+	/**
+	 * Import Bill image to support the expense.
+	 * @param MULTIFILE file which is the image file.
+	 * @param Model model.
+	 * @return Redirects to home page.
+	 */
+	@PostMapping("/uploadExpensesFile")
+    public String uploadCSVFile(@RequestParam("billImage") MultipartFile file, Model model) 
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		Expense newExpense = new Expense();
+		
+		// validate file
+        if (file.isEmpty()) 
+        {
+            model.addAttribute("message", "Please select a CSV file to upload.");
+            model.addAttribute("status", false);
+        } else 
+        	{
+        		String[] csvFileValue = new String[7];
+        		
+	        	 // parse CSV file to create a list of `User` objects
+	            try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) 
+	            {
+	                
+	            	String line;
+	            	
+	            	//read lines of the file
+	                while ((line = reader.readLine()) != null) {
+	                	csvFileValue = line.split(",");
+	                	
+	                	//Setting the new expense
+	                    newExpense.setExpenseName(csvFileValue[0]);
+	                    newExpense.setExpenseCost(Integer.parseInt(csvFileValue[1]));
+	                    newExpense.setDate(csvFileValue[2]);
+	                    newExpense.setExpenseType(csvFileValue[3]);
+	                    newExpense.setExpenseStatus(csvFileValue[4]);
+	                    newExpense.setExpenseDesc("");
+	                    newExpense.setBillImage("");
+	                    newExpense.setUser(csvFileValue[7]);
+	                    
+	                    //Send the new expense to the Expense table in the database
+	                    expenseDao.createExpense(newExpense, currentPrincipalName);
+	                }
+	                
+	            } catch (Exception ex) 
+	            {
+            	
+	            	model.addAttribute("message", "An error occurred while processing the CSV file.");
+	                model.addAttribute("status", false);
+	            }
+            
+        	}
+        
+        List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+        model.addAttribute("currentUserExpenses", expenses);
+        
+        return "homePage";
+	}
+	
+	
+	/**
+	 * Redirects user to be able to import a csv file with expenses
+	 * @return redirect to importExpensesCsvFile page.
+	 */
+	@GetMapping("/importCSV")
+	public String importCSV(){
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
 		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
-
-		if(user.getUserType().equals("admin")){
-
-			List<USER_404_PROJECT> currentUsers = userDAO.getAllUsers();
-			//System.out.println(currentUsers);
-			model.addAttribute("currentUsers", currentUsers);
-
-			return "manageUsers";
-		} else {
-			return("forbidden");
-		}
+	
+		return ("importExpensesCsvFile");
 
 	}
+	
 
 
 	@PostMapping("/editUser")
@@ -445,6 +595,105 @@ public class BootController {
 		return "manageUsers";
 	}
 
+
+	
+	/**
+	 *
+	 * This method receive the path of the image and then search it in the database
+	 * @param STRING pathImage which is the directory of the image.
+	 * @param MODEL model.
+	 * @return Redirects to show image page
+	 */
+	@GetMapping("/showImage")
+	public String showImage(@RequestParam(required = true) String pathImage, Model model)
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		
+		//BRING LIST
+		List<Expense> expenses = expenseDao.getExpensesByImage(currentPrincipalName, pathImage);
+		
+		//MODEL
+		model.addAttribute("currentUserExpenses", expenses);
+		return "showImage";
+	}
+	
+	/**
+	 * Redirects user to be able to upload a bill image file
+	 * @return redirect to updatebillImage page.
+	 */
+	@GetMapping("/updateImage")
+	public String updateImage(@RequestParam("expenseID") int expenseID, Model model){
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		List<Expense> expenses = expenseDao.getExpensesByID(expenseID);
+		
+		//MODEL
+		model.addAttribute("currentUserExpenses", expenses);
+		
+		return ("updateImage");
+	}
+	
+	/**
+	 *
+	 * Grabs expense id and expense bill image to update the expense 
+	 * is then added to the database.
+	 * @param MultipartFile file which is the bill image file
+	 * @param INT id which is the expense ID
+	 * @param MODEL model.
+	 * @return Redirects back to homepage.
+	 * @throws IOException 
+	 */
+	@PostMapping("/uploadExpensesImage")
+	public String uploadExpensesImage(@RequestParam("billImage") MultipartFile file,
+			@RequestParam("id") int id, Model model){
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		String UPLOADED_FOLDER = new File("src\\main\\uploadPhotos\\").getAbsolutePath();
+	    
+		//check if the uploadPhotos folder exist
+		File directory = new File(UPLOADED_FOLDER);
+		if (!directory.exists()){
+			directory.mkdirs();
+		}
+		
+		//check if the file is empty
+		if (file.isEmpty()) {
+           //redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+			return "homePage";
+       }
+		
+		try {
+			
+			DateTimeFormatter dateAndTime = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+			LocalDateTime now = LocalDateTime.now();  
+			String datePath = dateAndTime.format(now);
+           // Get the file and save it somewhere
+           byte[] bytes = file.getBytes();
+           String completePath = UPLOADED_FOLDER +"\\" + datePath + "-" + file.getOriginalFilename();
+           Path path = Paths.get(completePath);
+           Files.write(path, bytes);
+           
+           Expense updateExpense = new Expense();
+           
+           String imagePath = datePath + "-" + file.getOriginalFilename();
+           updateExpense.setBillImage(imagePath);
+           updateExpense.setId(id);
+           expenseDao.updateImage(updateExpense);
+
+		} catch (IOException e) {
+           e.printStackTrace();
+       }
+
+     
+		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
+       model.addAttribute("currentUserExpenses", expenses);
+		return "homePage";
+	}
 
 }
 

@@ -16,7 +16,7 @@
 	<div class="container">
 	<h3>Submit Expense</h3>
 		<form:form action="${pageContext.request.contextPath}/createExpense/" cssClass="form-horizontal"
-			method="post" modelAttribute="Expense">
+			method="post" modelAttribute="Expense" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="expenseName" class="col-md-3 control-label">Name of Expense</label>
 				<div class="col-md-9">
@@ -51,7 +51,7 @@
 			<div class="form-group">
 				<label for="billImage" class="col-md-3 control-label">Upload Bill Image</label>
 				<div class="col-md-9">
-					<form:input type="file" path="billImage" maxlength="240" cssClass="form-control" />
+					<form:input type="file" path="billImage" name="billImage" id="billImage" accept=".jpg, .png" maxlength="240"  cssClass="form-control" />
 				</div>
 			</div>
 			

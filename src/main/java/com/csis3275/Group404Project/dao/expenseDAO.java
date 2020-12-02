@@ -35,10 +35,13 @@ public class expenseDAO {
 
 	private final String SQL_GET_ALL = "select * from EXPENSE_404_project";
 	private final String SQL_GET_ALL_EXPENSES_BY_USERNAME = "select * from EXPENSE_404_project where USER = ?";
+	private final String SQL_GET_ALL_EXPENSES_BY_ID = "select * from EXPENSE_404_project where id = ?";
 	private final String SQL_GET_REPORTS_FROM = "select * from USER_404_project where USERNAME = ?";
 	private final String SQL_UPDATE_STATUS = "update EXPENSE_404_project SET expenseStatus = ?, expenseDesc = ? WHERE id = ?";
+	private final String SQL_UPDATE_BillImage = "update EXPENSE_404_project SET billImage = ? WHERE id = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
 	private final String SQL_GET_USER_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE EXPENSESTATUS = ?";
+	private final String SQL_GET_EXPENSE_BY_IMAGE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND BILLIMAGE = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSESTATUS = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, expenseDesc, billImage, user) values(?,?,?,?,?,?,?,?)";
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project WHERE EXPENSESTATUS = 'Approved' GROUP BY EXPENSETYPE";
@@ -122,6 +125,15 @@ public class expenseDAO {
 	public List<Expense> getExpensesByUserName(String USER){
 		return jdbcTemplate.query(SQL_GET_ALL_EXPENSES_BY_USERNAME, new Object[] {USER} , new ExpenseMapper());
 	}
+	
+	/**
+	 * Gets a list of expenses made by the userID.
+	 * @param INT expenseID who is logged in.
+	 * @return Returns list of expenses.
+	 */
+	public List<Expense> getExpensesByID(int expenseID){
+		return jdbcTemplate.query(SQL_GET_ALL_EXPENSES_BY_ID, new Object[] {expenseID} , new ExpenseMapper());
+	}
 
 
 	/**
@@ -133,6 +145,17 @@ public class expenseDAO {
 	public List<Expense> getExpensesByUserNameAndExpenseType(String USER, String EXPENSETYPE){
 
 		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSETYPE, new Object[] {USER, EXPENSETYPE} , new ExpenseMapper());
+	}
+	
+	/**
+	 *  Gets a list of certain expense made by the user logged and the  name of the bill image.
+	 * @param USER User who is logged in.
+	 * @param PathImage name of the bill image file.
+	 * @return List of expenses.
+	 */
+	public List<Expense> getExpensesByImage(String USER, String PathImage){
+
+		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_IMAGE, new Object[] {USER, PathImage} , new ExpenseMapper());
 	}
 	
 	
@@ -156,9 +179,8 @@ public class expenseDAO {
 		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSESTATUS, new Object[] {EXPENSESTATUS} , new ExpenseMapper());
 	}
 	/**
-	 * Gets a list of certain expense type made by the user.
+	 * Gets a list of certain expense sorted by ASC order
 	 * @param USER User who is logged in.
-	 * @param SORTEXPENSE it is the sort type asc or desc.
 	 * @return List of expenses. 
 	 * */
 	public List<Expense> getExpensesBySortAsc(String USER){
@@ -166,6 +188,11 @@ public class expenseDAO {
 		return jdbcTemplate.query(SQL_GET_TOTAL_EXPENSES_SORT_ASC, new Object[] {USER} , new ExpenseMapper());
 	}
 	
+	/**
+	 * Gets a list of certain expense sorted by DESC order.
+	 * @param USER User who is logged in.
+	 * @return List of expenses. 
+	 * */
 	public List<Expense> getExpensesBySortDesc(String USER){
 
 		return jdbcTemplate.query(SQL_GET_TOTAL_EXPENSES_SORT_DESC, new Object[] {USER} , new ExpenseMapper());
@@ -186,6 +213,15 @@ public class expenseDAO {
 	 */
 	public boolean modifyStatus(Expense expense){
 		return jdbcTemplate.update(SQL_UPDATE_STATUS, expense.getExpenseStatus(), expense.getExpenseDesc(), expense.getId()) > 0;
+	}
+	
+	/**
+	 * Finds and updated the image of an expense.
+	 * @param expense The expense being modified.
+	 * @return Executes query to update status of the expense.
+	 */
+	public boolean updateImage(Expense updateExpense){
+		return jdbcTemplate.update(SQL_UPDATE_BillImage, updateExpense.getBillImage(), updateExpense.getId()) > 0;
 	}
 
 	/**
