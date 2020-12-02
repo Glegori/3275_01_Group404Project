@@ -40,9 +40,9 @@ public class expenseDAO {
 	private final String SQL_UPDATE_STATUS = "update EXPENSE_404_project SET expenseStatus = ?, expenseDesc = ? WHERE id = ?";
 	private final String SQL_UPDATE_BillImage = "update EXPENSE_404_project SET billImage = ? WHERE id = ?";
 	private final String SQL_GET_EXPENSE_BY_EXPENSETYPE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSETYPE = ?";
-	private final String SQL_GET_USER_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE EXPENSESTATUS = ?";
+	private final String SQL_GET_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE EXPENSESTATUS = ?";
 	private final String SQL_GET_EXPENSE_BY_IMAGE = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND BILLIMAGE = ?";
-	private final String SQL_GET_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSESTATUS = ?";
+	private final String SQL_GET_USER_EXPENSE_BY_EXPENSESTATUS = "SELECT * FROM EXPENSE_404_project WHERE USER = ? AND EXPENSESTATUS = ?";
 	private final String SQL_INSERT_EXPENSE = "insert into EXPENSE_404_project(expenseName, expenseCost, date, expenseType, expenseStatus, expenseDesc, billImage, user) values(?,?,?,?,?,?,?,?)";
 	private final String SQL_GET_TOTAL_COST_BY_CATEGORY = "SELECT EXPENSETYPE, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project WHERE EXPENSESTATUS = 'Approved' GROUP BY EXPENSETYPE";
 	private final String SQL_GET_TOTAL_COST_BY_USER = "SELECT USER, SUM (EXPENSECOST) AS TOTALCOST, AVG (EXPENSECOST) AS AVERAGECOST, COUNT (EXPENSECOST) AS TOTALCOUNT FROM EXPENSE_404_project WHERE EXPENSESTATUS = 'Approved' GROUP BY USER";
@@ -176,10 +176,11 @@ public class expenseDAO {
 
 	/**
 	 * Gets a list of expenses from all users based on status
-	 * @param EXPENSESTATUS
+	 * @param EXPENSESTATUS the status of the expenses you want to fetch
 	 * @return
 	 */
 	public List<Expense> getExpenseByStatus(String EXPENSESTATUS){
+		System.out.println(EXPENSESTATUS);
 		return jdbcTemplate.query(SQL_GET_EXPENSE_BY_EXPENSESTATUS, new Object[] {EXPENSESTATUS} , new ExpenseMapper());
 	}
 	/**

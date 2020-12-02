@@ -3,15 +3,19 @@ package com.csis3275.Group404Project.controller;
 import javax.servlet.http.HttpSession;
 
 
+import com.csis3275.Group404Project.csvHelper;
 import com.csis3275.Group404Project.dao.userDAO;
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 
 import antlr.StringUtils;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -411,7 +415,45 @@ public class BootController {
 //		}
 //	}
 
-	//@GetMapping(value = "/csv", produces = "text/csv")
+	/**
+	 *
+	 * @return
+	 */
+	@GetMapping(value = "/csv", produces = "application/csv")
+	public ResponseEntity fileReturn(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		if(user.getUserType().equals("admin")) {
+			List<Expense> expenses = expenseDao.getExpenseByStatus("Approved");
+			File csvFile = csvHelper.getCSVFile(expenses);
+			InputStreamResource file = null;
+			try {
+				file = new InputStreamResource(new ByteArrayInputStream(Files.readAllBytes(Paths.get(csvFile.getPath()))));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=data.csv")
+					.contentType(MediaType.parseMediaType("application/csv"))
+					.body(file);
+		}
+		else {
+			List<Expense> expenses = expenseDao.getExpensesByUserAndStatus(currentPrincipalName,"Approved");
+			File csvFile = csvHelper.getCSVFile(expenses);
+			InputStreamResource file = null;
+			try {
+				file = new InputStreamResource(new ByteArrayInputStream(Files.readAllBytes(Paths.get(csvFile.getPath()))));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=data.csv")
+					.contentType(MediaType.parseMediaType("application/csv"))
+					.body(file);
+		}
+	}
 
 
 	/**

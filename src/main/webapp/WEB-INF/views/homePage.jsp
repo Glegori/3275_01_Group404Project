@@ -17,48 +17,18 @@
 </head>
 <body>
 
-<t:if test="${currentUser!= null}">
-	<t:choose>
-		<t:when test="${currentUser.isUserAdmin()}">
-			<div id="idSideMenu" class="sideMenu">
-				<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
-				<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>
-				<a href="javascript:void(0)" onclick="location.href = '/importCSV'">Import Expenses<br>by CSV file</a>
-				<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>
-				<a href="javascript:void(0)" onclick="location.href = '/createUser'">Create New User</a>
-				<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
-				<a href="javascript:void(0)" onclick="location.href = '/reports'">View Reports</a>
-				<a href="javascript:void(0)" onclick="location.href = '/expensesOverTime'">View Expenses <br>over time</a>
-				<a href="javascript:void(0)" onclick="location.href = '/manageUsers'">Manage Current <br> Users</a>
-					<a href="javascript:void(0)" onclick="location.href = '/budget'">Review Budget</a>
-			</div>
-
-		</t:when>
-		<t:otherwise>
-			<div id="idSideMenu" class="sideMenu">
-				<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
-				<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>
-				<a href="javascript:void(0)" onclick="location.href = '/importCSV'">Import Expenses<br>by CSV file</a>
-				<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>
-				<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
-				<a href="javascript:void(0)" onclick="location.href = '/reports'">View Reports</a>
-				<a href="javascript:void(0)" onclick="location.href = '/expensesOverTime'">View Expenses <br>over time</a>
-					<a href="javascript:void(0)" onclick="location.href = '/budget'">Review Budget</a>
-			</div>
-		</t:otherwise>
-	</t:choose>
-
-</t:if>
-<%--	<div id="idSideMenu" class="sideMenu">--%>
-<%--  		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>--%>
-<%--		<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>--%>
-<%--		<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>--%>
-<%--		<a href="javascript:void(0)" onclick="location.href = '/createUser'">Create New User</a>--%>
-<%--		<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>--%>
-<%--		<a href="javascript:void(0)" onclick="location.href = '/reports'">View Reports</a>--%>
-<%--		<a href="javascript:void(0)" onclick="location.href = '/expensesOverTime'">View Expenses <br>over time</a>--%>
-<%--		<a href="javascript:void(0)" onclick="location.href = '/manageUsers'">Manage Current <br> Users</a>--%>
-<%--  	</div>--%>
+	<div id="idSideMenu" class="sideMenu">
+  		<a href="javascript:void(0)" id="closeButton" class="sideButton" onclick="closeMenu()">&#9668;</a>
+		<a href="javascript:void(0)" onclick="openExpenseForm()">Add An Expense</a>
+		<a href="javascript:void(0)" onclick="location.href = '/csv'">Export to CSV</a>
+		<a href="javascript:void(0)" onclick="location.href = '/importCSV'">Import Expenses<br>by CSV file</a>
+		<a href="javascript:void(0)" onclick="location.href = '/changePassword' ">Change User<br>Password</a>
+		<a href="javascript:void(0)" onclick="location.href = '/createUser'">Create New User</a>
+		<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
+		<a href="javascript:void(0)" onclick="location.href = '/reports'">View Reports</a>
+		<a href="javascript:void(0)" onclick="location.href = '/expensesOverTime'">View Expenses <br>over time</a>
+		<a href="javascript:void(0)" onclick="location.href = '/manageUsers'">Manage Current <br> Users</a>
+  	</div>
 
 	<div id="top">
 		<h2 class="header">404 Expense Tracker</h2>
