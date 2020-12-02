@@ -21,11 +21,14 @@ public class userDAO {
 
     private final String SQL_GET_ALL = "select * from USER_404_PROJECT";
     private final String SQL_GET_USER_BY_USERNAME = "select * from USER_404_PROJECT  where USERNAME = ?";
-    private final String SQL_DELETE_USER_BY_USERNAME = "delete * from USER_404_PROJECT where USERNAME = ?";
+    private final String SQL_GET_USER_BY_ID = "select * from USER_404_PROJECT where ID = ?";
+
     private final String SQL_UPDATE_USER_BY_USERNAME = "update USER_404_PROJECT set USERNAME = ?, PASSWORD = ?, REPORTSFROM = ?, USERTYPE = ?, TOTAL = ? WHERE USERNAME = ?";
     private final String SQL_UPDATE_PASSWORD_BY_USERNAME = "update USER_404_PROJECT set PASSWORD = ? WHERE USERNAME = ?";
     private final String SQL_UPDATE_USER_TOTAL_BY_USERNAME = "update USER_404_PROJECT set TOTAL = ? WHERE USERNAME = ? ";
     private final String SQL_INSERT_USER = "insert into USER_404_PROJECT(USERNAME, PASSWORD, REPORTSFROM, USERTYPE, TOTAL) values(?,?,?,?,?)";
+    private final String SQL_UPDATE_USER_BY_ID = "update USER_404_PROJECT set USERNAME = ?, REPORTSFROM = ?, USERTYPE = ?, TOTAL = ? where ID = ?";
+    private final String SQL_DELETE_USER_BY_ID = "delete from USER_404_PROJECT where ID = ?";
 
     /**
      * Gets the jdbc connection to h2.
@@ -70,6 +73,16 @@ public class userDAO {
         return jdbcTemplate.update(SQL_UPDATE_USER_TOTAL_BY_USERNAME, newTotal, userName) > 0;
     }
 
+
+    public boolean updateUserByID(USER_404_PROJECT userBeingUpdated) {
+
+
+        return jdbcTemplate.update(SQL_UPDATE_USER_BY_ID, userBeingUpdated.getUserName(), userBeingUpdated.getReportsFrom(),
+                userBeingUpdated.getUserType(), userBeingUpdated.getTotal(), userBeingUpdated.getID()) > 0;
+    }
+
+
+
     /**
      * Gets a list of all the users.
      * @return List of users.
@@ -86,5 +99,17 @@ public class userDAO {
      */
     public boolean updatePasswordByUserName(String userName, String newPassword){
         return jdbcTemplate.update(SQL_UPDATE_PASSWORD_BY_USERNAME, newPassword, userName) > 0;
+    }
+
+    public USER_404_PROJECT getUserByID(int id) {
+
+        return jdbcTemplate.queryForObject(SQL_GET_USER_BY_ID, new Object[] {id} , new UserMapper());
+    }
+
+
+    public boolean deleteUserByID(int id) {
+
+        return jdbcTemplate.update(SQL_DELETE_USER_BY_ID, id) > 0;
+
     }
 }

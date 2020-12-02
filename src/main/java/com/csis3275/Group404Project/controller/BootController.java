@@ -66,6 +66,17 @@ public class BootController {
 	public Expense setupModifyForm() {
 		return new Expense();
 	}
+
+
+	/**
+	 * Saves our editUser to be used
+	 * @return
+	 */
+	@ModelAttribute("editUser")
+	public USER_404_PROJECT setupEditUser() {
+		return new USER_404_PROJECT();
+	}
+
 	/**
 	 *
 	 * Shows the login screen.
@@ -387,6 +398,52 @@ public class BootController {
 
 	}
 
+
+
+	@GetMapping("/manageUsers")
+	public String manageUsersPage(HttpSession session, Model model) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+
+		USER_404_PROJECT user = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		if(user.getUserType().equals("admin")){
+
+			List<USER_404_PROJECT> currentUsers = userDAO.getAllUsers();
+			//System.out.println(currentUsers);
+			model.addAttribute("currentUsers", currentUsers);
+
+			return "manageUsers";
+		} else {
+			return("forbidden");
+		}
+
+	}
+
+
+	@PostMapping("/editUser")
+	public String editUser(@ModelAttribute("editUser")USER_404_PROJECT editUser, Model model){
+
+		userDAO.updateUserByID(editUser);
+		List<USER_404_PROJECT> users = userDAO.getAllUsers();
+		model.addAttribute("currentUsers", users);
+
+		return "manageUsers";
+
+	}
+
+	@GetMapping("/deleteUser")
+	public String deleteUser(@RequestParam int id, Model model){
+
+		userDAO.deleteUserByID(id);
+
+		List<USER_404_PROJECT> users = userDAO.getAllUsers();
+		model.addAttribute("currentUsers", users);
+
+
+		return "manageUsers";
+	}
 
 
 }

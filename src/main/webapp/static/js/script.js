@@ -37,7 +37,33 @@ function openModifyForm(id, expenseUser, expenseName, expenseCost,expenseDate, e
 
     });
 }
+
+function openEditUserForm(id, userName,password, userType, reportsFrom, total){
+    document.getElementById("editUserForm").style.width = "45%";
+    document.getElementById("editUserForm").style.display = "block";
+//this needs some modification for formatting
+    $(document).ready(function() {
+        $('#id').val(id);
+        $('#password').val(password)
+        $('#userName').val(userName);
+        $('#labelUserName').html('<p class="col-md-12 control-label" id="labelUserName"><strong>User Name: </strong>' + userName + '</p>');
+        $('#reportsFrom').val(reportsFrom);
+        // $('#labelReportsFrom').html('<p class="col-md-12 control-label" id="labelReportsFrom"><strong>Reports From: </strong>' + reportsFrom + '</p>');
+        $('#total').val(total);
+        // $('#labelTotal').html('<p class="col-md-12 control-label" id="labelTotal"><strong>Total: </strong>' + total + '</p>');
+        $('#userType').val(userType);
+    });
+}
+
+
+
 function closeSide(){
     document.getElementById("modifyForm").style.width = "0%";
     document.getElementById("modifyForm").style.display = "none";
+
+}
+
+function closeUserForm(){
+    document.getElementById("editUserForm").style.width = "0%";
+    document.getElementById("editUserForm").style.display = "none";
 }

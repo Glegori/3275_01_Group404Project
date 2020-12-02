@@ -25,6 +25,7 @@
 		<a href="javascript:void(0)" onclick="location.href = '/decisionPage'">Review Expenses</a>
 		<a href="javascript:void(0)" onclick="location.href = '/reports'">View Reports</a>
 		<a href="javascript:void(0)" onclick="location.href = '/expensesOverTime'">View Expenses <br>over time</a>
+		<a href="javascript:void(0)" onclick="location.href = '/manageUsers'">Manage Current <br> Users</a>
   	</div>
 
 	<div id="top">
