@@ -169,6 +169,54 @@ public class BootController {
 		model.addAttribute("expenseUser", expenseUser);
 		return "reports";
 	}
+	
+	/**
+	 * Page that allows to edit the budget of each category,
+	 * @param model Holds all the current budgets.
+	 * @return Redirects to the budget page.
+	 */
+	
+	@GetMapping("/budget")
+	public String budget(Model model) {
+		List<Map<String, Object>> expenseBudget = expenseDao.getBudget();
+		model.addAttribute("expenseBudget", expenseBudget);
+		return "budget";	
+		}
+	
+	/**
+	 * Updates the selected budget based on the number inputed
+	 * @param expenseType 
+	 * @param budget
+	 * @param model
+	 * @return Redirects to budget page with updated values 
+	 */
+	@PostMapping("/saveBudget")
+	public String saveBudget(@RequestParam String expenseType, @RequestParam double budget, Model model){
+		
+		expenseDao.updateBudget(expenseType, budget);
+		
+		List<Map<String, Object>> expenseBudget = expenseDao.getBudget();
+		model.addAttribute("expenseBudget", expenseBudget);
+		return "budget";
+		
+	}
+
+	/**
+	 * Updates the selected budget to -1 in the database.
+	 * @param expenseTypeRemove
+	 * @param model
+	 * @return Redirects to budget page with updated values
+	 */
+	@PostMapping("/removeBudget")
+	public String removeBudget(@RequestParam String expenseTypeRemove, Model model){
+		
+		expenseDao.updateBudget(expenseTypeRemove, -1.0);
+		
+		List<Map<String, Object>> expenseBudget = expenseDao.getBudget();
+		model.addAttribute("expenseBudget", expenseBudget);
+		return "budget";
+		
+	}
 
 	/**
 	 *
@@ -193,8 +241,8 @@ public class BootController {
 
 	/**
 	 *
-	 * Grabs all the data that was entered into the form and create a new expense. This expense
-	 * is then added to the database.
+	 * Grabs all the data that was entered into the form and create a new expense. Checks the budget too see if it will be auto
+	 * declined. This expense is then added to the database.
 	 * @return Redirects back to homepage.
 	 * @throws IOException 
 	 */
@@ -207,6 +255,21 @@ public class BootController {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		
+	try {
+		double totalCost = (double) expenseDao.getTotalCostForCategory(createExpense.getExpenseType()).get(0).get("TOTALCOST");
+		double totalBudget = (double) expenseDao.getBudgetForCategory(createExpense.getExpenseType()).get(0).get("BUDGET");
+		
+		if (totalBudget != -1 && (totalCost + createExpense.getExpenseCost()) > totalBudget) {
+			createExpense.setExpenseDesc("Declined due to expense going over budget");
+			createExpense.setExpenseStatus("Denied");
+		}
+	}
+	catch (Exception e) {
+		
+	}
+		
+		expenseDao.createExpense(createExpense, currentPrincipalName);
 
 		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
 

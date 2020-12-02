@@ -50,6 +50,10 @@ public class expenseDAO {
 	private final String SQL_GET_TOTAL_BY_USERNAME = "SELECT SUM(EXPENSECOST) FROM EXPENSE_404_PROJECT WHERE USER = ?";
 	private final String SQL_GET_TOTAL_EXPENSES_SORT_ASC = "SELECT * FROM EXPENSE_404_project WHERE USER = ? order by DATE ASC";
 	private final String SQL_GET_TOTAL_EXPENSES_SORT_DESC = "SELECT * FROM EXPENSE_404_project WHERE USER = ? order by DATE DESC";
+	private final String SQL_GET_ALL_BUDGETS = "SELECT * FROM BUDGET_404_PROJECT ORDER BY EXPENSETYPE ASC";
+	private final String SQL_UPDATE_BUDGET = "UPDATE BUDGET_404_PROJECT SET BUDGET = ? WHERE EXPENSETYPE = ?";
+	private final String GET_BUDGET_FOR_CATEGORY = "SELECT BUDGET FROM BUDGET_404_PROJECT WHERE EXPENSETYPE = ?";
+	private final String GET_TOTAL_COST_FOR_CATEGORY = "SELECT SUM(EXPENSECOST) AS TOTALCOST FROM EXPENSE_404_project WHERE EXPENSETYPE = ?";
 
 	//Expenses over Time stuff
 	private final String SQL_GET_DATA_BETWEEN_DATES = "SELECT * FROM EXPENSE_404_PROJECT WHERE DATE BETWEEN ? AND ? ORDER BY DATE ASC";
@@ -247,6 +251,44 @@ public class expenseDAO {
 	public boolean deleteExpense(Expense expense){
 
 		return jdbcTemplate.update(SQL_DELETE_BY_EXPENSE_ID,  expense.getId()) > 0;
+	}
+	
+	/**
+	 * Gets all budgets for the expense types
+	 * @return List of all the budgets.
+	 */
+	public List<Map<String, Object>> getBudget(){
+		return jdbcTemplate.queryForList(SQL_GET_ALL_BUDGETS);
+	}
+	
+	/**
+	 * Updates the budget of the expense.
+	 * @param expense
+	 * @param amount
+	 * @return Executes update on budget.
+	 */
+	public boolean updateBudget(String expense, double amount) {
+		return jdbcTemplate.update(SQL_UPDATE_BUDGET, amount, expense) > 0;
+	}
+	
+	/**
+	 * Gets the budget for the selected category
+	 * @param expense
+	 * @return Returns budget for the expense
+	 */
+	public List<Map<String, Object>> getBudgetForCategory(String expense){
+		
+		return jdbcTemplate.queryForList(GET_BUDGET_FOR_CATEGORY, new Object[] {expense});
+	}
+	
+	/**
+	 * Gets the sum of all costs for a specific category
+	 * @param expense
+	 * @return Returns total cost for category
+	 */
+	public List<Map<String, Object>> getTotalCostForCategory(String expense){
+		
+		return jdbcTemplate.queryForList(GET_TOTAL_COST_FOR_CATEGORY, new Object[] {expense});
 	}
 }
 
