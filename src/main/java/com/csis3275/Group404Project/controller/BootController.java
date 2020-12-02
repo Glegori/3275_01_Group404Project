@@ -223,39 +223,50 @@ public class BootController {
 		
 		//check if the file is empty
 		if (file.isEmpty()) {
-			List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
-			model.addAttribute("currentUserExpenses", expenses);
-            //redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-			return "homePage";
-        }
-		
-		try {
 			
-			DateTimeFormatter dateAndTime = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
-			LocalDateTime now = LocalDateTime.now();  
-			String datePath = dateAndTime.format(now);
-            // Get the file and save it somewhere
-            byte[] bytes = file.getBytes();
-            String completePath = UPLOADED_FOLDER + "\\" + datePath + "-" + file.getOriginalFilename();
-            Path path = Paths.get(completePath);
-            Files.write(path, bytes);
-            
-            Expense createExpense = new Expense();
-            
-            String imagePath = datePath + "-" + file.getOriginalFilename();
-            createExpense.setExpenseName(expenseName);
-            createExpense.setDate(date);
-            createExpense.setExpenseCost(expenseCost);
-            createExpense.setExpenseType(expenseType);
-            createExpense.setExpenseStatus(expenseStatus);
-            createExpense.setBillImage(imagePath);
-            createExpense.setExpenseDesc(expenseDesc);
-            System.out.println("=== PATH === " + completePath);
-            expenseDao.createExpense(createExpense, currentPrincipalName);
-
-		} catch (IOException e) {
-            e.printStackTrace();
+	            Expense createExpense = new Expense();
+	            
+	            createExpense.setExpenseName(expenseName);
+	            createExpense.setDate(date);
+	            createExpense.setExpenseCost(expenseCost);
+	            createExpense.setExpenseType(expenseType);
+	            createExpense.setExpenseStatus(expenseStatus);
+	            createExpense.setBillImage("");
+	            createExpense.setExpenseDesc(expenseDesc);
+	            expenseDao.createExpense(createExpense, currentPrincipalName);
+	
         }
+		else
+		{
+			try {
+				
+				DateTimeFormatter dateAndTime = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+				LocalDateTime now = LocalDateTime.now();  
+				String datePath = dateAndTime.format(now);
+	            // Get the file and save it somewhere
+	            byte[] bytes = file.getBytes();
+	            String completePath = UPLOADED_FOLDER + "\\" + datePath + "-" + file.getOriginalFilename();
+	            Path path = Paths.get(completePath);
+	            Files.write(path, bytes);
+	            
+	            Expense createExpense = new Expense();
+	            
+	            String imagePath = datePath + "-" + file.getOriginalFilename();
+	            createExpense.setExpenseName(expenseName);
+	            createExpense.setDate(date);
+	            createExpense.setExpenseCost(expenseCost);
+	            createExpense.setExpenseType(expenseType);
+	            createExpense.setExpenseStatus(expenseStatus);
+	            createExpense.setBillImage(imagePath);
+	            createExpense.setExpenseDesc(expenseDesc);
+	            expenseDao.createExpense(createExpense, currentPrincipalName);
+
+			} catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+		
+
 
       
 		List<Expense> expenses = expenseDao.getExpensesByUserName(currentPrincipalName);
