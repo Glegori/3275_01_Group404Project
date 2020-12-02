@@ -282,8 +282,14 @@ public class BootController {
 	            createExpense.setBillImage("");
 	            createExpense.setExpenseDesc(expenseDesc);
 	            
+	            double totalCost;
 	            try {
-	        		double totalCost = (double) expenseDao.getTotalCostForCategory(createExpense.getExpenseType()).get(0).get("TOTALCOST");
+	        		 totalCost = (double) expenseDao.getTotalCostForCategory(createExpense.getExpenseType()).get(0).get("TOTALCOST");
+	            }
+	            catch (Exception e) {
+	            	 totalCost = 0;
+	            }
+	            try {
 	        		double totalBudget = (double) expenseDao.getBudgetForCategory(createExpense.getExpenseType()).get(0).get("BUDGET");
 	        		
 	        		if (totalBudget != -1 && (totalCost + createExpense.getExpenseCost()) > totalBudget) {
@@ -321,6 +327,27 @@ public class BootController {
 	            createExpense.setExpenseStatus(expenseStatus);
 	            createExpense.setBillImage(imagePath);
 	            createExpense.setExpenseDesc(expenseDesc);
+	            
+	            double totalCost;
+	            try {
+	        		 totalCost = (double) expenseDao.getTotalCostForCategory(createExpense.getExpenseType()).get(0).get("TOTALCOST");
+	            }
+	            catch (Exception e) {
+	            	 totalCost = 0;
+	            }
+	            try {
+	        		double totalBudget = (double) expenseDao.getBudgetForCategory(createExpense.getExpenseType()).get(0).get("BUDGET");
+	        		
+	        		if (totalBudget != -1 && (totalCost + createExpense.getExpenseCost()) > totalBudget) {
+	        			createExpense.setExpenseDesc("Declined due to expense going over budget");
+	        			createExpense.setExpenseStatus("Denied");
+	        		}
+	        	}
+	        	catch (Exception e) {
+	        		
+	        	}
+	          
+	            
 	            expenseDao.createExpense(createExpense, currentPrincipalName);
 
 			} catch (IOException e) {
