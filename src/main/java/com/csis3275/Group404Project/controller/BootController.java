@@ -5,10 +5,12 @@ import javax.servlet.http.HttpSession;
 
 import com.csis3275.Group404Project.csvHelper;
 import com.csis3275.Group404Project.dao.userDAO;
+import com.csis3275.Group404Project.model.CurrencyRate;
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
 
 import antlr.StringUtils;
 
+import com.csis3275.Group404Project.model.rates;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.sql.Date;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.Desktop;
@@ -136,6 +139,17 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+
+		RestTemplate restTemplate = new RestTemplate();
+		CurrencyRate currencyRate = restTemplate.getForObject("http://localhost:6969/api", CurrencyRate.class);
+		rates rates = currencyRate.getrates();
+		System.out.println(currencyRate.getDate());
+		System.out.println(rates);
+
+		model.addAttribute("rates", rates);
+		model.addAttribute("currencies", currencyRate);
+
+
 
 		model.addAttribute("currentUser", currentUser);
 

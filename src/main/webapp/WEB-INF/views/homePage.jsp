@@ -66,6 +66,17 @@
 		<button onclick="location.href = '/login';" id="logout" type="button"
 			class="btn btn-dark btn-lg">Logout</button>
 
+		<t:if test="${rates != null}">
+
+			<h3 class="header">
+				&nbsp;&nbsp; BASE RATE (USD): ${rates.getUSD()}
+				&nbsp; EUR: ${rates.getEUR()}
+				&nbsp; PKR: ${rates.getPKR()}
+				&nbsp; INR: ${rates.getINR()}
+			</h3>
+
+		</t:if>
+
 		<select onchange="location = this.value">
 			<option value="-" label="-- Please Select an expense type --" />
 			<option value="/filterExpense/?expenseType=FOOD" label="Food" />
