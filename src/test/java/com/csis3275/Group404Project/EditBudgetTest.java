@@ -1,3 +1,5 @@
+package com.csis3275.Group404Project;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Test;
