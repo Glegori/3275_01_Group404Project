@@ -22,6 +22,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.net.MalformedURLException;
 import java.net.URL;
 public class ReviewBudgetTest {
@@ -44,6 +45,7 @@ public class ReviewBudgetTest {
     driver.get("http://localhost:8080/login");
     driver.manage().window().setSize(new Dimension(1593, 1040));
     driver.findElement(By.id("username")).sendKeys("Francis");
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("password")).sendKeys("12345");
     driver.findElement(By.id("password")).sendKeys(Keys.ENTER);
     driver.findElement(By.xpath("//div[@onclick=\'openMenu()\']")).click();
@@ -53,18 +55,25 @@ public class ReviewBudgetTest {
       WebElement dropdown = driver.findElement(By.id("type"));
       dropdown.findElement(By.xpath("//option[. = 'TRAVEL']")).click();
     }
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("type")).click();
     driver.findElement(By.id("Expense")).click();
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("Expense")).click();
     driver.findElement(By.id("save")).click();
     driver.findElement(By.xpath("//button[@onclick=\"location.href = \'/homePage\';\"]")).click();
     driver.findElement(By.xpath("//div[@onclick=\'openMenu()\']")).click();
     driver.findElement(By.linkText("Add An Expense")).click();
     driver.findElement(By.id("expenseName")).click();
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("expenseName")).sendKeys("Hawaii");
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("expenseCost")).sendKeys("5000");
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("date")).click();
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("date")).sendKeys("2020-12-02");
+    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("expenseType")).click();
     {
       WebElement dropdown = driver.findElement(By.id("expenseType"));
