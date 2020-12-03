@@ -31,6 +31,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Date;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -132,20 +135,33 @@ public class BootController {
 	 * @return Redirects to the home page.
 	 */
 	@GetMapping("/homePage")
-	public String showHomePage(HttpSession session, Model model) {
+	public String showHomePage(HttpSession session, Model model) throws IOException {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
 
-		RestTemplate restTemplate = new RestTemplate();
-		CurrencyRate currencyRate = restTemplate.getForObject("http://localhost:6969/api", CurrencyRate.class);
-		rates rates = currencyRate.getrates();
-		System.out.println(currencyRate.getDate());
-		System.out.println(rates);
+		try{
+			URL url = new URL("http://localhost:6969/api");
+			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+			huc.setRequestMethod("HEAD");
+			int responseCode = huc.getResponseCode();
+			if(responseCode == 200){
 
-		model.addAttribute("rates", rates);
-		model.addAttribute("currencies", currencyRate);
+				RestTemplate restTemplate = new RestTemplate();
+				CurrencyRate currencyRate = restTemplate.getForObject("http://localhost:6969/api", CurrencyRate.class);
+				rates rates = currencyRate.getrates();
+				System.out.println(currencyRate.getDate());
+				System.out.println(rates);
+
+				model.addAttribute("rates", rates);
+				model.addAttribute("currencies", currencyRate);
+
+			}
+		}catch (IOException e){
+			System.out.println("Api didn't respond correctly, please check the connection.");
+
+		}
 
 		model.addAttribute("currentUser", currentUser);
 
@@ -197,6 +213,11 @@ public class BootController {
 	public String budget(Model model) {
 		List<Map<String, Object>> expenseBudget = expenseDao.getBudget();
 		model.addAttribute("expenseBudget", expenseBudget);
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		model.addAttribute("currentUser", currentUser);
 		return "budget";	
 		}
 	
@@ -214,6 +235,11 @@ public class BootController {
 		
 		List<Map<String, Object>> expenseBudget = expenseDao.getBudget();
 		model.addAttribute("expenseBudget", expenseBudget);
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		model.addAttribute("currentUser", currentUser);
 		return "budget";
 		
 	}
@@ -231,6 +257,11 @@ public class BootController {
 		
 		List<Map<String, Object>> expenseBudget = expenseDao.getBudget();
 		model.addAttribute("expenseBudget", expenseBudget);
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		model.addAttribute("currentUser", currentUser);
 		return "budget";
 		
 	}
@@ -572,6 +603,9 @@ public class BootController {
 
 		 
 		//MODEL
+
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
 	}
@@ -605,6 +639,10 @@ public class BootController {
 			//MODEL
 			model.addAttribute("currentUserExpenses", expenses);
 		}
+
+
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		model.addAttribute("currentUser", currentUser);
 		return "homePage";
 	}
 	
@@ -624,6 +662,9 @@ public class BootController {
 
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
+
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		model.addAttribute("currentUser", currentUser);
 		return "homePage";
 	}
 
@@ -829,6 +870,8 @@ public class BootController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
+		USER_404_PROJECT currentUser = userDAO.getUserByUserName(currentPrincipalName).get(0);
+		model.addAttribute("currentUser", currentUser);
 
 		List<Expense> expenses = expenseDao.getExpensesByID(expenseID);
 		
