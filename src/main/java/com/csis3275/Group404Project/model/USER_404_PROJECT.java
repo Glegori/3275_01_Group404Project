@@ -74,6 +74,10 @@ public class USER_404_PROJECT {
         this.total = total;
     }
 
+
+    /**
+     * @return True if the user is an admin type, false otherwise.
+     */
     public boolean isUserAdmin(){
         if (userType.equals("admin")){
             return true;

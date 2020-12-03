@@ -71,6 +71,13 @@ public class expenseDAO {
 		return jdbcTemplate.queryForObject(SQL_GET_TOTAL_BY_USERNAME, Double.class, userName);
 	}
 
+	/**
+	 * Adds an entry to the list of expenses table.
+	 * @param startDate The start date that the user selects for the starting period for the graphical view of the expenses.
+	 * @param startDate The end date that the user selects for the end of the period for the graphical view of the expenses.
+	 * @return The query to create an expense.
+	 */
+
 	public List<Expense> getExpensesBetweenDates(Date startDate, Date endDate){
 
 		return jdbcTemplate.query(SQL_GET_DATA_BETWEEN_DATES, new Object[] {startDate, endDate}, new ExpenseMapper());

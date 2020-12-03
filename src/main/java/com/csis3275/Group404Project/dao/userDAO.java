@@ -101,12 +101,23 @@ public class userDAO {
         return jdbcTemplate.update(SQL_UPDATE_PASSWORD_BY_USERNAME, newPassword, userName) > 0;
     }
 
+
+    /**
+     * @param id is the id of the user we want to obtain the object for.
+     * Gets the user with the matching id from the database.
+     * @return USER_404_PROJECT object.
+     */
     public USER_404_PROJECT getUserByID(int id) {
 
         return jdbcTemplate.queryForObject(SQL_GET_USER_BY_ID, new Object[] {id} , new UserMapper());
     }
 
 
+    /**
+     * @param id is the id of the user we want to delete from the database.
+     * Deletes the user with the matching id as the ID parameter being passed to the method.
+     * @return True if the delete was successful. Since the number of rows affected will be 1.
+     */
     public boolean deleteUserByID(int id) {
 
         return jdbcTemplate.update(SQL_DELETE_USER_BY_ID, id) > 0;

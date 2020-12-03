@@ -90,7 +90,7 @@ public class BootController {
 
 
 	/**
-	 * Saves our editUser to be used
+	 * Saves our edit user to be used (this user data is subject to manipulation through the web application)
 	 * @return
 	 */
 	@ModelAttribute("editUser")
@@ -98,7 +98,10 @@ public class BootController {
 		return new USER_404_PROJECT();
 	}
 
-
+	/**
+	 * Saves our current user to be used
+	 * @return
+	 */
 	@ModelAttribute("currentUser")
 	public USER_404_PROJECT setupCurrentUser() {
 		return new USER_404_PROJECT();
@@ -607,11 +610,20 @@ public class BootController {
 		return "homePage";
 	}
 
+	/**
+	 * Shows the options for inputing the period in which the user wants to see the graphical reports for the expenses.
+	 * @return Redirects to expensesOverTime page
+	 */
 	@GetMapping("/expensesOverTime")
 	public String expensesOverTime(){
 		return ("expensesByTime");
 	}
 
+	/**
+	 * @param startDate is the starting date for the period in which the user wants to see the graphical reports for the expenses.
+	 * @param endDate is the ending date for the period in which the user wants to see the graphical reports for the expenses.
+	 * @return Redirects to expensesOverTime page
+	 */
 	@PostMapping("/expensesOverTime")
 	public String displayExpensesOverTime(@RequestParam Date startDate, @RequestParam Date endDate, Model model){
 		System.out.println(startDate);
@@ -628,8 +640,10 @@ public class BootController {
 
 	}
 
-
-
+	/**
+	 * Shows the table of users present in the database and their respective data fields some of which are editable through the edit form.
+	 * @return Redirects to expensesOverTime page
+	 */
 	@GetMapping("/manageUsers")
     public String manageUsersPage(HttpSession session, Model model) {
 
@@ -733,9 +747,12 @@ public class BootController {
 		return ("importExpensesCsvFile");
 
 	}
-	
 
-
+	/**
+	 * @param editUser is the user subject to the edit selected by an admin to edit the data fields for.
+	 * @return Returns the manageUsers page but with a form which contains some default data according to the user that was
+	 * selected for the edit.
+	 */
 	@PostMapping("/editUser")
 	public String editUser(@ModelAttribute("editUser")USER_404_PROJECT editUser, Model model){
 
@@ -747,6 +764,10 @@ public class BootController {
 
 	}
 
+	/**
+	 * @param id is the ID of the user that is going to be deleted.
+	 * @return Redirects to manage users page but with an updated list of the users.
+	 */
 	@GetMapping("/deleteUser")
 	public String deleteUser(@RequestParam int id, Model model){
 
