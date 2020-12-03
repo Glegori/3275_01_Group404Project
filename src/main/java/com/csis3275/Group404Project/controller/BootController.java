@@ -9,7 +9,6 @@ import com.csis3275.Group404Project.model.CurrencyRate;
 import com.csis3275.Group404Project.model.USER_404_PROJECT;
 
 import antlr.StringUtils;
-
 import com.csis3275.Group404Project.model.rates;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -29,13 +28,12 @@ import com.csis3275.Group404Project.dao.expenseDAO;
 import com.csis3275.Group404Project.model.Expense;
 
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 
 import java.sql.Date;
 
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.Desktop;
@@ -148,8 +146,6 @@ public class BootController {
 
 		model.addAttribute("rates", rates);
 		model.addAttribute("currencies", currencyRate);
-
-
 
 		model.addAttribute("currentUser", currentUser);
 
@@ -562,7 +558,6 @@ public class BootController {
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
 		List <Expense> expenses;
 
 		//BRING LIST
@@ -571,9 +566,11 @@ public class BootController {
 			expenses = expenseDao.getExpensesByUserNameAndExpenseType(currentPrincipalName, expenseType);
 			}
 			catch (Exception e) {
-			expenses = null ;
+			expenses = new ArrayList<Expense>();
 			}
- 
+
+
+		 
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
@@ -582,7 +579,7 @@ public class BootController {
 	/**
 	 *
 	 * Shows a filtered list of expenses based on the sorting method selected.
-	 * @param STRING sortExpense which is the type of the sort of the expense.
+	 * @param STRING Expense which is the type of the sort of the expense.
 	 * @param MODEL model.
 	 * @return Redirects to home page.
 	 */
@@ -592,7 +589,7 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 
-
+		
 		//BRING LIST
 		if(sortExpense.equals("ASC"))
 		{
