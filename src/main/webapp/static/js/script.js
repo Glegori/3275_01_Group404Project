@@ -61,6 +61,57 @@ function closeSide(){
 
 }
 
+function changeBudget() {
+	var selectedDiv = document.getElementById("selectedChoiceDiv");
+	document.getElementById("expenseType").value = innerHTML = document.getElementById("type").value;
+
+	document.getElementById("expenseTypeRemove").value = innerHTML = document.getElementById("type").value;
+	for (var i = 0; i < budgetTypes.length; i++) {
+		if (budgetTypes[i] == document.getElementById("expenseType").value) {
+
+			if (budgetAmounts[i] == -1) {
+				document.getElementById("currentBudget").innerHTML = "No budget set yet.";
+			}
+			else {
+				document.getElementById("currentBudget").innerHTML = "Current budget set: $" +
+					budgetAmounts[i].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+				document.getElementById("budget").value = budgetAmounts[i];
+				document.getElementById("slider").value = budgetAmounts[i];
+			}
+		}
+	}
+	if (document.getElementById("expenseType").value == 'Expense') {
+		console.log(document.getElementById("type").value);
+		selectedDiv.style.display = "none";
+	}
+	else {
+
+		document.getElementById("selectedChoice").innerHTML = document.getElementById("type").value;
+		selectedDiv.style.display = "block";
+	}
+
+}
+
+
+function changeSlider(value) {
+	document.getElementById("budget").value = value.toString();
+	document.getElementById("output").innerHTML = "$" + value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+}
+
+function updateSlider() {
+	if (document.getElementById("budget").value < 0) {
+		document.getElementById("budget").value = 0;
+		document.getElementById("error").innerHTML = "Number must be between $0 and $10,000,000";
+	}
+	else {
+		document.getElementById("error").innerHTML = "";
+		changeSlider(document.getElementById("budget").value);
+		document.getElementById("slider").value = document.getElementById("budget").value;
+	}
+}
+
+
+
 function closeUserForm(){
     document.getElementById("editUserForm").style.width = "0%";
     document.getElementById("editUserForm").style.display = "none";
