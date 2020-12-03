@@ -40,13 +40,14 @@ public void tearDown() {
  driver.quit();
 }
 @Test
-public void importAndDisplayBillImageTest() {
+public void importAndDisplayBillImageTest() throws InterruptedException {
 	driver.get("http://localhost:8080/login");
     driver.manage().window().setSize(new Dimension(741, 639));
     driver.findElement(By.id("username")).sendKeys("Alfredo");
     driver.findElement(By.id("password")).sendKeys("12345");
     driver.findElement(By.cssSelector(".btn")).click();
     driver.findElement(By.cssSelector(".sideButton:nth-child(3)")).click();
+    Thread.sleep(4000);
     driver.findElement(By.linkText("Add An Expense")).click();
     driver.findElement(By.id("expenseName")).click();
     driver.findElement(By.id("expenseName")).sendKeys("Travel to LA");

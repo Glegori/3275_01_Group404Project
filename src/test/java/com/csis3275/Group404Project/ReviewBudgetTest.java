@@ -40,48 +40,124 @@ public class ReviewBudgetTest {
   public void tearDown() {
     driver.quit();
   }
+
   @Test
-  public void reviewBudgetTest() {
+  public void rEVIEWBUDGET() throws InterruptedException {
     driver.get("http://localhost:8080/login");
-    driver.manage().window().setSize(new Dimension(1593, 1040));
+    driver.manage().window().setSize(new Dimension(1641, 1174));
     driver.findElement(By.id("username")).sendKeys("Francis");
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("password")).sendKeys("12345");
     driver.findElement(By.id("password")).sendKeys(Keys.ENTER);
-    driver.findElement(By.xpath("//div[@onclick=\'openMenu()\']")).click();
+    driver.findElement(By.cssSelector(".sideButton:nth-child(3)")).click();
+
     driver.findElement(By.linkText("Review Budget")).click();
     driver.findElement(By.id("type")).click();
+
     {
       WebElement dropdown = driver.findElement(By.id("type"));
-      dropdown.findElement(By.xpath("//option[. = 'TRAVEL']")).click();
+      dropdown.findElement(By.xpath("//option[. = 'PERSONAL']")).click();
     }
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
     driver.findElement(By.id("type")).click();
-    driver.findElement(By.id("Expense")).click();
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+    driver.findElement(By.id("budget")).click();
+
+    driver.findElement(By.id("budget")).sendKeys("2500");
+
+    {
+      WebElement element = driver.findElement(By.id("save"));
+      Actions builder = new Actions(driver);
+      builder.moveToElement(element).clickAndHold().perform();
+    }
+    {
+      WebElement element = driver.findElement(By.id("output"));
+      Actions builder = new Actions(driver);
+      builder.moveToElement(element).release().perform();
+    }
     driver.findElement(By.id("Expense")).click();
     driver.findElement(By.id("save")).click();
-    driver.findElement(By.xpath("//button[@onclick=\"location.href = \'/homePage\';\"]")).click();
-    driver.findElement(By.xpath("//div[@onclick=\'openMenu()\']")).click();
+    driver.findElement(By.cssSelector(".btn:nth-child(4)")).click();
+    driver.findElement(By.cssSelector(".sideButton:nth-child(3)")).click();
+
     driver.findElement(By.linkText("Add An Expense")).click();
+    {
+      WebElement element = driver.findElement(By.linkText("Add An Expense"));
+      Actions builder = new Actions(driver);
+      builder.moveToElement(element).perform();
+    }
+    {
+      WebElement element = driver.findElement(By.tagName("body"));
+      Actions builder = new Actions(driver);
+      builder.moveToElement(element, 0, 0).perform();
+    }
+
     driver.findElement(By.id("expenseName")).click();
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
-    driver.findElement(By.id("expenseName")).sendKeys("Hawaii");
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
-    driver.findElement(By.id("expenseCost")).sendKeys("5000");
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
-    driver.findElement(By.id("date")).click();
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
-    driver.findElement(By.id("date")).sendKeys("2020-12-02");
-    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+    driver.findElement(By.id("expenseName")).sendKeys("Dildos");
+    driver.findElement(By.id("expenseCost")).sendKeys("2700");
+
+    driver.findElement(By.id("date")).sendKeys("2020-12-03");
+    driver.findElement(By.id("date")).sendKeys("2020-12-31");
+
     driver.findElement(By.id("expenseType")).click();
     {
       WebElement dropdown = driver.findElement(By.id("expenseType"));
-      dropdown.findElement(By.xpath("//option[. = 'Travel']")).click();
+      dropdown.findElement(By.xpath("//option[. = 'Personal']")).click();
     }
+
     driver.findElement(By.id("expenseType")).click();
-    driver.findElement(By.xpath("//button[@value=\'Submit\']")).click();
+
+    driver.findElement(By.cssSelector(".col-md-offset-3 > button")).click();
+
     assertThat(driver.findElement(By.xpath("(//tr)[last()]/td[5]")).getText(), is("Denied"));
   }
+
+
+
+
+//  @Test
+//  public void reviewBudgetTest() throws InterruptedException {
+//    driver.get("http://localhost:8080/login");
+//    driver.manage().window().setSize(new Dimension(1593, 1040));
+//    driver.findElement(By.id("username")).sendKeys("Francis");
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    driver.findElement(By.id("password")).sendKeys("12345");
+//    driver.findElement(By.id("password")).sendKeys(Keys.ENTER);
+//    driver.findElement(By.xpath("//div[@onclick=\'openMenu()\']")).click();
+//    driver.findElement(By.linkText("Review Budget")).click();
+//    driver.findElement(By.id("type")).click();
+//    {
+//      WebElement dropdown = driver.findElement(By.id("type"));
+//      dropdown.findElement(By.xpath("//option[. = 'TRAVEL']")).click();
+//    }
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    driver.findElement(By.id("type")).click();
+//    driver.findElement(By.id("Expense")).click();
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    driver.findElement(By.id("Expense")).click();
+//    driver.findElement(By.id("save")).click();
+//    Thread.sleep(4000);
+//    driver.findElement(By.xpath("//button[@onclick=\"location.href = \'/homePage\';\"]")).click();
+//    driver.findElement(By.xpath("//div[@onclick=\'openMenu()\']")).click();
+//    driver.findElement(By.linkText("Add An Expense")).click();
+//    driver.findElement(By.id("expenseName")).click();
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    driver.findElement(By.id("expenseName")).sendKeys("Hawaii");
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    driver.findElement(By.id("expenseCost")).sendKeys("5000");
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    driver.findElement(By.id("date")).click();
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    Thread.sleep(4000);
+//    driver.findElement(By.id("date")).sendKeys("2020-12-02");
+//    driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+//    Thread.sleep(4000);
+//    driver.findElement(By.id("expenseType")).click();
+//    {
+//      WebElement dropdown = driver.findElement(By.id("expenseType"));
+//      dropdown.findElement(By.xpath("//option[. = 'Travel']")).click();
+//    }
+//    driver.findElement(By.id("expenseType")).click();
+//    driver.findElement(By.xpath("//button[@value=\'Submit\']")).click();
+//    Thread.sleep(4000);
+//    assertThat(driver.findElement(By.xpath("(//tr)[last()]/td[5]")).getText(), is("Denied"));
+//  }
 }
 

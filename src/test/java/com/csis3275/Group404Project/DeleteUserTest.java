@@ -22,6 +22,8 @@ import org.openqa.selenium.Keys;
 import java.util.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 public class DeleteUserTest {
     private WebDriver driver;
     private Map<String, Object> vars;
@@ -37,6 +39,7 @@ public class DeleteUserTest {
     public void tearDown() {
         driver.quit();
     }
+
     @Test
     public void deleteUserTest2() {
         driver.get("http://localhost:8080/login");
@@ -62,4 +65,5 @@ public class DeleteUserTest {
             assert(elements.size() == 0);
         }
     }
+
 }

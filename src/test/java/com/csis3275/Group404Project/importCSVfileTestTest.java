@@ -40,24 +40,30 @@ public class importCSVfileTestTest {
     driver.quit();
   }
   @Test
-  public void importCSVfileTest() {
+  public void importCSVfileTest() throws InterruptedException {
     driver.get("http://localhost:8080/login");
     driver.manage().window().setSize(new Dimension(741, 727));
     driver.findElement(By.id("username")).sendKeys("Alfredo");
     driver.findElement(By.id("password")).sendKeys("12345");
     driver.findElement(By.cssSelector(".btn")).click();
+    Thread.sleep(4000);
     driver.findElement(By.cssSelector(".sideButton:nth-child(3)")).click();
+    Thread.sleep(4000);
     driver.findElement(By.cssSelector("a:nth-child(3)")).click();
+    Thread.sleep(4000);
     WebElement chooseFile = driver.findElement(By.id("billImage"));
     chooseFile.sendKeys("C:\\testImportExpensse.csv");
     driver.findElement(By.cssSelector(".col-md-offset-3 > button")).click();
-    driver.findElement(By.cssSelector("tr:nth-child(59) > td:nth-child(1)")).click();
-    driver.findElement(By.cssSelector("tr:nth-child(59) > td:nth-child(1)")).click();
+    Thread.sleep(4000);
+    driver.findElement(By.cssSelector("(//tr)[last()]/td[3]> td:nth-child(1)")).click();
+    Thread.sleep(4000);
+    driver.findElement(By.cssSelector("(//tr)[last()]/td[3]> td:nth-child(1)")).click();
+    Thread.sleep(4000);
     {
-      WebElement element = driver.findElement(By.cssSelector("tr:nth-child(59) > td:nth-child(1)"));
+      WebElement element = driver.findElement(By.cssSelector("(//tr)[last()]/td[3] > td:nth-child(1)"));
       Actions builder = new Actions(driver);
       builder.doubleClick(element).perform();
     }
-    assertThat(driver.findElement(By.cssSelector("tr:nth-child(71) > td:nth-child(2)")).getText(), is("250.0"));
+    assertThat(driver.findElement(By.cssSelector("(//tr)[last()]/td[3] > td:nth-child(2)")).getText(), is("250.0"));
   }
 }

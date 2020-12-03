@@ -55,8 +55,7 @@ public class ExpensesOverTimeTest {
         driver.findElement(By.id("getExpensesByDate")).click();
         {
             List<WebElement> elements = driver.findElements(By.cssSelector("h3"));
-            System.out.println(elements);
-            assert(!(elements.size() <= 0));
+            assert(elements.size() > 0);
         }
     }
 }
