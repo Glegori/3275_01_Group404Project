@@ -40,6 +40,7 @@
 <body>
 <div class="container">
     <h3>Expenses over time</h3>
+    <h4>Data over the period ${startDate} to  ${endDate}</h4>
 
 <%--    <div class="col-md-offset-3 col-md-9">--%>
 <%--        <button onclick="whatever()" id="wh" cssClass="btn btn-dark btn-lg">Submit2</button>--%>

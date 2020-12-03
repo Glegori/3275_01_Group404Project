@@ -37,8 +37,8 @@ public class ExportCSVTest {
         ChromeOptions chromeOptions = new ChromeOptions();
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put("download.prompt_for_download", false);
-        settings.put("download.default_directory", "/c:/tmp");
-        chromeOptions.setExperimentalOption("settings", settings);
+        settings.put("download.default_directory", "c:/tmp");
+        chromeOptions.setExperimentalOption("prefs", settings);
         System.setProperty("webdriver.chrome.driver", "c:/tmp/chromedriver.exe");
         driver = new  ChromeDriver(chromeOptions);
         js = (JavascriptExecutor) driver;
@@ -58,7 +58,7 @@ public class ExportCSVTest {
         driver.findElement(By.id("password")).sendKeys(Keys.ENTER);
         driver.findElement(By.id("export")).click();
         try {
-            byte[] csvFile = Files.readAllBytes(Paths.get("/c:/tmp/data.csv"));
+            byte[] csvFile = Files.readAllBytes(Paths.get("c:/tmp/data.csv"));
             byte[] comparer = comparerFileData();
             Boolean equal = Arrays.equals(comparer,csvFile);
             assertThat(equal ,is (true));

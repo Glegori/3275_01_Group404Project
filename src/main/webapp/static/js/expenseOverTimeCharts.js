@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded',function (){
 
         series: [
             {
-            name: 'Personal',
-            data: chartDataPersonal
+                name: 'Personal',
+                data: chartDataPersonal
             },
             {
                 name: 'Food',
