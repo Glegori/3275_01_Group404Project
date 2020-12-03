@@ -68,7 +68,7 @@ public void importAndDisplayBillImageTest() {
     }
     driver.findElement(By.id("expenseType")).click();
     WebElement chooseFile = driver.findElement(By.id("billImage"));
-    chooseFile.sendKeys("c:\\Users\\Alfredo Morales\\Desktop\\Screenshot_1.png");
+    chooseFile.sendKeys("c:\\iteration3.png");
     driver.findElement(By.cssSelector(".col-md-offset-3 > button")).click();
 
 }

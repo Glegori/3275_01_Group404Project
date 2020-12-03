@@ -49,7 +49,7 @@ public class importCSVfileTestTest {
     driver.findElement(By.cssSelector(".sideButton:nth-child(3)")).click();
     driver.findElement(By.cssSelector("a:nth-child(3)")).click();
     WebElement chooseFile = driver.findElement(By.id("billImage"));
-    chooseFile.sendKeys("C:\\Users\\Alfredo Morales\\Desktop\\testImportExpensse.csv");
+    chooseFile.sendKeys("C:\\testImportExpensse.csv");
     driver.findElement(By.cssSelector(".col-md-offset-3 > button")).click();
     driver.findElement(By.cssSelector("tr:nth-child(59) > td:nth-child(1)")).click();
     driver.findElement(By.cssSelector("tr:nth-child(59) > td:nth-child(1)")).click();
