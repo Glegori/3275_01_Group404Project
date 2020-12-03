@@ -563,11 +563,17 @@ public class BootController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		
+		List <Expense> expenses;
 
 		//BRING LIST
-		List<Expense> expenses = expenseDao.getExpensesByUserNameAndExpenseType(currentPrincipalName, expenseType);
-
-		 
+			try {
+			//BRING LIST
+			expenses = expenseDao.getExpensesByUserNameAndExpenseType(currentPrincipalName, expenseType);
+			}
+			catch (Exception e) {
+			expenses = null ;
+			}
+ 
 		//MODEL
 		model.addAttribute("currentUserExpenses", expenses);
 		return "homePage";
